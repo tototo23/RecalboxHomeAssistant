@@ -1,0 +1,11 @@
+language: "fr"
+intents:
+  RecalboxGameStatus:
+    data:
+      - sentences:
+          - "quel est le jeu en cours [sur recalbox]"
+          - "à quoi je joue [sur recalbox]"
+          - "qu'est-ce qui tourne sur la recalbox"
+          - "quel jeu est lancé [sur recalbox]"
+          - "quel esl le jeu lancé [sur recalbox]"
+          
