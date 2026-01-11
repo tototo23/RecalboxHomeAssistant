@@ -130,17 +130,19 @@ intent_script:
         data:
           game_name: "{{ game }}"
           console_id: "{{ console }}"
-        response_variable: response
+        response_variable: script_output
+      - stop: "Return value to intent script"
+        response_variable: script_output
     speech:
       text: >
-        {% set resp = response if response is defined else none %}
+        {% set resp = action_response %}
         {% if resp is not none %}
             {{ resp.result }}
         {% elif not is_state('binary_sensor.recalbox_rpi3', 'on') %}
           La recalbox ne semble pas allumée, ou pas accessible.
         {% else %}
-          Une erreur imprévue est survenue pendant la recherche du jeu {{ game }} sur Recalbox.
-          Aucun status n'a été reçu du script de recherche.
+          Une erreur imprévue est survenue pendant l'exécution du script.
+          Aucun status n'a été reçu du script de recherche. ({{ resp }})
         {% endif %}
 
 script:
@@ -180,7 +182,7 @@ script:
           - variables:
               reponse_finale: 
                 success: false
-                result: Impossible de récupérer la liste des jeux de {{ console_id }}.
+                result: "Impossible de récupérer la liste des jeux de {{ console_id }} actuellement (réponse de l'API : code HTTP {{ rom_list['status'] }})."
           - stop: "Cannot get Roms list"
             response_variable: reponse_finale
         
@@ -212,7 +214,7 @@ script:
                 {% if final_success == 'True' %}
                   Le jeu {{ target_game.name }} a été trouvé et lancé sur {{ console_id }}.
                 {% else %}
-                  Le jeu {{ target_game.name }} a été trouvé sur {{ console_id }}, mais n'a pas pu être lancé sur la Recalbox.
+                  Le jeu {{ target_game.name }} a bien été trouvé sur {{ console_id }}, mais n'a malheureusement pas pu être lancé sur la Recalbox par son API.
                 {% endif %}
         else:
           - variables:
