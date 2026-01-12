@@ -9,7 +9,7 @@ By Aurélien Tomassini, 2026.
 
 <!-- toc -->
 
-- [Features](#features)
+- [Intro](#intro)
 - [Context](#context)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -18,10 +18,14 @@ By Aurélien Tomassini, 2026.
   * [Turn OFF recalbox with text/voice command](#turn-off-recalbox-with-textvoice-command)
   * [Get current game with text/voice command](#get-current-game-with-textvoice-command)
   * [Launch a game from text/voice assistant](#launch-a-game-from-textvoice-assistant)
+- [Todo](#todo)
+- [Releases notes](#releases-notes)
+  * [v0.0.2 - In progress...](#v002---in-progress)
+  * [v0.0.1 - 13/01/2026](#v001---13012026)
 
 <!-- tocstop -->
 
-## Features
+## Intro
 
 A script listens on Recalbox events, based on [Scripts sur événements d'EmulationStation | Recalbox Wiki](https://wiki.recalbox.com/fr/advanced-usage/scripts-on-emulationstation-events) . The scripts reads the needed data for game information, and sends a MQTT message to Home Assistant with JSON data. Home Assistant can then update its "Recalbox" entity with the current game.
 
@@ -40,6 +44,9 @@ The attributes read by Home Assistant are, through this JSON :
 - `imageUrl `: URL to the image of the current game. null if no game running. The picture exists only if the game has been scrapped.
 
 Two buttons can also be used to stop/reboot the recalbox via Home Assistant.
+
+Assist integration for voice/text control has also been implemented in order to control, get information, or find a game to launch.
+
 
 ## Context
 
@@ -102,18 +109,6 @@ cards:
       - entity: switch.recalbox_global
         icon: mdi:gamepad-variant-outline
         secondary_info: last-changed
-  - type: markdown
-    content: >-
-      <small>
-      {{ device_attr('binary_sensor.recalbox_rpi3', 'name') }}
-      version
-      {{ device_attr('binary_sensor.recalbox_rpi3', 'sw_version') }},
-      sur {{ device_attr('binary_sensor.recalbox_rpi3', 'model') }}
-
-      [Ouvrir l'interface web de Recalbox]({{ device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') }})
-      
-      [Ouvrir la page Github de l'intégration (mises à jour et
-      docs)](https://github.com/tototo23/RecalboxHomeAssistant) </small>
   - type: entities
     visibility:
       - condition: state
@@ -153,6 +148,20 @@ cards:
       <center>
       <img src="{{ state_attr('binary_sensor.recalbox_rpi3', 'imageUrl') }}">
       </center>
+    text_only: true
+  - type: markdown
+    content: >-
+      ---
+
+      <small> {{ device_attr('binary_sensor.recalbox_rpi3', 'name') }} version
+      {{ device_attr('binary_sensor.recalbox_rpi3', 'sw_version') }}, sur {{
+      device_attr('binary_sensor.recalbox_rpi3', 'model') }}
+
+      [Ouvrir l'interface web de Recalbox]({{
+      device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') }})
+
+      [Ouvrir la page Github de l'intégration (mises à jour et
+      docs)](https://github.com/tototo23/RecalboxHomeAssistant) </small>
     text_only: true
  ```
 
@@ -223,7 +232,7 @@ intents:
 ![](currentGameAssist.png)
 
 
-### Select a game with assistant
+### Launch a game from text/voice assistant
 
 > NOTE : on January 12th, with Recalbox 9.2.3, I didnt find an uptodate API to launch a game.
 > The one I had need to be updated, because not working :
@@ -260,3 +269,30 @@ intents:
   - "Joue à Mario 64 sur la Nintendo 64 sur Recalbox"
   - "Lance Mario 64 sur la Nintendo 64"
   - "Lance Sonic 1 sur megadrive"
+
+
+## Todo
+
+- [ ] Get the actual Recalbox version and device to be shown in the dashboard
+- [ ] Implement the launch game via SSH if possible (we already know if we found the game, the rom path, and system. Only need a way to launch it on device)
+
+
+## Releases notes
+
+### v0.0.2 - In progress...
+
+- Update the exammle dashboard template, to use the device information to display it at the bottom of the Recalbox column
+- Changes the device infos in the yaml, as Recalbox 9.2.3 on Raspberry Pi3. The actual version and device will be dynamic later.
+- SSH implementation or game launch ???
+
+
+### v0.0.1 - 13/01/2026
+
+> First integration
+
+- Hardcoded device as a Recalbox 9.2.3 on Raspberry Pi 3 (no effect, only for display). It can be changed with the yaml
+- Script on Recalbox side to notify the Home Assistant of any event, and compute the game image URL
+- Home Assistant package configuration complete for receiving Recalbox events, actions to turn off or reboot the recabox, dashboard template, voice/text actions to :
+	- know the status of Recalbox (on/off)
+	- know the currently played game
+	- try to launch a game (not yet working, for know it can search if the file exists, but there is no API to laucnhe the game, and no SSH implementation done yet)
