@@ -104,9 +104,9 @@ cards:
         secondary_info: last-changed
   - type: markdown
     content: |-
-      <small>Version 9.2.3-PULSTAR,
+      <small> Version 9.2.3-PULSTAR,
       sur Raspberry Pi 3B+
-      </small>
+      [Ouvrir la page Github de l'intégration (mises à jour et docs)](https://github.com/tototo23/RecalboxHomeAssistant) </small>
   - type: entities
     visibility:
       - condition: state
