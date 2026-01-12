@@ -90,9 +90,11 @@ rest_command:
 # Lancement d'un jeu par commande SSH :
 # recalbox-config launch snes /recalbox/share/roms/snes/SuperMario.smc
 # https://wiki.recalbox.com/fr/tutorials/system/access/root-access-terminal-cli
+# https://gitlab.com/recalbox/recalbox/-/tree/master/projects/configgen/
 shell_command:
   recalbox_launch_game_ssh: >
-    ssh -i /config/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@recalbox.local "recalbox-config launch {{ console }} '{{ path }}'"
+    # ssh -i /config/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@recalbox.local "recalbox-config launch {{ console }} '{{ path }}'"
+    ssh -i /config/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@recalbox.local "python configgen/emulatorlauncher.py  -system {{ console }} -rom '{{ path }}'"
 
 
 # ----- Assistant
