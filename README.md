@@ -91,73 +91,9 @@ Assist integration for voice/text control has also been implemented in order to 
 Add a card to Home Assistant to display the Recalbox status, game info, picture, etc. 
 It will be refreshed in real time.
 
-For example :
+You can use this card yaml [](Home Assistant/dashboards/recalbox_card.yaml) for this example :
 ![](example.png)
- 
-```yaml
-type: vertical-stack
-title: Recalbox (retro gaming)
-cards:
-  - type: entities
-    entities:
-      - entity: switch.recalbox_global
-        icon: mdi:gamepad-variant-outline
-        secondary_info: last-changed
-  - type: entities
-    visibility:
-      - condition: state
-        entity: binary_sensor.recalbox_rpi3
-        state: "on"
-    entities:
-      - type: attribute
-        entity: binary_sensor.recalbox_rpi3
-        attribute: console
-        name: Console émulée
-        icon: mdi:sony-playstation
-      - type: attribute
-        entity: binary_sensor.recalbox_rpi3
-        attribute: game
-        name: Jeu en cours
-        icon: mdi:gamepad-variant-outline
-      - type: attribute
-        entity: binary_sensor.recalbox_rpi3
-        attribute: genre
-        name: Genre du jeu
-        icon: mdi:folder-outline
-    show_header_toggle: false
-    state_color: false
-    footer:
-      type: buttons
-      entities:
-        - entity: button.recalbox_eteindre_recalbox
-          name: Eteindre
-        - entity: button.recalbox_reboot_recalbox
-          name: Redémarrer
-  - type: markdown
-    visibility:
-      - condition: state
-        entity: binary_sensor.recalbox_rpi3
-        state: "on"
-    content: |-
-      <center>
-      <img src="{{ state_attr('binary_sensor.recalbox_rpi3', 'imageUrl') }}">
-      </center>
-    text_only: true
-  - type: markdown
-    content: >-
-      ---
 
-      <small> {{ device_attr('binary_sensor.recalbox_rpi3', 'name') }} version
-      {{ device_attr('binary_sensor.recalbox_rpi3', 'sw_version') }}, sur {{
-      device_attr('binary_sensor.recalbox_rpi3', 'model') }}
-
-      [Ouvrir l'interface web de Recalbox]({{
-      device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') }})
-
-      [Ouvrir la page Github de l'intégration (mises à jour et
-      docs)](https://github.com/tototo23/RecalboxHomeAssistant) </small>
-    text_only: true
- ```
 
 ### Automation when a game is launched
 
@@ -228,13 +164,17 @@ intents:
 
 ### Launch a game from text/voice assistant
 
-> NOTE : on January 12th, with Recalbox 9.2.3, I didnt find an uptodate API to launch a game.
-> The one I had need to be updated, because not working :
-> > recalbox_launch_game:
-> > url: "http://recalbox.local:81/api/systems/{{ console }}/launcher"
-> > method: POST
-> > payload: "{{ path }}"
-> > content_type: "text/plain"
+> SSH launch NOT WORKING YET !
+
+> Because of non existing APi to launch a game, we need to launch the game via SSH.
+> It means that Home Assistant needs access to Recalbox via SSH.  
+> - Enable "Advanced mode" for your user
+> - Install "Terminal & SSH" in Home Assistant : enable watchdog and sidebar. Go to settings and import a public key or define a password, and then save and restart the addon.
+> - Type "ssh-keygen -t rsa -b 4096", name it "/config/.ssh/recalboxHomeAssistantKey" (create folder /config/.ssh if needed)
+> - Your keys will then be sotred in /config/.ssh/recalboxHomeAssistantKey
+> - Type "ssh-copy-id -i /config/.ssh/recalboxHomeAssistantKey.pub root@recalbox.local" (default credentials on Recalbox are "root" / "recalboxroot")
+> - Verify in the terminal that the SSH connexion is good, without asking you the password anymore : "ssh -i /config/.ssh/recalboxHomeAssistantKey -o StrictHostKeyChecking=no root@recalbox.local"
+> - Type "exit"
 
 - Copy/get the intent RecalboxLaunchGame for game launch in `custom_sentences/fr/recalbox_intent.yaml` :
 ```yaml
@@ -278,7 +218,10 @@ intents:
 
 - Update the example dashboard template, to use the device information to display it at the bottom of the Recalbox column
 - Changes the device infos in the yaml, as Recalbox 9.2.3 on Raspberry Pi3. The actual version and device will be dynamic later
+- Moved variables to be changed on top of the `recalbox.yaml` file
 - Adds web links to recalbox web manager, and to this repository to get updates
+- Add SSH installation info to launch a game
+- Try to search for a game even if the recalbox is not seen connected
 - SSH implementation for game launch ???
 
 

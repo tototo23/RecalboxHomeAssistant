@@ -1,6 +1,15 @@
 # /config/packages/recalbox.yaml
 # Par Aurélien Tomassini
 
+
+homeassistant:
+  customize:
+    _recalbox_hw: &recalbox_hardware "Raspberry Pi 3 B+"
+    _recalbox_sw: &recalbox_sw_version "9.2.3-PULSAR"
+    _recalbox_name: &recalbox_name "Recalbox"
+    _recalbox_url: &recalbox_url "http://recalbox.local"
+    
+
 # Pour avoir recalbox sous forme d'une entité avec un status ON/OFF
 mqtt:
   binary_sensor:
@@ -9,7 +18,8 @@ mqtt:
       state_topic: "recalbox/notifications/status"
       payload_on: "ON"
       payload_off: "OFF"
-      device_class: power
+      device_class: running
+      icon: mdi:gamepad-variant-outline
       # On passe en "indisponible" après 2h sans nouvelles
       expire_after: 7200
       # On récupère en JSON des attributs pour récupérer
@@ -18,11 +28,11 @@ mqtt:
       # On définit l'appareil ici
       device: &recalbox_device
         identifiers: "recalbox_rpi3_system"
-        name: "Recalbox"
-        model: "Raspberry Pi 3"
+        name: *recalbox_name
+        model: *recalbox_hardware
         manufacturer: "Recalbox"
-        sw_version: "9.2.3-PULSAR" # Optionnel : version du système
-        configuration_url: "http://recalbox.local" # Lien direct vers l'interface web
+        sw_version: *recalbox_sw_version
+        configuration_url: *recalbox_url
         
   # On crée des boutons pour éteindre/redémarrer la recalbox.
   button:
@@ -68,22 +78,75 @@ automation:
 # Eteindre la recalbox : recalbox.local == 192.168.1.147
 rest_command:
   shutdown_recalbox:
-    url: "http://recalbox.local/api/system/shutdown"
+    url: >
+        {% set base = device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') %}
+        {{ base }}/api/system/shutdown
     method: POST
   reboot_recalbox:
-    url: "http://recalbox.local/api/system/reboot"
+    url: >
+        {% set base = device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') %}
+        {{ base }}/api/system/reboot
     method: POST
     
   # Récupère les roms d'une console précise
   recalbox_get_roms:
-    url: "http://recalbox.local:81/api/systems/{{ console }}/roms"
+    url: >
+        {% set base = device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') %}
+        {{ base }}:81/api/systems/{{ console }}/roms
     method: GET
   
-  recalbox_launch_game:
-    url: "http://recalbox.local:81/api/systems/{{ console }}/launcher"
-    method: POST
-    payload: "{{ path }}"
-    content_type: "text/plain"
+  #https://github.com/recalbox/recalbox-api/blob/1.1.x/documentation/api/system-launch-game.md
+  #recalbox_launch_game:
+  #  url: >
+  #     {% set base = *recalbox_url %}
+  #     {{ base }}:1337/systems/{{ console }}/launcher"
+  #  method: POST
+  #  payload: "{{ path }}"
+  #  content_type: "text/plain"
+
+
+# Lancement d'un jeu par commande SSH :
+# recalbox-config launch snes /recalbox/share/roms/snes/SuperMario.smc
+# https://wiki.recalbox.com/fr/tutorials/system/access/root-access-terminal-cli
+# https://gitlab.com/recalbox/recalbox/-/tree/master/projects/configgen/
+shell_command:
+  recalbox_launch_game_ssh: >
+    {# On retire le http:// pour n'avoir que recalbox.local #}
+    {% set base = device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') %}
+    {% set host = base.replace('http://', '').replace('https://', '').split(':')[0] if base is not none else 'recalbox.local' %}
+    
+    false # Pas d'implémentation fiable pour le moment
+    
+    # ssh -i /config/.ssh/recalboxHomeAssistantKey -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@{{ host }} 
+    # "ROM='{{ path }}'; 
+    # SYSTEM='{{ console }}'; 
+    # ROM_NAME=$(basename \"$ROM\"); 
+    # GAMELIST=\"/recalbox/share/roms/$SYSTEM/gamelist.xml\";
+    # CONF='/recalbox/share/system/recalbox.conf';
+    # echo \"--- DEBUG ---\"
+    # echo \"Recherche des paramètres de lancement du jeu $ROM_NAME sur $SYSTEM\"
+    # echo \"Recherche de l'émulateur et coeur spécifique au jeu dans $GAMELIST ...\"
+    # if [ -f \"$GAMELIST\" ]; then 
+    #   BLOCK=$(sed -n \"/<path>$ROM_NAME<\/path>/,/<\/game>/p\" \"$GAMELIST\");
+    #   EMU=$(echo \"$BLOCK\" | sed -n 's/.*<emulator>\(.*\)<\/emulator>.*/\1/p');
+    #   CORE=$(echo \"$BLOCK\" | sed -n 's/.*<core>\(.*\)<\/core>.*/\1/p');
+    #   echo \"Trouvé dans XML: EMU=$EMU / CORE=$CORE\"
+    # fi;
+    # echo \"Recherche de l'émulateur et coeur par défaut de $CONF ...\"
+    # [[ -z \"$EMU\" ]] && EMU=$(grep \"^${SYSTEM}.emulator=\" \"$CONF\" | cut -d'=' -f2);
+    # [[ -z \"$CORE\" ]] && CORE=$(grep \"^${SYSTEM}.core=\" \"$CONF\" | cut -d'=' -f2);
+    # [[ -z \"$EMU\" ]] && EMU='libretro';
+    # [[ -z \"$CORE\" || \"$CORE\" == \"default\" ]] && { 
+    #     [ \"$SYSTEM\" == \"megadrive\" ] && CORE=\"picodrive\";
+    #     [ \"$SYSTEM\" == \"snes\" ] && CORE=\"snes9x\"; 
+    #     [ \"$SYSTEM\" == \"nes\" ] && CORE=\"fceumm\"; 
+    #     [ \"$SYSTEM\" == \"n64\" ] && CORE=\"mupen64plus\"; 
+    #     [ \"$SYSTEM\" == \"psx\" ] && CORE=\"pcsx_rearmed\"; 
+    #     [ \"$SYSTEM\" == \"gba\" ] && CORE=\"mgba\"; 
+    # }; 
+    # [[ -z \"$CORE\" ]] && CORE=\"default\";
+    # echo \"Lancement du jeu $ROM, sur $SYSTEM, via l'émulateur $EMU et le coeur $CORE ...\"
+    # python3 /usr/bin/emulatorlauncher.py -system \"$SYSTEM\" -rom \"$ROM\" -emulator \"$EMU\" -core \"$CORE\" -p1index 0 -p1guid 0 -p1name \"Gamepad\" -ratio auto -rotation 0 -resolution 1920x1080"
 
 
 # ----- Assistant
@@ -153,20 +216,6 @@ script:
       - variables:
           final_msg: "Erreur inconnue"
           final_success: "false"
-    
-      - if:
-          - condition: not
-            conditions:
-              - condition: state
-                entity_id: binary_sensor.recalbox_rpi3
-                state: "on"
-        then:
-          - variables:
-              reponse_finale: 
-                success: false
-                result: La Recalbox semble ne pas être allumée, ou non détectée. Assurez-vous de la voir connectée à Home Assistant pour la contrôler.
-          - stop: "Recalbox is OFF"
-            response_variable: reponse_finale
           
       # lister toutes les roms de la console
       - action: rest_command.recalbox_get_roms
@@ -179,12 +228,28 @@ script:
           - condition: template
             value_template: "{{ rom_list is not defined or rom_list['status'] != 200 }}"
         then:
-          - variables:
-              reponse_finale: 
-                success: false
-                result: "Impossible de récupérer la liste des jeux de {{ console_id }} actuellement (réponse de l'API : code HTTP {{ rom_list['status'] }})."
-          - stop: "Cannot get Roms list"
-            response_variable: reponse_finale
+        
+          - if:
+              - condition: not
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.recalbox_rpi3
+                    state: "on"
+            then:
+              - variables:
+                  reponse_finale: 
+                    success: false
+                    result: La Recalbox semble ne pas être allumée, ou non détectée. Assurez-vous de la voir connectée à Home Assistant pour la contrôler.
+              - stop: "Recalbox is OFF"
+                response_variable: reponse_finale
+                
+            else:
+              - variables:
+                  reponse_finale: 
+                    success: false
+                    result: "Impossible de récupérer la liste des jeux de {{ console_id }} actuellement (réponse de l'API : code HTTP {{ rom_list['status'] }})."
+              - stop: "Cannot get Roms list"
+                response_variable: reponse_finale
         
       - variables:
           search_pattern: "{{ game_name | replace(' ', ' .*') }}"
@@ -202,19 +267,19 @@ script:
           - condition: template
             value_template: "{{ target_game is not none }}"
         then:
-          - action: rest_command.recalbox_launch_game
+          - action: shell_command.recalbox_launch_game_ssh
             data:
               console: "{{ console_id }}"
               path: "{{ target_game.path }}"
-            continue_on_error: true # Permet de ne pas stopper le script si l'API échoue
+            continue_on_error: true # Permet de ne pas stopper le script si l'appel échoue
             response_variable: launch_result
           - variables:
               final_success: "{{ launch_result is defined and launch_result['status'] == 200 }}"
               final_msg: > 
                 {% if final_success == 'True' %}
-                  Le jeu {{ target_game.name }} a été trouvé et lancé sur {{ console_id }}.
+                  Le jeu {{ target_game.name }} a été trouvé et lancé sur {{ console_id }} en SSH.
                 {% else %}
-                  Le jeu {{ target_game.name }} a bien été trouvé sur {{ console_id }}, mais n'a malheureusement pas pu être lancé sur la Recalbox par son API.
+                  Le jeu {{ target_game.name }} a bien été trouvé sur {{ console_id }}, mais n'a malheureusement pas pu être lancé sur la Recalbox par script SSH.
                 {% endif %}
         else:
           - variables:
