@@ -86,6 +86,11 @@ rest_command:
         {% set base = device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') %}
         {{ base }}/api/system/reboot
     method: POST
+  screenshot_recalbox:
+    url: >
+        {% set base = device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') %}
+        {{ base }}/api/media/takescreenshot
+    method: POST
     
   # Récupère les roms d'une console précise
   recalbox_get_roms:
@@ -148,11 +153,6 @@ shell_command:
 # python3 /usr/bin/emulatorlauncher.py -system \"$SYSTEM\" -rom \"$ROM\" -emulator \"$EMU\" -core \"$CORE\" -p1index 0 -p1guid 0 -p1name \"Gamepad\" -ratio auto -rotation 0 -resolution 1920x1080"
 
 
-  # https://wiki.recalbox.com/fr/tutorials/system/access/folders-and-ssh-commands
-  # Il prendra une capture d'écran et créera un fichier sous /recalbox/share/screenshots/ sous le nom screenshot-date-du-screenTheure-du-screen.png.
-  recalbox_screenshot_ssh: >-
-    ssh -i /config/.ssh/recalboxHomeAssistantKey -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@recalbox.local "raspi2png -p /recalbox/share/screenshots/screenshotHomeAssistant_{{ now().strftime('%Y%m%d_%H%M%S') }}.png"
-    
 
 # ----- Assistant
 
@@ -179,7 +179,11 @@ template:
     # device: *recalbox_device
     icon: mdi:camera
     press:
-      - action: shell_command.recalbox_screenshot_ssh
+      - action: rest_command.screenshot_recalbox
+      - action: notify.persistent_notification
+        data:
+          message: "Capture d'écran Recalbox effectuée !"
+          title: "Succès"
 
 
 # Pour les infos sur le jeu en cours
@@ -223,7 +227,7 @@ intent_script:
   # Pour lancer un jeu par la voix
   RecalboxCreateSnapshot:
     action:
-      - action: shell_command.recalbox_screenshot_ssh
+      - action: rest_command.screenshot_recalbox
         response_variable: script_output
       - stop: "Return value to intent script"
         response_variable: script_output
@@ -231,7 +235,7 @@ intent_script:
       text: >
         {% set resp = action_response %}
         {% if resp is not none %}
-          Une capture d'écran a été faite et enregistée dans {{ resp.result }}
+          Une capture d'écran a été faite et enregistée dans /recalbox/share/screenshots/
         {% elif not is_state('binary_sensor.recalbox_rpi3', 'on') %}
           La recalbox ne semble pas allumée, ou pas accessible.
         {% else %}

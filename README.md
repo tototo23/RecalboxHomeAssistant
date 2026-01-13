@@ -86,7 +86,7 @@ Assist integration for voice/text control has also been implemented in order to 
 3. **SSH for Home Assistant to access Recalbox**
 
 
-Some Recalbox API are not existing (screenshot, launch a game). We can still execute some features with scripts over SSH.
+Some Recalbox API are not existing (launch a game, for example). We can still execute some features with scripts over SSH.
 It means that Home Assistant needs access to Recalbox via SSH if you want to access those features.  
 - Enable "Advanced mode" for your user
 - Install "Terminal & SSH" in Home Assistant : enable watchdog and sidebar. Go to settings and import a public key or define a password, and then save and restart the addon.
@@ -240,8 +240,8 @@ Once again, use the exampes in [custom_sentences/fr/recalbox_intent.yaml](Home%2
 - Add `recalboxVersion` and `hardware` in the MQTT message sent to Home Assistant. So HA can know the OS version and device of Recalbox.
 - Update the recalbox_card example with actual Recabox version and hardware
 - Recalbox now sends messages to MQTT in retain mode for the attributes (and then remember the recabox version and hardware)
-- Add screen shot button (needs SSH to be configured)
-- Add screen shot action via assist (text or voice) (needs SSH to be configured)
+- Add screen shot button
+- Add screen shot action via assist (text or voice)
 - Add SSH installation info to launch a game
 - SSH implementation for game launch ???
 
