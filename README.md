@@ -91,73 +91,9 @@ Assist integration for voice/text control has also been implemented in order to 
 Add a card to Home Assistant to display the Recalbox status, game info, picture, etc. 
 It will be refreshed in real time.
 
-For example :
+You can use this card yaml [](Home Assistant/dashboards/recalbox_card.yaml) for this example :
 ![](example.png)
- 
-```yaml
-type: vertical-stack
-title: Recalbox (retro gaming)
-cards:
-  - type: entities
-    entities:
-      - entity: switch.recalbox_global
-        icon: mdi:gamepad-variant-outline
-        secondary_info: last-changed
-  - type: entities
-    visibility:
-      - condition: state
-        entity: binary_sensor.recalbox_rpi3
-        state: "on"
-    entities:
-      - type: attribute
-        entity: binary_sensor.recalbox_rpi3
-        attribute: console
-        name: Console émulée
-        icon: mdi:sony-playstation
-      - type: attribute
-        entity: binary_sensor.recalbox_rpi3
-        attribute: game
-        name: Jeu en cours
-        icon: mdi:gamepad-variant-outline
-      - type: attribute
-        entity: binary_sensor.recalbox_rpi3
-        attribute: genre
-        name: Genre du jeu
-        icon: mdi:folder-outline
-    show_header_toggle: false
-    state_color: false
-    footer:
-      type: buttons
-      entities:
-        - entity: button.recalbox_eteindre_recalbox
-          name: Eteindre
-        - entity: button.recalbox_reboot_recalbox
-          name: Redémarrer
-  - type: markdown
-    visibility:
-      - condition: state
-        entity: binary_sensor.recalbox_rpi3
-        state: "on"
-    content: |-
-      <center>
-      <img src="{{ state_attr('binary_sensor.recalbox_rpi3', 'imageUrl') }}">
-      </center>
-    text_only: true
-  - type: markdown
-    content: >-
-      ---
 
-      <small> {{ device_attr('binary_sensor.recalbox_rpi3', 'name') }} version
-      {{ device_attr('binary_sensor.recalbox_rpi3', 'sw_version') }}, sur {{
-      device_attr('binary_sensor.recalbox_rpi3', 'model') }}
-
-      [Ouvrir l'interface web de Recalbox]({{
-      device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') }})
-
-      [Ouvrir la page Github de l'intégration (mises à jour et
-      docs)](https://github.com/tototo23/RecalboxHomeAssistant) </small>
-    text_only: true
- ```
 
 ### Automation when a game is launched
 

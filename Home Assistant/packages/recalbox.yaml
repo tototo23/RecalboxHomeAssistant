@@ -115,37 +115,38 @@ shell_command:
     {% set base = device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') %}
     {% set host = base.replace('http://', '').replace('https://', '').split(':')[0] if base is not none else 'recalbox.local' %}
     
-    ssh -i /config/.ssh/recalboxHomeAssistantKey -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@{{ host }} 
-    "ROM='{{ path }}'; 
-    SYSTEM='{{ console }}'; 
-    ROM_NAME=$(basename \"$ROM\"); 
-    GAMELIST=\"/recalbox/share/roms/$SYSTEM/gamelist.xml\";
-    CONF='/recalbox/share/system/recalbox.conf';
-    echo \"--- DEBUG ---\"
-    echo \"Recherche des paramètres de lancement du jeu $ROM_NAME sur $SYSTEM\"
-    echo \"Recherche de l'émulateur et coeur spécifique au jeu dans $GAMELIST ...\"
-    if [ -f \"$GAMELIST\" ]; then 
-      BLOCK=$(sed -n \"/<path>$ROM_NAME<\/path>/,/<\/game>/p\" \"$GAMELIST\");
-      EMU=$(echo \"$BLOCK\" | sed -n 's/.*<emulator>\(.*\)<\/emulator>.*/\1/p');
-      CORE=$(echo \"$BLOCK\" | sed -n 's/.*<core>\(.*\)<\/core>.*/\1/p');
-      echo \"Trouvé dans XML: EMU=$EMU / CORE=$CORE\"
-    fi;
-    echo \"Recherche de l'émulateur et coeur par défaut de $CONF ...\"
-    [[ -z \"$EMU\" ]] && EMU=$(grep \"^${SYSTEM}.emulator=\" \"$CONF\" | cut -d'=' -f2);
-    [[ -z \"$CORE\" ]] && CORE=$(grep \"^${SYSTEM}.core=\" \"$CONF\" | cut -d'=' -f2);
-    [[ -z \"$EMU\" ]] && EMU='libretro';
-    [[ -z \"$CORE\" || \"$CORE\" == \"default\" ]] && { 
-        [ \"$SYSTEM\" == \"megadrive\" ] && CORE=\"picodrive\";
-        [ \"$SYSTEM\" == \"snes\" ] && CORE=\"snes9x\"; 
-        [ \"$SYSTEM\" == \"nes\" ] && CORE=\"fceumm\"; 
-        [ \"$SYSTEM\" == \"n64\" ] && CORE=\"mupen64plus\"; 
-        [ \"$SYSTEM\" == \"psx\" ] && CORE=\"pcsx_rearmed\"; 
-        [ \"$SYSTEM\" == \"gba\" ] && CORE=\"mgba\"; 
-    }; 
-    [[ -z \"$CORE\" ]] && CORE=\"default\";
-    echo \"Lancement du jeu $ROM, sur $SYSTEM, via l'émulateur $EMU et le coeur $CORE ...\"
-    python3 /usr/bin/emulatorlauncher.py -system \"$SYSTEM\" -rom \"$ROM\" -emulator \"$EMU\" -core \"$CORE\" -p1index 0 -p1guid 0 -p1name \"Gamepad\" -ratio auto -rotation 0 -resolution 1920x1080
-    "
+    false # Pas d'impléemntation fiable pour le moment
+    
+    # ssh -i /config/.ssh/recalboxHomeAssistantKey -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@{{ host }} 
+    # "ROM='{{ path }}'; 
+    # SYSTEM='{{ console }}'; 
+    # ROM_NAME=$(basename \"$ROM\"); 
+    # GAMELIST=\"/recalbox/share/roms/$SYSTEM/gamelist.xml\";
+    # CONF='/recalbox/share/system/recalbox.conf';
+    # echo \"--- DEBUG ---\"
+    # echo \"Recherche des paramètres de lancement du jeu $ROM_NAME sur $SYSTEM\"
+    # echo \"Recherche de l'émulateur et coeur spécifique au jeu dans $GAMELIST ...\"
+    # if [ -f \"$GAMELIST\" ]; then 
+    #   BLOCK=$(sed -n \"/<path>$ROM_NAME<\/path>/,/<\/game>/p\" \"$GAMELIST\");
+    #   EMU=$(echo \"$BLOCK\" | sed -n 's/.*<emulator>\(.*\)<\/emulator>.*/\1/p');
+    #   CORE=$(echo \"$BLOCK\" | sed -n 's/.*<core>\(.*\)<\/core>.*/\1/p');
+    #   echo \"Trouvé dans XML: EMU=$EMU / CORE=$CORE\"
+    # fi;
+    # echo \"Recherche de l'émulateur et coeur par défaut de $CONF ...\"
+    # [[ -z \"$EMU\" ]] && EMU=$(grep \"^${SYSTEM}.emulator=\" \"$CONF\" | cut -d'=' -f2);
+    # [[ -z \"$CORE\" ]] && CORE=$(grep \"^${SYSTEM}.core=\" \"$CONF\" | cut -d'=' -f2);
+    # [[ -z \"$EMU\" ]] && EMU='libretro';
+    # [[ -z \"$CORE\" || \"$CORE\" == \"default\" ]] && { 
+    #     [ \"$SYSTEM\" == \"megadrive\" ] && CORE=\"picodrive\";
+    #     [ \"$SYSTEM\" == \"snes\" ] && CORE=\"snes9x\"; 
+    #     [ \"$SYSTEM\" == \"nes\" ] && CORE=\"fceumm\"; 
+    #     [ \"$SYSTEM\" == \"n64\" ] && CORE=\"mupen64plus\"; 
+    #     [ \"$SYSTEM\" == \"psx\" ] && CORE=\"pcsx_rearmed\"; 
+    #     [ \"$SYSTEM\" == \"gba\" ] && CORE=\"mgba\"; 
+    # }; 
+    # [[ -z \"$CORE\" ]] && CORE=\"default\";
+    # echo \"Lancement du jeu $ROM, sur $SYSTEM, via l'émulateur $EMU et le coeur $CORE ...\"
+    # python3 /usr/bin/emulatorlauncher.py -system \"$SYSTEM\" -rom \"$ROM\" -emulator \"$EMU\" -core \"$CORE\" -p1index 0 -p1guid 0 -p1name \"Gamepad\" -ratio auto -rotation 0 -resolution 1920x1080"
 
 
 # ----- Assistant
