@@ -114,7 +114,7 @@ shell_command:
     {% set base = device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') %}
     {# On retire le http:// pour n'avoir que recalbox.local #}
     {% set host = base.replace('http://', '').replace('https://', '') %}
-    ssh -i /config/.ssh/recalboxHomeAssistantKey -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@{{ host }} "recalbox-config launch {{ console }} '{{ path }}'"
+    ssh -i /config/.ssh/recalboxHomeAssistantKey -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@{{ host }} "python /usr/bin/emulatorlauncher.py -system {{ console }} -rom '{{ path }}'"
 
 
 # ----- Assistant
@@ -184,20 +184,6 @@ script:
       - variables:
           final_msg: "Erreur inconnue"
           final_success: "false"
-    
-      - if:
-          - condition: not
-            conditions:
-              - condition: state
-                entity_id: binary_sensor.recalbox_rpi3
-                state: "on"
-        then:
-          - variables:
-              reponse_finale: 
-                success: false
-                result: La Recalbox semble ne pas être allumée, ou non détectée. Assurez-vous de la voir connectée à Home Assistant pour la contrôler.
-          - stop: "Recalbox is OFF"
-            response_variable: reponse_finale
           
       # lister toutes les roms de la console
       - action: rest_command.recalbox_get_roms
@@ -210,12 +196,28 @@ script:
           - condition: template
             value_template: "{{ rom_list is not defined or rom_list['status'] != 200 }}"
         then:
-          - variables:
-              reponse_finale: 
-                success: false
-                result: "Impossible de récupérer la liste des jeux de {{ console_id }} actuellement (réponse de l'API : code HTTP {{ rom_list['status'] }})."
-          - stop: "Cannot get Roms list"
-            response_variable: reponse_finale
+        
+          - if:
+              - condition: not
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.recalbox_rpi3
+                    state: "on"
+            then:
+              - variables:
+                  reponse_finale: 
+                    success: false
+                    result: La Recalbox semble ne pas être allumée, ou non détectée. Assurez-vous de la voir connectée à Home Assistant pour la contrôler.
+              - stop: "Recalbox is OFF"
+                response_variable: reponse_finale
+                
+            else:
+              - variables:
+                  reponse_finale: 
+                    success: false
+                    result: "Impossible de récupérer la liste des jeux de {{ console_id }} actuellement (réponse de l'API : code HTTP {{ rom_list['status'] }})."
+              - stop: "Cannot get Roms list"
+                response_variable: reponse_finale
         
       - variables:
           search_pattern: "{{ game_name | replace(' ', ' .*') }}"
