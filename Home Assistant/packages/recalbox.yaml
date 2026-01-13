@@ -6,7 +6,7 @@ homeassistant:
   customize:
     _recalbox_hw: &recalbox_hardware "Raspberry Pi 3 B+"
     _recalbox_sw: &recalbox_sw_version "9.2.3-PULSAR"
-    _recalbox_name: &recalbox_name "Recalbox"
+    _recalbox_name: &recalbox_name "Recalbox RPI3"
     _recalbox_url: &recalbox_url "http://recalbox.local"
     
 
@@ -14,7 +14,7 @@ homeassistant:
 mqtt:
   binary_sensor:
     - name: *recalbox_name
-      unique_id: recalbox_rpi3
+      unique_id: recalbox_console_rpi3
       state_topic: "recalbox/notifications/status"
       payload_on: "ON"
       payload_off: "OFF"
