@@ -222,6 +222,8 @@ You can make a screejn shot simply push the screen shot button on your dashboard
 You can also make a screen shot via Assist, typing or saying "Prends une capture d'écran du jeu", for example.
 Once again, use the exampes in [custom_sentences/fr/recalbox_intent.yaml](Home%20Assistant/custom_sentences/fr/recalbox_intent.yaml), for the `RecalboxCreateSnapshot` intent.
 
+> Note : on Recalbox 9.2.3 or Raspberry Pi 3, the screenshots are broken, also in the Recalbox Web Manager. Hopefully it will be fixed soon.
+> `fbgrab` command gives better results, but keeps the welcome screen as fixed image, to I can't switch to this command to get better screenshots.
 
 ## Todo
 
