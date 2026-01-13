@@ -151,7 +151,7 @@ shell_command:
   # https://wiki.recalbox.com/fr/tutorials/system/access/folders-and-ssh-commands
   # Il prendra une capture d'écran et créera un fichier sous /recalbox/share/screenshots/ sous le nom screenshot-date-du-screenTheure-du-screen.png.
   recalbox_screenshot_ssh: >-
-    ssh -i /config/.ssh/recalboxHomeAssistantKey -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@recalbox.local "raspi2png"
+    ssh -i /config/.ssh/recalboxHomeAssistantKey -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@recalbox.local "raspi2png -p /recalbox/share/screenshots/screenshotHomeAssistant_{{ now().strftime('%Y%m%d_%H%M%S') }}.png"
     
 
 # ----- Assistant
