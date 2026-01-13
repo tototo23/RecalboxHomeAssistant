@@ -62,7 +62,17 @@ clean_json_val() {
 send_mqtt() {
     local sub_topic="$1"
     local message="$2"
-    mosquitto_pub -h "$HA_IP" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$TOPIC/$sub_topic" -m "$message" -r
+	local retain="$3"
+	
+    local args=(-h "$HA_IP" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$TOPIC/$sub_topic" -m "$message")
+    
+    # On ajoute -r si et seulement si le 3ème paramètre est "true"
+    if [ "$retain" = "true" ]; then
+        args+=("-r")
+    fi
+
+    mosquitto_pub "${args[@]}"
+	
 }
 
 # Fonction pour générer le JSON de jeu
@@ -120,5 +130,7 @@ case "$ACTION" in
         ;;
 esac
 
-send_mqtt "status" "$STATUS"
-send_mqtt "game" "$(gen_game_json)"
+# On ne demande pas de retenir l'état sur le log terme
+send_mqtt "status" "$STATUS" "false"
+# Mais on veut persister les attributs, notamment pour retenir la version de recalbox et le hardware
+send_mqtt "game" "$(gen_game_json)" "true"
