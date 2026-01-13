@@ -41,6 +41,11 @@ GAME_GENRE_ID=$(get_val "GenreId")
 # si le nom du jeu commence par 3 chiifres puis espace, alors on les retire :
 GAME_NAME="${GAME_NAME/#[0-9][0-9][0-9] /}"
 
+	
+# Extraction de la version et du hardware
+RECALBOX_VERSION=$(cat /recalbox/recalbox.version 2>/dev/null || echo "Inconnue")
+HARDWARE_MODEL=$(tr -d '\0' < /proc/device-tree/model 2>/dev/null || echo "Hardware inconnu")
+
 
 # Nettoyage des variables pour le JSON
 clean_json_val() {
@@ -57,7 +62,7 @@ clean_json_val() {
 send_mqtt() {
     local sub_topic="$1"
     local message="$2"
-    mosquitto_pub -h "$HA_IP" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$TOPIC/$sub_topic" -m "$message"
+    mosquitto_pub -h "$HA_IP" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$TOPIC/$sub_topic" -m "$message" -r
 }
 
 # Fonction pour générer le JSON de jeu
@@ -76,7 +81,9 @@ gen_game_json() {
   "rom": $(clean_json_val "$ROM"),
   "genre": $(clean_json_val "$GAME_GENRE"),
   "genreId": $(clean_json_val "$GAME_GENRE_ID"),
-  "imageUrl": $imageUrl
+  "imageUrl": $imageUrl,
+  "recalboxVersion": $(clean_json_val "$RECALBOX_VERSION"),
+  "hardware": $(clean_json_val "$HARDWARE_MODEL")
 }
 EOF
 }

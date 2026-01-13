@@ -36,6 +36,8 @@ The attributes read by Home Assistant are, through this JSON :
 - `genre `: genre of the running game, user friendly. null if no game launched.
 - `genreId `: genreId of the running game. null if no game launched. Can be useful for automation where you want to set lights colors depending on type of game for example.
 - `imageUrl `: URL to the image of the current game. null if no game running. The picture exists only if the game has been scrapped.
+- `recalboxVersion` : Version of the Recalbox OS
+- `hardware` : Device running the Recalbox
 
 Two buttons can also be used to stop/reboot the recalbox via Home Assistant.
 
@@ -212,7 +214,6 @@ intents:
 
 ## Todo
 
-- [ ] Get the actual Recalbox version and device to be shown in the dashboard
 - [ ] Implement the launch game via SSH if possible (we already know if we found the game, the rom path, and system. Only need a way to launch it on device)
 - [ ] Internationalization
 
@@ -222,11 +223,13 @@ intents:
 ### v0.0.2 - In progress...
 
 - Update the example dashboard template, to use the device information to display it at the bottom of the Recalbox column
-- Changes the device infos in the yaml, as Recalbox 9.2.3 on Raspberry Pi3. The actual version and device will be dynamic later
-- Moved variables to be changed on top of the `recalbox.yaml` file
+- Moved variables to be changed on top of the `recalbox.yaml` file. The version and hardware are not hardcoded anymore.
 - Adds web links to recalbox web manager, and to this repository to get updates
-- Add SSH installation info to launch a game
 - Try to search for a game even if the recalbox is not seen connected
+- Add `recalboxVersion` and `hardware` in the MQTT message sent to Home Assistant. So HA can know the OS version and device of Recalbox.
+- Update the recalbox_card example with actual Recabox version and hardware
+- Recalbox now sends messages to MQTT in retain mode
+- Add SSH installation info to launch a game
 - SSH implementation for game launch ???
 
 
