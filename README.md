@@ -118,43 +118,20 @@ If any of the services doenst work as exptected (like scteen shot on Raspberry P
 ### Automations
 
 You can also create automations, triggered when a game is launched for example.  
-Example :
- 
+If interested in this example, copy [recalbox_automations.yaml](Home%20Assistant/automations/recalbox_automations.yaml) into `/config/automations/recalbox_automations.yaml`
+and then add
 ```yaml
-alias: Notification de nouveau jeu
-description: Annonce le nouveau jeu qui vient d'être lancé
-triggers:
-  - trigger: state
-    entity_id:
-      - binary_sensor.recalbox_rpi3
-    attribute: game
-conditions:
-  - condition: template
-    value_template: |-
-      {{ trigger.to_state.attributes.game != None and 
-         trigger.to_state.attributes.game != 'unknown' and
-         trigger.to_state.attributes.console != 'Kodi' and
-         trigger.to_state.attributes.game != '' }}
-actions:
-  - action: notify.notify
-    metadata: {}
-    data:
-      message: >-
-        Lancement du jeu {{ trigger.to_state.attributes.game -}}
-
-        {%- if trigger.to_state.attributes.console %}, sur {{
-        trigger.to_state.attributes.console }}{% endif -%}
-
-        {%- if trigger.to_state.attributes.genre %} ({{
-        trigger.to_state.attributes.genre }}){% endif %}.
-      title: Jeu sur Recalbox
-mode: single
+automation: !include automations.yaml
+automation yaml: !include_dir_merge_list automations/
 ```
+in `configuration.yaml`, to allow Home Assistant to read yaml files in `automations` subfolder.
+
 
 ### Assist (text/voice)
 
 The file [custom_sentences/fr/recalbox_intent.yaml](Home%20Assistant/custom_sentences/fr/recalbox_intent.yaml) should be 
 copied to `/config/custom_sentences/<language>/recalbox_intent.yaml`, and improved/updated according to your preferences.
+
 
 #### Turn OFF recalbox
 
@@ -168,7 +145,7 @@ Example : "Eteins Recalbox" will turn off the Recalbox.
 
 #### Get current game
 
-This required the `RecalboxGameStatus` intent in `/config/custom_sentences/<language>/recalbox_intent.yaml`.
+This requires the `RecalboxGameStatus` intent in `/config/custom_sentences/<language>/recalbox_intent.yaml`.
 
 Examples :
   - "quel est le jeu en cours [sur recalbox]"
@@ -185,7 +162,7 @@ Examples :
 > SSH access is required. 
 > Launch via SSH is NOT WORKING YET !
 
-This required the `RecalboxLaunchGame` intent in `/config/custom_sentences/<language>/recalbox_intent.yaml`.
+This requires the `RecalboxLaunchGame` intent in `/config/custom_sentences/<language>/recalbox_intent.yaml`.
 
 Examples :
   - "Recalbox lance Pokemon Jaune sur Game Boy"
@@ -207,7 +184,7 @@ Examples :
 
 #### Take a screenshot
 
-This required the `RecalboxCreateSnapshot` intent in `/config/custom_sentences/<language>/recalbox_intent.yaml`.
+This requires the `RecalboxCreateSnapshot` intent in `/config/custom_sentences/<language>/recalbox_intent.yaml`.
 
 You can make a game screenshot, simply pushing the screenshot button on your dashboard.
 You can also make a screen shot via Assist, typing or saying "Prends une capture d'écran du jeu", for example.
