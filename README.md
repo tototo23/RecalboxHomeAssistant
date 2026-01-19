@@ -10,7 +10,7 @@ By Aurélien Tomassini, 2026.
 <!-- toc -->
 
 - [Intro](#intro)
-- [Context](#context)
+- [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
   * [Dashboard card](#dashboard-card)
@@ -46,7 +46,7 @@ Two buttons can also be used to stop/reboot the recalbox via Home Assistant.
 Assist integration for voice/text control has also been implemented in order to control, get information, or find a game to launch.
 
 
-## Context
+## Requirements
 
 - You should have a `Recabox `OS available.
   Tested only with Recalbox <mark>9.2.3</mark>, Raspberry Pi 3 B+.
