@@ -2,15 +2,15 @@
 
 By Aurélien Tomassini, 2026.
 
-![](RecalboxHomeAssistantIntegration.png)
+![](docs/RecalboxHomeAssistantIntegration.png)
 
 <!-- Use "markdown-toc -i README.md --maxdepth 4" to auto update table of content -->
 <!-- (if not installed yet, run "npm install --save markdown-toc -g") -->
 
 <!-- toc -->
 
-- [Intro](#intro)
 - [Requirements](#requirements)
+- [Architecture](#architecture)
 - [Installation](#installation)
 - [Usage](#usage)
   * [Dashboard card](#dashboard-card)
@@ -27,9 +27,22 @@ By Aurélien Tomassini, 2026.
 
 <!-- tocstop -->
 
-## Intro
+## Requirements
 
-A script listens on Recalbox events, based on [Scripts sur événements d'EmulationStation | Recalbox Wiki](https://wiki.recalbox.com/fr/advanced-usage/scripts-on-emulationstation-events) . The scripts reads the needed data for game information, and sends a MQTT message to Home Assistant with JSON data. Home Assistant can then update its "Recalbox" entity with the current game.
+- You should have a `Recabox `OS available.
+  Tested only with Recalbox <mark>9.2.3</mark>, Raspberry Pi 3 B+.
+  By default, should be accessible on `recalbox.local`
+
+- You should have a `Home Assistant`.
+  Tested on Home Assistant <mark>2026.1</mark>, Raspberry Pi 3 B+.
+  By default, It should be accessible in the same network, at`homeassistant.local`
+
+
+## Architecture
+
+![](docs/RecalboxHomeAssistantArchitecture.png)
+
+On the Recalbox, a script listens on Recalbox events, based on [Scripts sur événements d'EmulationStation | Recalbox Wiki](https://wiki.recalbox.com/fr/advanced-usage/scripts-on-emulationstation-events) . The scripts reads the needed data for game information, and sends a MQTT message to Home Assistant with JSON data. Home Assistant can then update its "Recalbox" entity with the current game.
 
 The attributes read by Home Assistant are, through this JSON :
 - `game `: name of the running game, user friendly. null if no game launched.
@@ -41,20 +54,11 @@ The attributes read by Home Assistant are, through this JSON :
 - `recalboxVersion` : Version of the Recalbox OS
 - `hardware` : Device running the Recalbox
 
-Two buttons can also be used to stop/reboot the recalbox via Home Assistant.
+On Home Assistant, some buttons can also be used to stop/reboot/take a screnshot of the Recalbox.
 
 Assist integration for voice/text control has also been implemented in order to control, get information, or find a game to launch.
 
 
-## Requirements
-
-- You should have a `Recabox `OS available.
-  Tested only with Recalbox <mark>9.2.3</mark>, Raspberry Pi 3 B+.
-  By default, should be accessible on `recalbox.local`
-
-- You should have a `Home Assistant`.
-  Tested on Home Assistant <mark>2026.1</mark>, Raspberry Pi 3 B+.
-  By default, It should be accessible in the same network, at`homeassistant.local`
 
 ## Installation
 
@@ -109,7 +113,7 @@ Add a card to Home Assistant to display the Recalbox status, game info, picture,
 It will be refreshed in real time.
 
 You can use this [recalbox_card.yaml](Home%20Assistant/dashboards/recalbox_card.yaml) in your dashboard, to get this example :
-![](example.png)
+![](docs/example.png)
 
 Three action buttons allow you to turn off, reboot, or take a screen short of the Recolbox with their web manager API.
 If any of the services doenst work as exptected (like scteen shot on Raspberry Pi 3 on Recalbox 9.2.3) try directly with the web manager.
@@ -140,7 +144,7 @@ It allows to control the Recalbox as a switch, and use assist to turn OFF recalb
 
 Example : "Eteins Recalbox" will turn off the Recalbox.
 
-![](turnOffRecalbox.png)
+![](docs/turnOffRecalbox.png)
 
 
 #### Get current game
@@ -154,7 +158,7 @@ Examples :
   - "quel jeu est lancé [sur recalbox]"
   - "quel est le jeu lancé [sur recalbox]"
 
-![](currentGameAssist.png)
+![](docs/currentGameAssist.png)
 
 
 #### Launch a game
@@ -171,7 +175,7 @@ Examples :
   - "Lance Mario 64 sur la Nintendo 64"
   - "Lance Sonic 1 sur megadrive"
 
-  ![](launchGame.png)
+  ![](docs/launchGame.png)
   
 > If needed, update the systems list in `/config/custom_sentences/fr/recalbox_intent.yaml` with the consoles you want to support/recognize in the launch command.
 > By default, it supports launching command on NES, SNES, Megadrive, PSX, N64, GB, GBA, GBC, Dreamcast, PSP.
