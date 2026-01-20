@@ -30,20 +30,22 @@ By Aurélien Tomassini, 2026.
 
 ## Requirements
 
-- You should have a `Recabox `OS available.
+- You should have a `Recalbox` OS available.
   Tested only with Recalbox <mark>9.2.3</mark>, Raspberry Pi 3 B+.
   By default, should be accessible on `recalbox.local`
 
 - You should have a `Home Assistant`.
   Tested on Home Assistant <mark>2026.1</mark>, Raspberry Pi 3 B+.
-  By default, It should be accessible in the same network, at`homeassistant.local`
+  By default, It should be accessible in the same network, at `homeassistant.local`
 
 
 ## Architecture
 
 ![](docs/RecalboxHomeAssistantArchitecture.png)
 
-On the Recalbox, a script listens on Recalbox events, based on [Scripts sur événements d'EmulationStation | Recalbox Wiki](https://wiki.recalbox.com/fr/advanced-usage/scripts-on-emulationstation-events) . The scripts reads the needed data for game information, and sends a MQTT message to Home Assistant with JSON data. Home Assistant can then update its "Recalbox" entity with the current game.
+On the Recalbox, a script listens on local events, based on [Scripts sur événements d'EmulationStation | Recalbox Wiki](https://wiki.recalbox.com/fr/advanced-usage/scripts-on-emulationstation-events) .
+The scripts reads the needed data for game information, and sends a MQTT message to Home Assistant with JSON data.
+Home Assistant can then update its "Recalbox" entity with the current game.
 
 The attributes read by Home Assistant are, through this JSON :
 - `game `: name of the running game, user friendly. null if no game launched.
@@ -55,7 +57,8 @@ The attributes read by Home Assistant are, through this JSON :
 - `recalboxVersion` : Version of the Recalbox OS
 - `hardware` : Device running the Recalbox
 
-On Home Assistant, some buttons can also be used to stop/reboot/take a screnshot of the Recalbox.
+On Home Assistant, some buttons can also be used to stop/reboot/take a screenshot of the Recalbox.
+It uses API ou UDP commands.
 
 Assist integration for voice/text control has also been implemented in order to control, get information, or find a game to launch.
 
@@ -66,14 +69,7 @@ Assist integration for voice/text control has also been implemented in order to 
 1. **Recalbox**
    
    - Copy the file `Recalbox/userscripts/home_assistant_notifier.sh` in the `userscripts` Recalbox folder.
-     This script will react to Recabox events :
-     
-     - `start`|`systembrowsing`|`endgame `: refreshes the status ON, no game
-     - `runkodi `: refreshes ON status, set the current console as "Kodi"
-     - `rungame `: refreshes ON status, show current game, console (readable name), and builds image URL base on the scrapped data. If the game has a numeric prefix with 3 digits, it is removed. Example : "001 Sonic 1" will be shown as "Sonic 1".
-     - `stop `: change status to OFF, remove current game, image
-
-   <!-- - If you want to support UDP commands, like starting a game by text/voice request, you need to set `network_cmd_enable = true` in `retroarch.cfg`, as [documented in the Recalbox Wiki / GPIO](https://wiki.recalbox.com/en/tutorials/network/send-commands-to-emulators-with-gpio). -->
+     This script will react to Recalbox events.
 
 
 2. **Home Assistant**
@@ -170,10 +166,11 @@ Examples :
 > Example : Searching for "Pokemon Jaune", can find the rom "Pokemon - Version Jaune - Edition Speciale Pikachu".
 
 
-#### Stop running a game
+#### Stop the current game
 
 > This uses a retroarch UDP command.  
 > It requires to set `network_cmd_enable = true` in `retroarch.cfg`, as [documented in the Recalbox Wiki / GPIO](https://wiki.recalbox.com/en/tutorials/network/send-commands-to-emulators-with-gpio).
+> Please double check the port configured in your device. This versions uses port 55355 for retroarch UDP commands.
 
 This requires the `RecalboxStopGame` intent in `/config/custom_sentences/<language>/recalbox_intent.yaml`.
 
@@ -196,6 +193,7 @@ You can also make a screenshot via Assist, typing or saying "Prends une capture 
 ## Todo
 
 - [ ] Internationalization
+- [ ] Screenshots : switch from API usage to retroarch, to see if it gets better results on RPI3B+
 
 
 ## Releases notes
