@@ -72,6 +72,9 @@ Assist integration for voice/text control has also been implemented in order to 
      - `rungame `: refreshes ON status, show current game, console (readable name), and builds image URL base on the scrapped data. If the game has a numeric prefix with 3 digits, it is removed. Example : "001 Sonic 1" will be shown as "Sonic 1".
      - `stop `: change status to OFF, remove current game, image
 
+   <!-- - If you want to support UDP commands, like starting a game by text/voice request, you need to set `network_cmd_enable = true` in `retroarch.cfg`, as [documented in the Recalbox Wiki / GPIO](https://wiki.recalbox.com/en/tutorials/network/send-commands-to-emulators-with-gpio). -->
+
+
 2. **Home Assistant**
    
    - Create a new Home Assistant User, named "recalbox" (or something else), allowed to connect only on the local network. This user will be used for MQTT Authentication. Replace the user/password `home_assistant_notifier.sh` line 13 and 14 (`MQTT_USER` & `MQTT_PASS`)

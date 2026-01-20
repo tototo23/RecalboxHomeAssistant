@@ -110,16 +110,25 @@ rest_command:
   #  content_type: "text/plain"
 
 
-# Lancement d'un jeu par commande SSH :
-# recalbox-config launch snes /recalbox/share/roms/snes/SuperMario.smc
-# https://wiki.recalbox.com/fr/tutorials/system/access/root-access-terminal-cli
-# https://gitlab.com/recalbox/recalbox/-/tree/master/projects/configgen/
+# Lancement d'un jeu par commande UDP :
+# https://wiki.recalbox.com/en/tutorials/network/send-commands-to-emulators-with-gpio
 shell_command:
   recalbox_launch_game_upd: >
     {% set base = device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') %}
     {% set host = base.replace('http://', '').replace('https://', '').split(':')[0] if base is not none else 'recalbox.local' %}
-    {% set port = 80 %}
-    echo -n "VOTRE_COMMANDE" | nc -u -w1 $host $port
+    echo -n "START|{{ console }}|{{ path }}" | nc -u -w1 $host 1337
+  recalbox_stop_game_upd: >
+    {% set base = device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') %}
+    {% set host = base.replace('http://', '').replace('https://', '').split(':')[0] if base is not none else 'recalbox.local' %}
+    echo -n "QUIT" | nc -u -w1 $host 55435
+  recalbox_screenshot_upd: >
+    {% set base = device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') %}
+    {% set host = base.replace('http://', '').replace('https://', '').split(':')[0] if base is not none else 'recalbox.local' %}
+    echo -n "SCREENSHOT" | nc -u -w1 $host 55435
+  recalbox_pause_upd: >
+    {% set base = device_attr('binary_sensor.recalbox_rpi3', 'configuration_url') %}
+    {% set host = base.replace('http://', '').replace('https://', '').split(':')[0] if base is not none else 'recalbox.local' %}
+    echo -n "PAUSE_TOGGLE" | nc -u -w1 $host 55435
 
 
 # ----- Assistant
