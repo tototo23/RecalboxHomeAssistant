@@ -6,12 +6,18 @@ By Aurélien Tomassini, 2026.
 > - In your dashboard :
 >   - Get status
 >   - Display current game
->   - Turn off, reboot, take screenshots, ...
+>   - Turn off
+>   - Reboot
+>   - Take screenshots
+>   - etc
 > - Trigger any automation you want.  
 >   For example, change light color according to the game launched, send notifications, etc.
 > - Voice/text commands with assistant :
 >   - Launch a game
+>   - Ask what is the current game
 >   - Stop current game
+>   - Take a screenshot
+>   - Turn off Recalbox
 >   - etc
 
 ![](docs/RecalboxHomeAssistantIntegration.png)
