@@ -25,57 +25,82 @@
         }
         h1 { color: #24292f; }
         a {
+            text-decoration: none;
+            color: black;
+        }
+        a > h1 {
+            margin-bottom: 2px;
+        }
+        a > p {
+            margin-top: 2px;
+            margin-bottom: 40px;
+        }
+        a.button {
             display: inline-block;
             margin-top: 20px;
             padding: 10px 20px;
             background-color: #2da44e;
             color: white;
-            text-decoration: none;
             border-radius: 6px;
             font-weight: bold;
         }
-        a:hover { background-color: #2c974b; }
+        a.button:hover { background-color: #2c974b; }
         .description, ul {
-            max-width: 550px;
+            max-width: 300px;
             text-align: left;
+        }
+        ul > li {
+            margin-top: 10px;
+        }
+        .preview, img {
+            max-width: 380px;
+            display: block;
+            background-color: none;
+        }
+        .small-text {
+            font-size: small;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Recalbox Home Assistant</h1>
-        <p>By Aurélien Tomassini</p>
-        <p class="description">This repository allows you to integrate Recalbox in your Home Assistant :
-            <ul>
-                <li>
-                    In your dashboard :
-                    Get status,
-                    Display current game,
-                    Turn off,
-                    Reboot,
-                    Take screenshots,
-                    ...
-                </li>
-                <li>
-                    Trigger any automation you want.
-                    For example :
-                    change light color according to the game launched,
-                    send notifications,
-                    etc.
-                </li>
-                <li>
-                    Voice/text commands with assistant :
-                    Launch a game,
-                    Ask what is the current game,
-                    Stop current game,
-                    Take a screenshot,
-                    Turn off Recalbox,
-                    etc
-                </li>
-            </ul>
-        </p>
         <a href="https://github.com/tototo23/RecalboxHomeAssistant">
+            <h1>Recalbox Home Assistant</h1>
+            <p class="small-text">by Aurélien Tomassini, 2026</p>
+        </a>
+        <p class="description">This repository allows you to integrate Recalbox in your Home Assistant :</p>
+        <ul>
+            <li>
+                In your dashboard :
+                Get status,
+                Display current game,
+                Turn off,
+                Reboot,
+                Take screenshots,
+                ...
+            </li>
+            <li>
+                Trigger any automation you want.
+                For example :
+                change light color according to the game launched,
+                send notifications,
+                etc.
+            </li>
+            <li>
+                Voice/text commands with assistant :
+                Launch a game,
+                Ask what is the current game,
+                Stop current game,
+                Take a screenshot,
+                Turn off Recalbox,
+                etc
+            </li>
+        </ul>
+        <a class="preview" href="docs/RecalboxHomeAssistantIntegration.png">
+            <img src="docs/RecalboxHomeAssistantIntegration.png" alt="Preview"/>
+        </a>
+        <a class="button" href="https://github.com/tototo23/RecalboxHomeAssistant">
             View documentation and sources on GitHub
         </a>
     </div>
