@@ -34,7 +34,7 @@ class RecalboxEntityMQTT(BinarySensorEntity):
             "identifiers": {(DOMAIN, self._config_entry.entry_id)},
             "name": f"Recalbox ({self._ip})",
             "manufacturer": "Aurelien Tomassini",
-            "model": "Recalbox OS",
+            "model": "Recalbox Integration",
             "configuration_url": f"http://{self._ip}",
             "sw_version": self._attr_extra_state_attributes.get("recalboxVersion", "-"),
             "hw_version": self._attr_extra_state_attributes.get("hardware", "-"),
