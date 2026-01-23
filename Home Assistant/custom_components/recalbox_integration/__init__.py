@@ -21,11 +21,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await async_setup_intents(hass)
 
     # enregistrement du chemin statique
-    hass.http.async_register_static_paths([
+    await hass.http.async_register_static_paths([
         StaticPathConfig(
-            url_path="/recalbox",
-            local_path=hass.config.path("custom_components/recalbox/www"),
-            cache_headers=False
+            "/recalbox",
+            hass.config.path("custom_components/recalbox/www"),
+            False
         )
     ])
 

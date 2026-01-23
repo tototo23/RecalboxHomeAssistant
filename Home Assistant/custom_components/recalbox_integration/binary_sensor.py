@@ -71,6 +71,16 @@ class RecalboxEntityMQTT(BinarySensorEntity):
                 print('Updating recalbox current game')
                 try:
                     data = json.loads(payload)
+
+                    # 1. Mise à jour des attributs internes
+                    v_sw = data.get("recalboxVersion")
+                    v_hw = data.get("hardware")
+
+                    self._attr_extra_state_attributes.update({
+                        "hardware": v_hw,
+                        "recalboxVersion": v_sw
+                    })
+
                     self.game = data.get("game", "-")
                     self.console = data.get("console", "-")
                     self.genre = data.get("genre", "-")
@@ -78,21 +88,20 @@ class RecalboxEntityMQTT(BinarySensorEntity):
                     self.rom = data.get("rom", "-")
                     self.imageUrl = data.get("imageUrl", "-")
 
-                    # Mise à jour des attributs persistants
-                    self._attr_extra_state_attributes.update({
-                        "hardware": data.get("hardware"),
-                        "recalboxVersion": data.get("recalboxVersion")
-                    })
 
-                    # /!\ IMPORTANT :
+                    print('Updating device version/hardware')
                     # On signale à HA que les infos du device ont pu changer
                     from homeassistant.helpers import device_registry as dr
                     device_registry = dr.async_get(self.hass)
-                    device_registry.async_update_device(
-                        self.device_entry_id,
-                        sw_version=data.get("recalboxVersion"),
-                        model=data.get("hardware")
+                    device = device_registry.async_get_device(
+                        identifiers={(DOMAIN, self._config_entry.entry_id)}
                     )
+                    if device:
+                        device_registry.async_update_device(
+                            device.id,
+                            sw_version=v_sw,
+                            hw_version=v_hw
+                        )
 
                 except json.JSONDecodeError:
                     pass
