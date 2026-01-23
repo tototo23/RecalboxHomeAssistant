@@ -4,13 +4,21 @@ import homeassistant.helpers.config_validation as cv
 from .const import DOMAIN
 
 async def async_setup_intents(hass):
-    """Enregistre les handlers d'intentions."""
-    intent.async_register(hass, RecalboxLaunchHandler())
-    intent.async_register(hass, RecalboxStatusHandler())
-    # Handler générique pour les commandes simples
-    intent.async_register(hass, RecalboxActionHandler("RecalboxStopGame", 55355, "QUIT", "Retour au menu"))
-    intent.async_register(hass, RecalboxActionHandler("RecalboxPauseGame", 55355, "PAUSE_TOGGLE", "Pause demandée"))
-    intent.async_register(hass, RecalboxActionHandler("RecalboxCreateScreenshot", 55355, "SCREENSHOT", "Deamnde de capture d'écran effectuée"))
+    """Enregistre les handlers d'intentions seulement s'ils n'existent pas."""
+
+    # Liste des intentions de votre intégration
+    intents_to_register = [
+        RecalboxLaunchHandler(),
+        RecalboxStatusHandler(),
+        RecalboxActionHandler("RecalboxStopGame", 55355, "QUIT", "Retour au menu"),
+        RecalboxActionHandler("RecalboxPauseGame", 55355, "PAUSE_TOGGLE", "Pause demandée"),
+        RecalboxActionHandler("RecalboxCreateScreenshot", 55355, "SCREENSHOT", "Deamnde de capture d'écran effectuée")
+    ]
+
+    for handler in intents_to_register:
+        # On vérifie si l'intent_type est déjà enregistré
+        if handler.intent_type not in intent.async_get(hass):
+            intent.async_register(hass, handler)
 
 
 class RecalboxActionHandler(intent.IntentHandler):
