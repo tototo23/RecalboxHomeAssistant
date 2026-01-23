@@ -81,6 +81,6 @@ class RecalboxLaunchHandler(intent.IntentHandler):
 
         if target:
             # 3. Lancement UDP
-            await api.send_udp(1337, f"START|{console}|{target['path']}")
+            await api.send_udp_command(1337, f"START|{console}|{target['path']}")
             return f"Je lance {target['name']} sur {console} !"
         return f"Jeu {game_query} non trouvé sur {console}."
