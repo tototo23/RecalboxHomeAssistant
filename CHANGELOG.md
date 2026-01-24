@@ -2,9 +2,12 @@
 
 > By Aurélien Tomassini, 2026.
 
-## v0.1.3 - Work in progress
+## v0.1.3 - 24/01/2026
 
-- ...
+- As `extra_folders` is not working, added a script to copy the `custom_components/recalbox/custom_sentences`
+  to `custom_sentences`. As this script is launched when the integration starts, you could need two restarts
+  to get Assist sentences : a first restart to run the integration, that will copy the sentences ; and a second
+  restart, that will read the sentences on start.
 
  
 ## v0.1.2 - 24/01/2026
