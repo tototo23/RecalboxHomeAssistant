@@ -2,7 +2,13 @@
 
 > By Aurélien Tomassini, 2026.
 
-## v0.2.1 - Work in progress
+## v0.2.2 - Work in progress
+
+- ...
+
+
+
+## v0.2.1 - 25/01/2026
 
 - Compare MD5 of sentences files, in order to update them only when required.
   It avoids to show double restart required when the update doesn't change the sentences.
