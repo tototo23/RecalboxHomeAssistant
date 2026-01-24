@@ -2,7 +2,12 @@
 
 > By Aurélien Tomassini, 2026.
 
-## v0.1.2 - Work in progress
+## v0.1.3 - Work in progress
+
+- ...
+
+ 
+## v0.1.2 - 24/01/2026
 
 - Try to force HACS to copy `custom_sentences` folder, thanks to `extra_folders` key
 - Improve dashboard card actions CSS to make bottom smooth
