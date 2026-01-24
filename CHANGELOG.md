@@ -2,7 +2,7 @@
 
 > By Aurélien Tomassini, 2026.
 
-## v0.1.3 - 24/01/2026
+## v0.2.0 - 24/01/2026
 
 - As `extra_folders` is not working, added a script to copy the `custom_components/recalbox/custom_sentences`
   to `custom_sentences`. As this script is launched when the integration starts, you could need two restarts
