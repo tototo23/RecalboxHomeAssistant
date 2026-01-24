@@ -3,15 +3,16 @@
 > By Aurélien Tomassini, 2026.
 
 
-## v0.0.3 - Work in progress...
+## v0.1.0 - 24/01/2026
 
+- Changes from Yaml version to Python custom integration
 - New screenshot script : it first tries a UDP screenshot.
   If it fails, then it tries a screenshot via API.  
   Used both for voice/text command, and button pressed.
 - Update dashboard card and button icons
 - Improve notify automation example, to avoid wrong notification when Home Assistant updates itself while Recalbox is still off.
 - When looking for game name in game launch, remove accents
-- Improve scripts readability with aliases
+- Create HACS files to enable repo download via HACS
 
 
 ## v0.0.2 - 20/01/2026
