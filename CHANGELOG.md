@@ -9,6 +9,7 @@
   to get Assist sentences : a first restart to run the integration, that will copy the sentences ; and a second
   restart, that will read the sentences on start.
 - Display in dashboard if the secondary restart is needed.
+- Fill the default host when creating your Recalbox, with `recalbox.local`
 
  
 ## v0.1.2 - 24/01/2026

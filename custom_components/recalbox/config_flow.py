@@ -17,7 +17,7 @@ class RecalboxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="user",
             data_schema=vol.Schema({
-                vol.Required("host"): str,  # On demande l'IP ou le hostname
+                vol.Required("host", default="recalbox.local"): str,  # On demande l'IP ou le hostname
             }),
             errors=errors,
         )
