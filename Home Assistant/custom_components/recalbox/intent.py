@@ -13,7 +13,7 @@ async def async_setup_intents(hass):
         RecalboxStatusHandler(),
         RecalboxActionHandler("RecalboxStopGame", 55355, "QUIT", "Retour au menu"),
         RecalboxActionHandler("RecalboxPauseGame", 55355, "PAUSE_TOGGLE", "Pause demandée"),
-        RecalboxScreenshotHandler("RecalboxCreateScreenshot")
+        RecalboxScreenshotHandler()
     ]
 
     for handler in intents_to_register:
