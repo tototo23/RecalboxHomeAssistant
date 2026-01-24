@@ -5,13 +5,13 @@
   alias: Notification de nouveau jeu
   description: Annonce le nouveau jeu qui vient d'être lancé
   triggers:
-  - trigger: state
-    entity_id:
-    - binary_sensor.recalbox_rpi3
-    attribute: game
+    - trigger: state
+      entity_id:
+        - binary_sensor.recalbox_recalbox_local
+      attribute: game
   conditions:
-  - condition: template
-    value_template: "{{ 
+    - condition: template
+      value_template: "{{ 
       trigger.to_state.attributes.game and \n 
       trigger.to_state.attributes.game != None and \n 
       trigger.to_state.attributes.game != 'unknown' and \n 
@@ -19,15 +19,15 @@
       trigger.to_state.attributes.game != '' and \n 
       trigger.to_state.state == 'on' }}"
   actions:
-  - action: notify.notify
-    metadata: {}
-    data:
-      message: 'Lancement du jeu {{ trigger.to_state.attributes.game -}}
+    - action: notify.notify
+      metadata: {}
+      data:
+        message: 'Lancement du jeu {{ trigger.to_state.attributes.game -}}
 
         {%- if trigger.to_state.attributes.console %}, sur {{ trigger.to_state.attributes.console
         }}{% endif -%}
 
         {%- if trigger.to_state.attributes.genre %} ({{ trigger.to_state.attributes.genre
         }}){% endif %}.'
-      title: Jeu sur Recalbox
+        title: Jeu sur Recalbox
   mode: single

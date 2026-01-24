@@ -53,15 +53,15 @@ clean_json_val() {
 
 
 # Fonction pour envoyer les messages MQTT
-# Usage: send_mqtt "sous_topic" "message"
+# Usage: send_mqtt "sous_topic" "message" retain
 send_mqtt() {
     local sub_topic="$1"
     local message="$2"
 	
     if [ "$3" == "true" ]; then
-		mosquitto_pub -h "$HA_IP" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$TOPIC/$sub_topic" -m "$message" -r
-	else
-		mosquitto_pub -h "$HA_IP" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$TOPIC/$sub_topic" -m "$message"
+      mosquitto_pub -h "$HA_IP" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$TOPIC/$sub_topic" -m "$message" -r
+    else
+      mosquitto_pub -h "$HA_IP" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$TOPIC/$sub_topic" -m "$message"
     fi
 
 	
@@ -135,7 +135,7 @@ EOF
 
 # Si on doit effacer le retain du status...
 # send_mqtt "status" "" "true"
-# On ne demande pas de retenir l'état sur le log terme
+# On ne demande pas de retenir l'état sur le long terme
 send_mqtt "status" "$STATUS" "false"
 # Mais on veut persister les attributs, notamment pour retenir la version de recalbox et le hardware
 send_mqtt "game" "$(gen_game_json)" "true"

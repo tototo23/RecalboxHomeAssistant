@@ -99,22 +99,24 @@ It uses the same services just listed.
 
 
 2. **Home Assistant**
+ 
+   - Install MQTT Broker :
    
-   - Create a new Home Assistant User, named "recalbox" (or something else), allowed to connect only on the local network. This user will be used for MQTT Authentication. Replace the user/password `home_assistant_notifier.sh` line 13 and 14 (`MQTT_USER` & `MQTT_PASS`)
+     - Create a new Home Assistant User, named "recalbox" (or something else), allowed to connect only on the local network. This user will be used for MQTT Authentication. Replace the user/password `home_assistant_notifier.sh` line 13 and 14 (`MQTT_USER` & `MQTT_PASS`)
    
-   - Install MQTT Mosquitto broker in Home assistant (in addons). Enable the Run on start, and watchdog.
+     - Install MQTT Mosquitto broker in Home assistant (in addons). Enable the Run on start, and watchdog.
    
-   - In services integration, add MQTT service which should be now available.
-     Click on reconfigure, and use the credentials defined for authentication.
-	 Double check they are the same defined in `home_assistant_notifier.sh` lines 13+14.
-   
-   - Copy file `/packages/recalbox.yaml` from this repo, to `/homeassistant/packages/recalbox.yaml`, and add in `configuration.yaml` those lines in order to load this external config file (and then restart HA) :
+     - In services integration, add MQTT service which should be now available.
+       Click on reconfigure, and use the credentials defined for authentication.
+       Double check they are the same defined in `home_assistant_notifier.sh` lines 13+14.
      
-     ```
-     homeassistant:
-         packages: !include_dir_named packages
-     ```
-
+   - Install Recalbox Integration
+   
+     - Install HACS
+     
+     - Add `https://github.com/tototo23/RecalboxHomeAssistant`.
+       It will automatically add Recalbox full integration to your Home Assistant, with device creation
+       (new "Recalbox" Integration), the custom_sentences recognition for assist, and a custom dashboard card.
 
 
 ## Usage 
@@ -123,7 +125,7 @@ It uses the same services just listed.
 
 You can add a card to your Home Assistant dashboard, in order to display the Recalbox status, game info, picture, etc.  
 It will be refreshed in real time.  
-You can use [recalbox_card.yaml](Home%20Assistant/dashboards/recalbox_card.yaml) to get this example :  
+Simply add to your dashboard a `"custom:recalbox-card"` with your Recalbox entity :  
 ![](docs/example.png)
 
 
@@ -141,21 +143,6 @@ in `configuration.yaml`, to allow Home Assistant to read yaml files in `automati
 
 ### Assist (text/voice)
 
-The file [custom_sentences/fr/recalbox_intent.yaml](Home%20Assistant/custom_sentences/fr/recalbox_intent.yaml) and/or [custom_sentences/en/recalbox_intent.yaml](Home%20Assistant/custom_sentences/fr/recalbox_intent.yaml) should be 
-copied to `/config/custom_sentences/<language>/recalbox_intent.yaml`. Update/improve the sentences according to your preferences.
-
-
-#### Turn OFF recalbox
-
-Since January 11th 2026, the script added a switch template.  
-It allows to control the Recalbox as a switch, and use assist to turn OFF recalbox with voice or assist text :  
-
-Example : 
-  - "Eteins Recalbox" will turn off the Recalbox.
-
-![](docs/turnOffRecalbox.png)
-
-
 #### Get current game
 
 Examples :
@@ -166,8 +153,6 @@ Examples :
   - "quel est le jeu lancé [sur recalbox]"
 
 ![](docs/currentGameAssist.png)
-
-> It uses the `RecalboxGameStatus` intent from `/config/custom_sentences/<language>/recalbox_intent.yaml`.
 
 
 #### Launch a game
@@ -181,11 +166,6 @@ Examples :
 
   ![](docs/launchGame.png)
 
-> It uses the `RecalboxLaunchGame` intent from `/config/custom_sentences/<language>/recalbox_intent.yaml`.
-  
-> If needed, update the systems list in `/config/custom_sentences/fr/recalbox_intent.yaml` with the consoles you want to support/recognize in the launch command.  
-> By default, it supports systems recognition for launching command on NES, SNES, Megadrive, PSX, N64, GB, GBA, GBC, Dreamcast, PSP.
-> 
 > The search ignores case, and can find roms with words in between your search.
 > Example : Searching for "Pokemon Jaune", can find the rom "Pokemon - Version Jaune - Edition Speciale Pikachu".
 
@@ -196,7 +176,6 @@ Examples :
 Examples :
   - "Arrête le jeu en cours sur Recalbox"
 
-> It uses the `RecalboxStopGame` intent from `/config/custom_sentences/<language>/recalbox_intent.yaml`.
 
 > This uses a retroarch UDP command.  
 > It requires to set `network_cmd_enable = true` in `retroarch.cfg`, as [documented in the Recalbox Wiki / GPIO](https://wiki.recalbox.com/en/tutorials/network/send-commands-to-emulators-with-gpio).  
@@ -212,8 +191,6 @@ Examples :
 
   - "Prends une capture d'écran du jeu"
   - "Fais un screenshot du jeu"
-
-> It uses the `RecalboxCreateScreenshot` intent from `/config/custom_sentences/<language>/recalbox_intent.yaml`.
 
 > Since January 26th 2026, the screenshot is done with a script :
 > - trying first a UDP command screenshot, which is more integrated
