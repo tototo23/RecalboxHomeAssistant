@@ -36,7 +36,6 @@ This repository allows you to integrate Recalbox in your Home Assistant :
   * [Dashboard card](#dashboard-card)
   * [Automations](#automations)
   * [Assist (text/voice)](#assist-textvoice)
-    + [Turn OFF recalbox](#turn-off-recalbox)
     + [Get current game](#get-current-game)
     + [Launch a game](#launch-a-game)
     + [Stop the current game](#stop-the-current-game)
@@ -114,9 +113,10 @@ It uses the same services just listed.
    
      - Install HACS
      
-     - Add `https://github.com/tototo23/RecalboxHomeAssistant`.
-       It will automatically add Recalbox full integration to your Home Assistant, with device creation
-       (new "Recalbox" Integration), the custom_sentences recognition for assist, and a custom dashboard card.
+     - Add `https://github.com/tototo23/RecalboxHomeAssistant` as repository, as Integration.
+       Press download, and then accept to restart.
+       It will automatically add Recalbox to your Home Assistant, with device creation
+       (new "Recalbox" Integration will be available after restart), the custom_sentences recognition for assist, and a custom dashboard card.
 
 
 ## Usage 
@@ -125,7 +125,8 @@ It uses the same services just listed.
 
 You can add a card to your Home Assistant dashboard, in order to display the Recalbox status, game info, picture, etc.  
 It will be refreshed in real time.  
-Simply add to your dashboard a `"custom:recalbox-card"` with your Recalbox entity :  
+Simply add to your dashboard a `"type: custom:recalbox-card"` with your Recalbox entity :
+`entity: binary_sensor.recalbox_recalbox_local` (or similar)  
 ![](docs/example.png)
 
 
