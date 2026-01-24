@@ -73,7 +73,7 @@ class RecalboxStatusHandler(intent.IntentHandler):
             text = "La Recalbox est éteinte."
         else:
             game = recalbox.attributes.get("game", "-")
-            if game != "-":
+            if game is not None and game != "None" and game != "-" :
                 console = recalbox.attributes.get("console", "")
                 text = f"Tu joues à {game}, sur {console}."
             else:

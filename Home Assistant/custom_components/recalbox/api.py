@@ -29,6 +29,7 @@ class RecalboxAPI:
             async with session.post(url) as response:
                 return response.status == 200
 
+
     async def get_roms(self, console):
         url = f"http://{self.host}:81/api/systems/{console}/roms"
         print(f"API GET roms from {url}")

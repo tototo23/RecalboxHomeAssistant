@@ -1,71 +1,77 @@
 class RecalboxCard extends HTMLElement {
   set hass(hass) {
-    if (!this.content) {
-      this.innerHTML = `<ha-card header="Recalbox"></ha-card>`;
-      this.content = this.querySelector('ha-card');
-    }
-
     const entityId = this.config.entity;
     const state = hass.states[entityId];
 
     if (!state) {
-      this.content.innerHTML = `<div style="padding:16px;">Entité non trouvée : ${entityId}</div>`;
+      this.innerHTML = `<ha-card><div style="padding:16px; color:red;">Entité non trouvée : ${entityId}</div></ha-card>`;
       return;
     }
 
+    // On ne crée la structure de base qu'une seule fois
+    if (!this.content) {
+      this.innerHTML = `
+        <ha-card header="Recalbox">
+          <style>
+            .card-content { padding: 0 16px 16px 16px; }
+            .game-img { width: 100%; border-radius: 8px; margin: 10px 0; }
+            .status-on { color: var(--success-color); font-weight: bold; }
+            .info-row { display: flex; align-items: center; margin: 8px 0; }
+            .info-row ha-icon { margin-right: 12px; color: var(--primary-text-color); }
+            .actions { display: flex; justify-content: space-around; padding: 8px; border-top: 1px solid var(--divider-color); }
+          </style>
+          <div id="container"></div>
+        </ha-card>
+      `;
+      this.content = this.querySelector('#container');
+    }
+
     const game = state.attributes.game || "-";
-    const console = state.attributes.console || "-";
+    const consoleName = state.attributes.console || "-";
     const genre = state.attributes.genre || "-";
     const imageUrl = state.attributes.imageUrl || "";
     const isOn = state.state === "on";
 
+    // Construction du contenu dynamique
     let html = `
-      <style>
-        .card-content { padding: 16px; }
-        .game-img { width: 100%; border-radius: 8px; margin: 10px 0; display: ${imageUrl && isOn ? 'block' : 'none'}; }
-        .status-on { color: var(--success-color); }
-        .info-row { display: flex; align-items: center; margin: 8px 0; }
-        .info-row ha-icon { margin-right: 12px; color: var(--primary-text-color); }
-        .actions { display: flex; justify-content: space-around; padding: 8px; border-top: 1px solid var(--divider-color); }
-      </style>
       <div class="card-content">
         <div class="info-row">
           <ha-icon icon="mdi:controller"></ha-icon>
-          <span>Statut: <b class="${isOn ? 'status-on' : ''}">${state.state.toUpperCase()}</b></span>
+          <span>Statut: <span class="${isOn ? 'status-on' : ''}">${state.state.toUpperCase()}</span></span>
         </div>
     `;
 
-        if (isOn) {
-          html += `
-            <div class="info-row"><ha-icon icon="mdi:sony-playstation"></ha-icon><span>Console: ${console}</span></div>
-            <div class="info-row"><ha-icon icon="mdi:gamepad-variant-outline"></ha-icon><span>Jeu: ${game}</span></div>
-            <div class="info-row"><ha-icon icon="mdi:folder-outline"></ha-icon><span>Genre: ${genre}</span></div>
-          `;
-        }
-
-        // Ajout des boutons si souhaité
-        html += `
-          <div class="actions">
-            <ha-icon-button icon="mdi:camera" title="Screenshot" id="btn-snap"></ha-icon-button>
-            <ha-icon-button icon="mdi:restart" title="Reboot" id="btn-reboot"></ha-icon-button>
-            <ha-icon-button icon="mdi:power" title="Shutdown" id="btn-stop"></ha-icon-button>
-          </div>
-        `;
-
-    html += `</div>`;
-
-    if (isOn && img.length && img.length > 5) {
+    if (isOn) {
       html += `
-        <img class="game-img" src="${imageUrl}">
+        <div class="info-row"><ha-icon icon="mdi:sony-playstation"></ha-icon><span>Console: ${consoleName}</span></div>
+        <div class="info-row"><ha-icon icon="mdi:gamepad-variant-outline"></ha-icon><span>Jeu: ${game}</span></div>
+        <div class="info-row"><ha-icon icon="mdi:folder-outline"></ha-icon><span>Genre: ${genre}</span></div>
+        ${imageUrl && imageUrl.length > 5 ? `<img class="game-img" src="${imageUrl}">` : ''}
+
+        <div class="actions">
+          <ha-icon-button icon="mdi:power" title="Shutdown" id="btn-stop"></ha-icon-button>
+          <ha-icon-button icon="mdi:restart" title="Reboot" id="btn-reboot"></ha-icon-button>
+          <ha-icon-button icon="mdi:camera" title="Screenshot" id="btn-snap"></ha-icon-button>
+        </div>
       `;
+    } else {
+      html += `<p>La console est éteinte.</p>`;
     }
 
+    html += `</div>`;
     this.content.innerHTML = html;
 
-    // Gestion des clics (Exemple pour Screenshot)
-    this.content.querySelector('#btn-snap').onclick = () => {
-      hass.callService('button', 'press', { entity_id: this.config.screenshot_button });
-    };
+    // Gestion des clics sécurisée (uniquement si les boutons existent)
+    const snapBtn = this.content.querySelector('#btn-snap');
+    const rebootBtn = this.content.querySelector('#btn-reboot');
+    const stopBtn = this.content.querySelector('#btn-stop');
+    if (snapBtn) {
+      snapBtn.onclick = () => hass.callService('button', 'press', { entity_id: this.config.screenshot_button });
+    }
+    if (stopBtn) {
+      rebootBtn.onclick = () => hass.callService('button', 'press', { entity_id: this.config.reboot_button });
+      stopBtn.onclick = () => hass.callService('button', 'press', { entity_id: this.config.shutdown_button });
+    }
   }
 
   setConfig(config) {
@@ -78,11 +84,10 @@ class RecalboxCard extends HTMLElement {
 
 customElements.define('recalbox-card', RecalboxCard);
 
-// Enregistrement pour l'interface de sélection des cartes
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: "recalbox-card",
   name: "Recalbox Card",
   preview: true,
-  description: "Affiche l'état du jeu et les contrôles Recalbox"
+  description: "Affiche l'état de la console, du jeu en cours, et des contrôles de base."
 });
