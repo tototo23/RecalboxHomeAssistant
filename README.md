@@ -1,6 +1,8 @@
 # Recalbox Home Assistant integration
 
-> By Aurélien Tomassini, 2026.
+<small>By Aurélien Tomassini, 2026</small>
+
+<img src="logo.png" height="196px">
 
 This repository allows you to integrate Recalbox in your Home Assistant :
 - In your dashboard :
