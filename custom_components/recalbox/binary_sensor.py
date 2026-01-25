@@ -37,7 +37,7 @@ async def prepare_ping_coordinator(hass, api) -> DataUpdateCoordinator:
         _LOGGER,
         name="Recalbox Availability",
         update_method=async_update_data,
-        update_interval=timedelta(seconds=60), # Fréquence du check (ex: 30s)
+        update_interval=timedelta(seconds=30), # Fréquence du check (ici: 30s)
     )
 
     # On lance le premier rafraîchissement
