@@ -11,7 +11,7 @@ class RecalboxTranslator:
         self.hass = hass
         self._domain = domain
         self._cache = {}
-        self._base_path = hass.config.path("custom_components", domain, "translations")
+        self._base_path = hass.config.path("custom_components", domain, "custom_translations")
 
     def _load_language(self, lang):
         _LOGGER.info(f"Loading translations from lang : {lang}")
