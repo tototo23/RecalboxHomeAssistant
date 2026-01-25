@@ -106,8 +106,11 @@ def get_file_hash(filename):
         with open(filename, "rb") as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_md5.update(chunk)
-        return hash_md5.hexdigest()
+        hashValue = hash_md5.hexdigest()
+        _LOGGER.info("The file %s hash is %s", filename, hashValue)
+        return hashValue
     except FileNotFoundError:
+        _LOGGER.info("The file %s doesnt exist", filename)
         return None
 
 
