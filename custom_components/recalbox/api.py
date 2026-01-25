@@ -49,17 +49,21 @@ class RecalboxAPI:
                         return data.get("roms", [])
             except:
                 _LOGGER.error(f"Failed to get roms list on {url}")
-                return []
+                raise
 
 
     async def ping(self) -> bool:
         """Exécute un ping système vers l'hôte."""
         _LOGGER.debug(f"PING recalbox on {self.host}")
         command = f"ping -c 1 -W 1 {self.host} > /dev/null 2>&1"
+        try:
+            # On exécute la commande système de façon asynchrone
+            process = await asyncio.create_subprocess_shell(command)
+            await process.wait()
 
-        # On exécute la commande système de façon asynchrone
-        process = await asyncio.create_subprocess_shell(command)
-        await process.wait()
-
-        # Si le code de retour est 0, l'hôte a répondu
-        return process.returncode == 0
+            _LOGGER.debug(f"PING {self.host} returned {process.returncode}")
+            # Si le code de retour est 0, l'hôte a répondu
+            return process.returncode == 0
+        except:
+            _LOGGER.debug(f"Failed to PING {self.host}")
+            return False;

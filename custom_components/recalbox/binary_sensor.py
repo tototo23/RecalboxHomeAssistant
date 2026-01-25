@@ -186,12 +186,21 @@ class RecalboxEntityMQTT(CoordinatorEntity, BinarySensorEntity):
 
 
     # Renvoie le texte pour Assist
-    async def search_and_launch_game_by_name(self, console, game_query) -> str :
+    async def search_and_launch_game_by_name(self, console, game_query, lang=None) -> str :
         _LOGGER.debug(f"Try to launch game {game_query} on system {console}")
+        translator = self.hass.data[DOMAIN]["translator"]
         # Récupérer la liste des roms via l'API (HTTP GET)
-        roms = await self._api.get_roms(console)
-        if not roms:
-            return f"Aucun jeu trouvé sur la console {console}."
+        try:
+            roms = await self._api.get_roms(console)
+            if not roms:
+                return translator.translate(
+                    "intent_response.no_game_on_system",
+                    {"console": console},
+                    lang = lang
+                )
+        except:
+            return translator.translate("intent_response.list_roms_failed", lang=lang)
+
 
         def normalize_str(s):
             if not s: return ""
@@ -216,13 +225,25 @@ class RecalboxEntityMQTT(CoordinatorEntity, BinarySensorEntity):
             try:
                 await self._api.send_udp_command(1337, f"START|{console}|{target['path']}")
                 _LOGGER.debug(f"Game launched !")
-                return f"Le jeu {target['name']} a bien été trouvé. Lancement sur {console} !"
+                return translator.translate(
+                    "intent_response.game_launched_success",
+                    {"console": console, "game": target['name']},
+                    lang=lang
+                )
             except Exception as err:
                 _LOGGER.error(f"Failed to launch game {target['name']} on {console} : {err}")
-                return False
+                return translator.translate(
+                    "intent_response.game_launched_error",
+                    {"console": console, "game": target['name']},
+                    lang=lang
+                )
         else:
             _LOGGER.info(f"No game matching {game_query} on {console} !")
-            return f"Le jeu {game_query} n'a pas été trouvé sur {console}."
+            return translator.translate(
+                "intent_response.game_not_found_on_console",
+                {"console": console, "game":game_query},
+                lang=lang
+            )
 
 
     ##########################
