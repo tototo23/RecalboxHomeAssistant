@@ -2,7 +2,8 @@
 
 > By Aurélien Tomassini, 2026.
 
-## v1.0.1 - Work in progress...
+
+## v1.0.1 - 25/01/2026
 
 - Add a coordinator, which pings the Recalbox every 1min, to check if it is still ON
 - Add HACS integration button in the Github page
