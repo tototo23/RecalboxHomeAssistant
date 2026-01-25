@@ -38,7 +38,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.data[DOMAIN]["intents_registered"] = True
 
     # On ajoute "button" à la liste des plateformes
-    await hass.config_entries.async_forward_entry_setups(entry, ["binary_sensor", "button"])
+    await hass.config_entries.async_forward_entry_setups(entry, ["switch", "button"])
 
     return True
 

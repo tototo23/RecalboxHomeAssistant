@@ -72,8 +72,6 @@ class RecalboxCard extends HTMLElement {
             .info-value { color: var(--secondary-text-color); font-size: 0.9em; }
             .one-line { display: flex; flex-direction: row-reverse; gap: 20px; justify-content: space-between; vertical-align: middle; margin: 6px 0; }
             .one-line .info-value { color: var(--primary-text-color); font-size: inherit; }
-            .status-badge { background: var(--disabled-text-color); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.8em; float: right; }
-            .status-on { background: var(--success-color); }
 
             .game-preview { text-align: center; padding: 10px 0; margin: 10px -16px; }
             .game-preview img { max-width: 90%; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
@@ -123,6 +121,11 @@ class RecalboxCard extends HTMLElement {
           <ha-icon icon="mdi:gamepad-variant-outline"></ha-icon>
           <div class="info-text"><div>${this.config.title || "Recalbox"}</div><div class="info-value">${i18n.subtitle}</div></div>
           <span class="status-badge ${isOn ? 'status-on' : ''}">${state.state.toUpperCase()}</span>
+          <ha-switch
+            ${isOn ? '' : 'disabled'}
+            ${isOn ? 'checked' : ''}
+            @click="${(e) => this._handleSwitch(e, state)}"
+          ></ha-switch>
         </div>
         ${isOn ? `
           <hr/>
@@ -199,6 +202,18 @@ class RecalboxCard extends HTMLElement {
         <a href="https://github.com/tototo23/RecalboxHomeAssistant" target="_blank">${i18n.footer.integrationLabel}</a>
       </div>
     `;
+  }
+
+  _handleSwitch(ev, state) {
+      // Empêche le switch de basculer visuellement si on veut gérer l'action nous-même
+      ev.stopPropagation();
+
+      if (state.state === 'on') {
+          // Appelle le service d'extinction
+          this._hass.callService('switch', 'turn_off', {
+              entity_id: state.entity_id
+          });
+      }
   }
 
   setConfig(config) {

@@ -3,9 +3,14 @@
 > By Aurélien Tomassini, 2026.
 
 
-## v1.1.1 - ...
+## v2.0.0 - ...
 
+> This versions changes the entity from binary sensor to switch.
+> If you installed the previous version, you will need to remove the
+> binary sensor entity, and use the switch in your dashboard, and
+> automations.
 
+- Transforms the binary sensor to a switch entity
 - Improve custom_sentences update check algorithm, 
   in order to not ask to reboot if the sentences have no real change
 - Improve french custom sentences for intents (more natural)
