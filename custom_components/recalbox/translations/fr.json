@@ -18,6 +18,25 @@
     ],
     "screenshot_fail": [
       "La capture d'écran n'a pas pu être effectuée. (FR)"
+    ],
+    "quit_game_requested": [
+      "Retour au menu (FR)"
+    ],
+    "pause_game_requested": [
+      "Pause demandée (FR)"
+    ],
+    "no_game_on_system": [
+      "Aucun jeu trouvé sur la console {console}. (FR)",
+      "Malheureusement, aucun jeu n'a été trouvé sur {console}. (FR)"
+    ],
+    "game_not_found_on_console": [
+      "Le jeu {game} n'a pas été trouvé sur {console}."
+    ],
+    "game_launched_error": [
+      "Le jeu {game} a bien été trouvé sur {console}, mais la commande de lancement a échoué."
+    ],
+    "game_launched_success": [
+      "Le jeu {game} a bien été trouvé. Lancement sur {console} ! (FR)"
     ]
   }
 }

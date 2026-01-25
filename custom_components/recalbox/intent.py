@@ -11,8 +11,8 @@ async def async_setup_intents(hass):
     intents_to_register = [
         RecalboxLaunchHandler(),
         RecalboxStatusHandler(),
-        RecalboxActionHandler("RecalboxStopGame", 55355, "QUIT", "Retour au menu"),
-        RecalboxActionHandler("RecalboxPauseGame", 55355, "PAUSE_TOGGLE", "Pause demandée"),
+        RecalboxActionHandler("RecalboxStopGame", 55355, "QUIT", "intent_response.quit_game_requested"),
+        RecalboxActionHandler("RecalboxPauseGame", 55355, "PAUSE_TOGGLE", "intent_response.pause_game_requested"),
         RecalboxScreenshotHandler()
     ]
 
@@ -23,20 +23,21 @@ async def async_setup_intents(hass):
 
 
 class RecalboxActionHandler(intent.IntentHandler):
-    def __init__(self, intent_type, port, command, reply):
+    def __init__(self, intent_type, port, command, responseKey):
         self.intent_type = intent_type
         self._port = port
         self._command = command
-        self._reply = reply
+        self._responseKey = responseKey
 
     async def async_handle(self, intent_obj):
         instances = intent_obj.hass.data[DOMAIN].get("instances", {})
         entry_id = list(instances.keys())[0]
         api = instances[entry_id]["api"]
         await api.send_udp_command(self._port, self._command)
+        translator = hass.data[DOMAIN]["translator"]
 
         response = intent_obj.create_response()
-        response.async_set_speech(self._reply)
+        response.async_set_speech(translator.translate(self._responseKey))
         return response
 
 class RecalboxScreenshotHandler(intent.IntentHandler):
