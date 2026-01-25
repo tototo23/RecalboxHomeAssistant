@@ -14,7 +14,7 @@ This repository allows you to integrate Recalbox in your Home Assistant :
   - etc
 - Trigger any automation you want.  
   For example, change light color according to the game launched, send notifications, etc.
-- Voice/text commands with assistant :
+- Voice/text commands with assistant (EN/FR) :
   - Launch a game by its title (full or partial title search)
   - Ask what is the current game
   - Stop current game
