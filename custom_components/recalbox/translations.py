@@ -14,6 +14,7 @@ class RecalboxTranslator:
         self._base_path = hass.config.path("custom_components", domain, "translations")
 
     def _load_language(self, lang):
+        _LOGGER.info(f"Loading translations from lang : {lang}")
         if lang not in self._cache:
             file_path = os.path.join(self._base_path, f"{lang}.json")
             if not os.path.exists(file_path):
@@ -38,6 +39,7 @@ class RecalboxTranslator:
             if isinstance(value, dict) and key in value:
                 value = value[key]
             else:
+                _LOGGER.warning(f"Missing translation key : {path}")
                 return path # Retourne la clé brute si non trouvé
 
         # Gestion du "default" si on pointe sur un dictionnaire

@@ -70,19 +70,19 @@ class RecalboxStatusHandler(intent.IntentHandler):
         translator = hass.data[DOMAIN]["translator"]
 
         if not recalbox:
-            text = translator.translate("recalbox_not_found")
+            text = translator.translate("intent_response.recalbox_not_found")
         elif recalbox.state == "off":
-            text = translator.translate("recalbox_offline")
+            text = translator.translate("intent_response.recalbox_offline")
         else:
             game = recalbox.attributes.get("game", "-")
             if game is not None and game != "None" and game != "-" :
                 console = recalbox.attributes.get("console", "")
                 text = translator.translate(
-                    "game_status_playing",
+                    "intent_response.game_status_playing",
                     {"game": game, "console": console}
                 )
             else:
-                text = translator.translate("game_status_none")
+                text = translator.translate("intent_response.game_status_none")
 
         response = intent_obj.create_response()
         response.async_set_speech(text)
