@@ -30,6 +30,7 @@ def _get_file_hash(filename):
 
 
 def install_sentences(hass: HomeAssistant) -> bool :
+    _LOGGER.debug("Checking for Recalbox custom_sentences (re)installation...")
     """Copie récursivement les sentences du composant vers le dossier système de HA."""
     # Chemin source : /config/custom_components/recalbox/sentences
     source_root = hass.config.path("custom_components", DOMAIN, "custom_sentences")

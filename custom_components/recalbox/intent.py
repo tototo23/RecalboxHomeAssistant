@@ -37,7 +37,7 @@ async def async_setup_intents(hass):
 # Va chercher la Recalbox par défaut.
 # Pour le moment on ne supporte qu'une seule recalbox via Assist -> on prend la première
 # Plus tard, on ira chercher celle désignée en vocal/text
-def find_recalbox_entity(hass: HomeAssistant):
+def find_recalbox_entity(hass: HomeAssistant, entity_id=None):
     instances = hass.data[DOMAIN].get("instances", {})
     entry_id = list(instances.keys())[0]
     recalbox = instances[entry_id].get("sensor_entity")
@@ -164,12 +164,13 @@ class RecalboxLaunchHandler(intent.IntentHandler):
 
     async def async_handle(self, intent_obj):
         hass = intent_obj.hass
-        recalbox = find_recalbox_entity(hass)
-
         # 1. Récupérer les slots (variables) de la phrase
         slots = intent_obj.slots
         game = slots.get("game", {}).get("value")
         console = slots.get("console", {}).get("value")
+        # recalboxEntityId = slots.get("recalboxEntityId", {}).get("value")
+
+        recalbox = find_recalbox_entity(hass)
 
         # Appeler la fonction de recherche
         result_text = await recalbox.search_and_launch_game_by_name(console, game, lang=intent_obj.language)
