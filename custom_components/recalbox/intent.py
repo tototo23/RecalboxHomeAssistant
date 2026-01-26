@@ -37,16 +37,49 @@ async def async_setup_intents(hass):
 # --- TOOLS ----
 
 # Va chercher la Recalbox par défaut.
-# Pour le moment on ne supporte qu'une seule recalbox via Assist -> on prend la première
-# Plus tard, on ira chercher celle désignée en vocal/text
-def find_recalbox_entity(hass: HomeAssistant, entity_id=None) -> RecalboxEntityMQTT:
+# - soit l'instance est spécifiée dans l'intent
+# - soit non, et on prend la première qu'on trouve allumée
+# - soit on prend la première qu'on trouve si toutes sont éteintes
+def find_recalbox_entity(hass: HomeAssistant, intent_obj:intent.Intent) -> RecalboxEntityMQTT:
     instances = hass.data[DOMAIN].get("instances", {})
-    entry_id = list(instances.keys())[0]
-    recalbox:RecalboxEntityMQTT = instances[entry_id].get("sensor_entity")
-    return recalbox
+    if not instances:
+        return None
 
-def find_recalbox_states(hass: HomeAssistant, entity_id=None) -> State:
-    recalboxEntity:RecalboxEntityMQTT = find_recalbox_entity(hass, entity_id=entity_id)
+    # Extraction des entités réelles (RecalboxEntityMQTT)
+    all_entities = [instance.get("sensor_entity") for instance in instances.values() if instance.get("sensor_entity")]
+
+    if not all_entities:
+        _LOGGER.warning("No RecalboxEntityMQTT found")
+        return None
+
+    # Prio 1 :
+    # Recherche par nom spécifique, si présent dans l'Intent
+    slots = intent_obj.slots
+    recalbox_instance_name = slots.get("instance", {}).get("value")
+
+    if recalbox_instance_name:
+        target_slug = slugify(str(recalbox_instance_name))
+        for entity in all_entities:
+            # On compare avec le nom de l'entité ou un attribut de nom
+            if slugify(entity.name) == target_slug:
+                _LOGGER.info(f"Found Recalbox target by its name {entity.name}")
+                return entity
+
+    # Prio 2 :
+    # Si on n'a pas trouvé un RecalboxEntityMQTT par nom,
+    # on cherche la première qui est "ON"
+    for entity in all_entities:
+        state = hass.states.get(entity.entity_id)
+        if state and state.state == "on":
+            _LOGGER.info(f"Found a Recalbox that is ON : {entity.name}")
+            return entity
+
+    # Sinon, on prend juste la première de la liste par défaut
+    _LOGGER.info(f"Using the first Recalbox by default.")
+    return all_entities[0]
+
+def find_recalbox_states(hass: HomeAssistant, intent_obj:intent.Intent) -> State:
+    recalboxEntity:RecalboxEntityMQTT = find_recalbox_entity(hass, intent_obj)
     return hass.states.get(recalboxEntity.entity_id)
 
 def get_translator(hass: HomeAssistant) -> RecalboxTranslator:
@@ -82,7 +115,7 @@ class RecalboxScreenshotHandler(intent.IntentHandler):
 
     async def async_handle(self, intent_obj):
         hass = intent_obj.hass
-        recalbox:RecalboxEntityMQTT = find_recalbox_entity(hass)
+        recalbox:RecalboxEntityMQTT = find_recalbox_entity(hass, intent_obj)
         translator:RecalboxTranslator = get_translator(hass)
 
         if await recalbox.request_screenshot():
@@ -101,7 +134,7 @@ class RecalboxQuitGameHandler(intent.IntentHandler):
 
     async def async_handle(self, intent_obj):
         hass = intent_obj.hass
-        recalbox:RecalboxEntityMQTT = find_recalbox_entity(hass)
+        recalbox:RecalboxEntityMQTT = find_recalbox_entity(hass, intent_obj)
         translator:RecalboxTranslator = get_translator(hass)
 
         if await recalbox.request_quit_current_game():
@@ -120,7 +153,7 @@ class RecalboxPauseGameHandler(intent.IntentHandler):
 
     async def async_handle(self, intent_obj):
         hass = intent_obj.hass
-        recalbox:RecalboxEntityMQTT = find_recalbox_entity(hass)
+        recalbox:RecalboxEntityMQTT = find_recalbox_entity(hass, intent_obj)
         translator:RecalboxTranslator = get_translator(hass)
 
         if await recalbox.request_pause_game():
@@ -140,7 +173,7 @@ class RecalboxStatusHandler(intent.IntentHandler):
     async def async_handle(self, intent_obj):
         # On va lire l'état de l'entité binary_sensor pour répondre
         hass = intent_obj.hass
-        recalboxState:State = find_recalbox_states(hass)
+        recalboxState:State = find_recalbox_states(hass, intent_obj)
         translator:RecalboxTranslator = get_translator(hass)
 
         if not recalboxState:
@@ -168,7 +201,7 @@ class RecalboxLaunchHandler(intent.IntentHandler):
     """Handler pour lancer un jeu."""
     intent_type = "RecalboxLaunchGame" # Doit correspondre au nom dans ton YAML
 
-    async def async_handle(self, intent_obj):
+    async def async_handle(self, intent_obj:intent.Intent):
         hass = intent_obj.hass
         # 1. Récupérer les slots (variables) de la phrase
         slots = intent_obj.slots
@@ -176,7 +209,7 @@ class RecalboxLaunchHandler(intent.IntentHandler):
         console = slots.get("console", {}).get("value")
         # recalboxEntityId = slots.get("recalboxEntityId", {}).get("value")
 
-        recalbox = find_recalbox_entity(hass)
+        recalbox = find_recalbox_entity(hass, intent_obj)
 
         # Appeler la fonction de recherche
         result_text = await recalbox.search_and_launch_game_by_name(console, game, lang=intent_obj.language)

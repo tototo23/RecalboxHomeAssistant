@@ -3,7 +3,7 @@
 > By Aurélien Tomassini, 2026.
 
 
-## v1.2.1 - ...
+## v1.2.1 - 26/01/2026
 
 
 - In the dashboard card, remove the interactive switch, to a simple power state icon
@@ -11,6 +11,8 @@
 - Externalize the custom_sentences installer to be an sync job
 - Externalize Recalbox services installation
 - Improve code and logs on assist sentences and intents registration
+- For Voice/Text assis, now looks for the Recalbox that are ON, instead of using the 1st one by default.
+  Preparing also commands to specify a Recalbox target by name.
 
 
 
