@@ -45,44 +45,40 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # services appelés par le JS
 
     async def handle_shutdown(call):
-        entity_id = call.data.get("entity_id")
-        recalbox_entity = hass.data[DOMAIN]["instances"][entity_id].get("sensor_entity")
-        if recalbox_entity:
-            await recalbox_entity.request_shutdown()
+        recalbox_entity = findRecalboxEntity(hass, call.data.get("entity_id"))
+        if recalbox_entity: await recalbox_entity.request_shutdown()
     async def handle_reboot(call):
-        entity_id = call.data.get("entity_id")
-        recalbox_entity = hass.data[DOMAIN]["instances"][entity_id].get("sensor_entity")
-        if recalbox_entity:
-            await recalbox_entity.request_reboot()
+        recalbox_entity = findRecalboxEntity(hass, call.data.get("entity_id"))
+        if recalbox_entity: await recalbox_entity.request_reboot()
     async def handle_screenshot(call):
-        entity_id = call.data.get("entity_id")
-        recalbox_entity = hass.data[DOMAIN]["instances"][entity_id].get("sensor_entity")
-        if recalbox_entity:
-            await recalbox_entity.request_screenshot()
+        recalbox_entity = findRecalboxEntity(hass, call.data.get("entity_id"))
+        if recalbox_entity: await recalbox_entity.request_screenshot()
     async def handle_quit_game(call):
-        entity_id = call.data.get("entity_id")
-        recalbox_entity = hass.data[DOMAIN]["instances"][entity_id].get("sensor_entity")
+        recalbox_entity = findRecalboxEntity(hass, call.data.get("entity_id"))
+        if recalbox_entity: await recalbox_entity.request_quit_current_game()
+    async def handle_launch_game(call):
+        recalbox_entity = findRecalboxEntity(hass, call.data.get("entity_id"))
+        game = call.data.get("game")
+        console = call.data.get("console")
         if recalbox_entity:
-            await recalbox_entity.request_quit_current_game()
+            await recalbox_entity.search_and_launch_game_by_name(console, game)
 
     # Enregistrement du service recalbox.screen
     hass.services.async_register(DOMAIN, "shutdown", handle_shutdown)
     hass.services.async_register(DOMAIN, "reboot", handle_reboot)
     hass.services.async_register(DOMAIN, "screenshot", handle_screenshot)
     hass.services.async_register(DOMAIN, "quit_game", handle_quit_game)
+    hass.services.async_register(DOMAIN, "launch_game", handle_launch_game)
 
     return True
 
 
-
-#    if "Shutdown" in self._attr_name:
-#        await entity.request_shutdown()
-#    elif "Reboot" in self._attr_name:
-#        await entity.request_reboot()
-#    elif "Screenshot" in self._attr_name:
-#        await entity.request_screenshot()
-#    elif "Stop" in self._attr_name:
-#        await entity.request_quit_current_game()
+async def findRecalboxEntity(hass: HomeAssistant, entity_id: str):
+    for instance in hass.data[DOMAIN]["instances"].values():
+        entity = instance.get("sensor_entity")
+        if entity and entity.entity_id == entity_id:
+            return entity
+    return None
 
 
 async def async_register_frontend(hass: HomeAssistant) -> None:
