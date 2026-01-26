@@ -61,7 +61,6 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
     def is_on(self) -> bool:
         """L'entité est ON si MQTT dit ON ET que le dernier ping a réussi."""
         if not self.coordinator.data:
-            self.reset_game_attributes()
             return False
         return self._attr_is_on
 
@@ -231,7 +230,6 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
         self.rom = "-"
         self.imageUrl = "-"
         _LOGGER.debug("Recalbox game attributes cleaned")
-        self.async_write_ha_state()
 
     ##########################
     #       Ecoute MQTT      #
