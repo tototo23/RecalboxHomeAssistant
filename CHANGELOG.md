@@ -3,7 +3,7 @@
 > By Aurélien Tomassini, 2026.
 
 
-## v1.2.2 - ...
+## v1.2.2 - 26/01/2026
 
 
 - Implementing a new coordinator with Pings history.
