@@ -7,29 +7,30 @@ intents:
   RecalboxGameStatus:
     data:
       - sentences:
-          - "quel est le jeu en cours [sur recalbox]"
-          - "à quoi je joue [sur recalbox]"
+          - "quel est le jeu (en cours | actuel | lancé | qui tourne) [sur [la] recalbox]"
+          - "à quoi je joue [sur [la] recalbox]"
           - "qu'est-ce qui tourne sur [la] recalbox"
-          - "quel jeu est lancé [sur recalbox]"
-          - "quel est le jeu lancé [sur recalbox]"
+          - "quel (jeu est | est le jeu) (lancé | en cours | actuellement) [sur [la] recalbox]"
   RecalboxCreateScreenshot:
     data:
       - sentences:
-          - "(fais | prends) (une capture | un screenshot) [d'écran] [du jeu] [sur recalbox]"
+          - "(fais | prends) (une capture | un screenshot) [d'écran] [du jeu] [sur [la] recalbox]"
   RecalboxLaunchGame:
     data:
       - sentences:
-          - "(joue à | joue au jeu | lance | lance le jeu | mets | mets le jeu) {game} sur [la] {console} [sur recalbox]"
+          - "(joue à | joue au jeu | lance | lance le jeu | mets | mets le jeu) {game} sur [la] {console} [sur [la] recalbox]"
           - "recalbox (joue à | joue au jeu | lance | lance le jeu | mets | mets le jeu) {game} sur [la] {console}"
   RecalboxStopGame:
     data:
       - sentences:
-          - "(arrête | stop | quitte) le jeu (actuel | en cours) [sur recalbox]"
+          - "(arrête | stop | quitte) le jeu (actuel | en cours) [sur [la] recalbox]"
+          - "(retourne | va) (au | sur le) menu [sur [la] recalbox]"
   RecalboxPauseGame:
     data:
       - sentences:
-          - "(mets en pause | reprends | arrête la pause) le jeu (actuel | en cours) [sur recalbox]"
-          
+          - "(mets en pause | reprends | arrête la pause) le jeu (actuel | en cours) [sur [la] recalbox]"
+          - "mets le jeu en pause [sur [la] recalbox]"
+
 lists:
   game:
     wildcard: true

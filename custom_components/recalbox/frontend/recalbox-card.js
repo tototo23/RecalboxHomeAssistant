@@ -5,7 +5,7 @@ const TRANSLATIONS = {
     "system": "Console",
     "game": "Jeu en cours",
     "genre": "Genre",
-    "rebootRequired": "De nouvelles phrases Assist ont été détectées et installées. Redémarrez une fois de plus pour les activer et avoir accès aux nouvelles commandes vocales/textuelles.",
+    "rebootRequired": "De nouvelles phrases Assist ont été détectées et installées. Redémarrez Home Assistant une nouvelle fois pour les activer et avoir accès aux nouvelles commandes vocales/textuelles.",
     "buttons": {
       "shutdown": "Éteindre",
       "reboot": "Redémarrer",
@@ -52,11 +52,6 @@ class RecalboxCard extends HTMLElement {
       return;
     }
 
-    const shutdownBtn = this.config.shutdown_button || `button.recalbox_shutdown`;
-    const rebootBtn = this.config.reboot_button || `button.recalbox_reboot`;
-    const screenshotBtn = this.config.screenshot_button || `button.recalbox_screenshot`;
-    const stopBtn = this.config.quit_button || `button.recalbox_stop`;
-
     if (!this.content) {
       this.innerHTML = `
         <div id="title"></div>
@@ -64,21 +59,19 @@ class RecalboxCard extends HTMLElement {
           <style>
             .card-header { padding: 24px 16px 16px; margin-block-start: 0px; margin-block-end: 0px; font-weight: var(--ha-font-weight-normal); font-family: var(--ha-card-header-font-family, inherit); font-size: var(--ha-card-header-font-size, var(--ha-font-size-2xl)); line-height: var(--ha-line-height-condensed); }
 
-            .recalbox-card-content { padding: 16px; }
+            .recalbox-card-content { padding: 16px 20px; }
             .recalbox-card-content hr { margin: 12px 0; border: 0; border-top: 1px solid var(--divider-color); margin: 8px 0; }
             .info-row { display: flex; align-items: center; padding: 8px 0; }
-            .info-row ha-icon { color: var(--state-icon-color); margin-right: 16px; }
+            .info-row ha-icon { color: var(--state-icon-color); margin-right: 24px; margin-left: 4px; }
             .info-text { flex-grow: 1; }
             .info-value { color: var(--secondary-text-color); font-size: 0.9em; }
             .one-line { display: flex; flex-direction: row-reverse; gap: 20px; justify-content: space-between; vertical-align: middle; margin: 6px 0; }
             .one-line .info-value { color: var(--primary-text-color); font-size: inherit; }
-            .status-badge { background: var(--disabled-text-color); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.8em; float: right; }
-            .status-on { background: var(--success-color); }
 
             .game-preview { text-align: center; padding: 10px 0; margin: 10px -16px; }
             .game-preview img { max-width: 90%; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
-            .card-actions { display: flex; gap: 8px; justify-content: center; padding: 12px; background-color: var(--secondary-background-color); border-top: 1px solid var(--divider-color); border-radius: 0 0 12px 12px; }
+            .card-actions { display: flex; gap: 8px; justify-content: center; padding: 12px; border-top: 1px solid var(--divider-color); border-radius: 0 0 12px 12px; }
             .action-button { display: flex; flex-direction: row; gap: 6px; border-radius: 20px; padding: 2px 12px; align-items: center; cursor: pointer; font-size: 10px; text-transform: uppercase; color: var(--primary-text-color); background-color: var(--chip-background-color); }
             .action-button ha-icon { color: var(--_leading-icon-color); margin-bottom: 4px; --mdc-icon-size: 18px; }
 
@@ -101,6 +94,7 @@ class RecalboxCard extends HTMLElement {
       this.footer = this.querySelector('#markdown-footer');
     }
 
+    const recalboxName = state.attributes.friendly_name || state.attributes.entity_name || "Recalbox";
     const isOn = state.state === "on";
     const game = state.attributes.game || "-";
     const consoleName = state.attributes.console || "-";
@@ -112,7 +106,7 @@ class RecalboxCard extends HTMLElement {
     // 0. titre
     this.card_title.innerHTML = `
       <h1 class="card-header">
-        Recalbox
+        ${this.config.title || "Recalbox"}
       </h1>
     `
 
@@ -121,8 +115,12 @@ class RecalboxCard extends HTMLElement {
       <div class="recalbox-card-content">
         <div class="info-row">
           <ha-icon icon="mdi:gamepad-variant-outline"></ha-icon>
-          <div class="info-text"><div>${this.config.title || "Recalbox"}</div><div class="info-value">${i18n.subtitle}</div></div>
-          <span class="status-badge ${isOn ? 'status-on' : ''}">${state.state.toUpperCase()}</span>
+          <div class="info-text"><div>${recalboxName}</div><div class="info-value">${i18n.subtitle}</div></div>
+          <ha-switch
+            ${isOn ? '' : 'disabled'}
+            ${isOn ? 'checked' : ''}
+            style="pointer-events: none;"
+          ></ha-switch>
         </div>
         ${isOn ? `
           <hr/>
@@ -136,8 +134,8 @@ class RecalboxCard extends HTMLElement {
     if (needsRestart) {
       // On insère un petit bandeau d'alerte en haut de la carte
       const alertHtml = `
-        <div style="background-color: var(--warning-color); color: white; padding: 8px; border-radius: 4px; margin: 10px; font-size: 0.8em; display: flex; align-items: center;">
-          <ha-icon icon="mdi:alert" style="margin-right: 8px;"></ha-icon>
+        <div style="background-color: var(--secondary-background-color); color: white; padding: 12px; border-radius: 4px; margin: 10px; font-size: 0.8em; display: flex; align-items: center;">
+          <ha-icon icon="mdi:alert" style="margin-right: 16px;"></ha-icon>
           ${i18n.rebootRequired}
         </div>
       `;
@@ -175,10 +173,10 @@ class RecalboxCard extends HTMLElement {
         <div class="action-button" id="btn-snap" ` + (isAGameRunning ? '' : 'style="display:none"')+ `><ha-icon icon="mdi:camera"></ha-icon>${i18n.buttons.screenshot}</div>
         <div class="action-button" id="btn-stop" ` + (isAGameRunning ? '' : 'style="display:none"')+ `><ha-icon icon="mdi:location-exit"></ha-icon>${i18n.buttons.stop}</div>
       `;
-      this.actions.querySelector('#btn-power-off').onclick = () => hass.callService('button', 'press', { entity_id: shutdownBtn });
-      this.actions.querySelector('#btn-reboot').onclick = () => hass.callService('button', 'press', { entity_id: rebootBtn });
-      this.actions.querySelector('#btn-snap').onclick = () => hass.callService('button', 'press', { entity_id: screenshotBtn });
-      this.actions.querySelector('#btn-stop').onclick = () => hass.callService('button', 'press', { entity_id: stopBtn });
+      this.actions.querySelector('#btn-power-off').onclick = () => hass.callService('recalbox', 'shutdown', { entity_id: entityId });
+      this.actions.querySelector('#btn-reboot').onclick = () => hass.callService('recalbox', 'reboot', { entity_id: entityId });
+      this.actions.querySelector('#btn-snap').onclick = () => hass.callService('recalbox', 'screenshot', { entity_id: entityId });
+      this.actions.querySelector('#btn-stop').onclick = () => hass.callService('recalbox', 'quit_game', { entity_id: entityId });
     } else {
       this.actions.style.display = "none";
     }
@@ -200,6 +198,7 @@ class RecalboxCard extends HTMLElement {
       </div>
     `;
   }
+
 
   setConfig(config) {
     if (!config.entity) throw new Error("Entité manquante");

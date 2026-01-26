@@ -23,6 +23,12 @@ intents:
     data:
       - sentences:
           - "(stop | quit) [the] [current] game [on recalbox]"
+  RecalboxPauseGame:
+    data:
+      - sentences:
+          - "(pause | resume | stop the pause) [the] [(current | running)] game [on [the] recalbox]"
+          - "pause [the] [(current | running)] game [on [the] recalbox]"
+          - "unpause [the] [(current | running)] game [on [the] recalbox]"
           
 lists:
   game:
