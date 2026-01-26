@@ -1,21 +1,25 @@
 from homeassistant.helpers import intent
+from homeassistant.core import HomeAssistant
 import unicodedata
 import re
-import homeassistant.helpers.config_validation as cv
 from .const import DOMAIN
 import logging
 
 _LOGGER = logging.getLogger(__name__)
 
-async def async_setup_intents(hass):
+def setup_intents(hass):
     """Enregistre les handlers d'intentions seulement s'ils n'existent pas."""
+
+    if "intents_registered" in hass.data[DOMAIN]:
+        _LOGGER.debug("The intents are already registered. Skip re-register.")
+        return
 
     # Liste des intentions de votre intégration
     intents_to_register = [
         RecalboxLaunchHandler(),
         RecalboxStatusHandler(),
-        RecalboxActionHandler("RecalboxStopGame", 55355, "QUIT", "intent_response.quit_game_requested"),
-        RecalboxActionHandler("RecalboxPauseGame", 55355, "PAUSE_TOGGLE", "intent_response.pause_game_requested"),
+        RecalboxQuitGameHandler(),
+        RecalboxPauseGameHandler(),
         RecalboxScreenshotHandler()
     ]
 
@@ -23,35 +27,50 @@ async def async_setup_intents(hass):
         # On vérifie si l'intent_type est déjà enregistré
         if handler.intent_type not in intent.async_get(hass):
             intent.async_register(hass, handler)
+            _LOGGER.info(f"Registered {handler.intent_type} handler")
+
+    hass.data[DOMAIN]["intents_registered"] = True
 
 
-class RecalboxActionHandler(intent.IntentHandler):
-    def __init__(self, intent_type, port, command, responseKey):
-        self.intent_type = intent_type
-        self._port = port
-        self._command = command
-        self._responseKey = responseKey
+#class RecalboxOtherUDPActionHandler(intent.IntentHandler):
+#    def __init__(self, intent_type, port, command, responseKey):
+#        self.intent_type = intent_type
+#        self._port = port
+#        self._command = command
+#        self._responseKey = responseKey
+#
+#    async def async_handle(self, intent_obj):
+#        instances = intent_obj.hass.data[DOMAIN].get("instances", {})
+#        entry_id = list(instances.keys())[0]
+#        api = instances[entry_id]["api"]
+#        await api.send_udp_command(self._port, self._command)
+#        translator = intent_obj.hass.data[DOMAIN]["translator"]
+#
+#        response = intent_obj.create_response()
+#        response.async_set_speech(translator.translate(self._responseKey, lang=intent_obj.language))
+#        return response
 
-    async def async_handle(self, intent_obj):
-        instances = intent_obj.hass.data[DOMAIN].get("instances", {})
-        entry_id = list(instances.keys())[0]
-        api = instances[entry_id]["api"]
-        await api.send_udp_command(self._port, self._command)
-        translator = intent_obj.hass.data[DOMAIN]["translator"]
 
-        response = intent_obj.create_response()
-        response.async_set_speech(translator.translate(self._responseKey, lang=intent_obj.language))
-        return response
+# Va chercher la Recalbox par défaut.
+# Pour le moment on ne supporte qu'une seule recalbox via Assist -> on prend la première
+# Plus tard, on ira chercher celle désignée en vocal/text
+def find_recalbox_entity(hass: HomeAssistant):
+    instances = hass.data[DOMAIN].get("instances", {})
+    entry_id = list(instances.keys())[0]
+    recalbox = instances[entry_id].get("sensor_entity")
+    return recalbox
+
+def get_translator(hass: HomeAssistant):
+    return hass.data[DOMAIN]["translator"]
+
 
 class RecalboxScreenshotHandler(intent.IntentHandler):
     intent_type = "RecalboxCreateScreenshot"
 
     async def async_handle(self, intent_obj):
         hass = intent_obj.hass
-        instances = hass.data[DOMAIN].get("instances", {})
-        entry_id = list(instances.keys())[0]
-        recalbox = instances[entry_id].get("sensor_entity")
-        translator = hass.data[DOMAIN]["translator"]
+        recalbox = find_recalbox_entity(hass)
+        translator = get_translator(hass)
 
         if await recalbox.request_screenshot():
             text = translator.translate("intent_response.screenshot_success", lang=intent_obj.language)
@@ -62,17 +81,54 @@ class RecalboxScreenshotHandler(intent.IntentHandler):
         response.async_set_speech(text)
         return response
 
+
+
+class RecalboxQuitGameHandler(intent.IntentHandler):
+    intent_type = "RecalboxStopGame"
+
+    async def async_handle(self, intent_obj):
+        hass = intent_obj.hass
+        recalbox = find_recalbox_entity(hass)
+        translator = get_translator(hass)
+
+        if await recalbox.request_quit_current_game():
+            text = translator.translate("intent_response.quit_game_requested", lang=intent_obj.language)
+        else:
+            text = translator.translate("intent_response.quit_game_failed", lang=intent_obj.language)
+
+        response = intent_obj.create_response()
+        response.async_set_speech(text)
+        return response
+
+
+
+class RecalboxPauseGameHandler(intent.IntentHandler):
+    intent_type = "RecalboxPauseGame"
+
+    async def async_handle(self, intent_obj):
+        hass = intent_obj.hass
+        recalbox = find_recalbox_entity(hass)
+        translator = get_translator(hass)
+
+        if await recalbox.request_pause_game():
+            text = translator.translate("intent_response.pause_game_requested", lang=intent_obj.language)
+        else:
+            text = translator.translate("intent_response.pause_game_failed", lang=intent_obj.language)
+
+        response = intent_obj.create_response()
+        response.async_set_speech(text)
+        return response
+
+
+
 class RecalboxStatusHandler(intent.IntentHandler):
     intent_type = "RecalboxGameStatus"
 
     async def async_handle(self, intent_obj):
         # On va lire l'état de l'entité binary_sensor pour répondre
         hass = intent_obj.hass
-        instances = hass.data[DOMAIN].get("instances", {})
-        entry_id = list(instances.keys())[0]
-        recalboxEntity = instances[entry_id].get("sensor_entity")
-        recalbox = hass.states.get(recalboxEntity.entity_id)
-        translator = hass.data[DOMAIN]["translator"]
+        recalbox = find_recalbox_entity(hass)
+        translator = get_translator(hass)
 
         if not recalbox:
             text = translator.translate("intent_response.recalbox_not_found", lang=intent_obj.language)
@@ -101,9 +157,7 @@ class RecalboxLaunchHandler(intent.IntentHandler):
 
     async def async_handle(self, intent_obj):
         hass = intent_obj.hass
-        instances = hass.data[DOMAIN].get("instances", {})
-        entry_id = list(instances.keys())[0]
-        recalbox = instances[entry_id].get("sensor_entity")
+        recalbox = find_recalbox_entity(hass)
 
         # 1. Récupérer les slots (variables) de la phrase
         slots = intent_obj.slots

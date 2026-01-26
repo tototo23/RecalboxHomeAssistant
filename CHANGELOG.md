@@ -9,6 +9,8 @@
 - In the dashboard card, remove the interactive switch, to a simple power state icon
 - Add an exception when trying to turn on Recalbox from HA (only turn off is supported)
 - Externalize the custom_sentences installer to be an sync job
+- Externalize Recalbox services installation
+- Improve code and logs on assist sentences and intents registration
 
 
 

@@ -3,6 +3,7 @@ import shutil
 import logging
 import hashlib
 from homeassistant.core import HomeAssistant
+from .const import DOMAIN
 
 # by Aurélien Tomassini - tototo23
 # Tools : installer les custom_sentences
@@ -27,10 +28,10 @@ def get_file_hash(filename):
         return None
 
 
-def install_sentences(hass: HomeAssistant, domain: str) -> bool :
+def install_sentences(hass: HomeAssistant) -> bool :
     """Copie récursivement les sentences du composant vers le dossier système de HA."""
     # Chemin source : /config/custom_components/recalbox/sentences
-    source_root = hass.config.path("custom_components", domain, "custom_sentences")
+    source_root = hass.config.path("custom_components", DOMAIN, "custom_sentences")
     # Chemin destination : /config/custom_sentences
     dest_root = hass.config.path("custom_sentences")
     changes_made = False
@@ -71,6 +72,8 @@ def install_sentences(hass: HomeAssistant, domain: str) -> bool :
                                 _LOGGER.error("Failed to copy file to %s: %s", dest_file, e)
                         else:
                             _LOGGER.debug("Hashes are equals, no need to copy again this file.")
+        if not changes_made:
+            _LOGGER.info("Pas de mise à jour nécessaire des phrases Assist")
         return changes_made
     except Exception as e:
         _LOGGER.error("Erreur lors de l'installation des phrases Assist : %s", e)
