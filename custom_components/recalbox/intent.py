@@ -43,6 +43,10 @@ def find_recalbox_entity(hass: HomeAssistant, entity_id=None):
     recalbox = instances[entry_id].get("sensor_entity")
     return recalbox
 
+def find_recalbox_states(hass: HomeAssistant, entity_id=None):
+    recalboxEntity: find_recalbox_entity(hass, entity_id=entity_id)
+    return hass.states.get(recalboxEntity.entity_id)
+
 def get_translator(hass: HomeAssistant):
     return hass.data[DOMAIN]["translator"]
 
@@ -134,7 +138,7 @@ class RecalboxStatusHandler(intent.IntentHandler):
     async def async_handle(self, intent_obj):
         # On va lire l'état de l'entité binary_sensor pour répondre
         hass = intent_obj.hass
-        recalbox = find_recalbox_entity(hass)
+        recalbox = find_recalbox_states(hass)
         translator = get_translator(hass)
 
         if not recalbox:
