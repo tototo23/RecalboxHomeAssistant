@@ -73,7 +73,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     return True
 
 
-async def findRecalboxEntity(hass: HomeAssistant, entity_id: str):
+def findRecalboxEntity(hass: HomeAssistant, entity_id: str):
     for instance in hass.data[DOMAIN]["instances"].values():
         entity = instance.get("sensor_entity")
         if entity and entity.entity_id == entity_id:
