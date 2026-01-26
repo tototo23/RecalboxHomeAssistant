@@ -11,6 +11,8 @@
   then we consider it's offline. If there is at least one ping OK during the
   the last 2 minutes, then we use the status based on MQTT messages.
 - Improve MQTT logs
+- Reset the games attributes when the Recalbox turns offline,
+  to avoid displaying old data when it restarts
 
 
 ## v1.2.1 - 26/01/2026

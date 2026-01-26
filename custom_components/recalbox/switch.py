@@ -61,6 +61,7 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
     def is_on(self) -> bool:
         """L'entité est ON si MQTT dit ON ET que le dernier ping a réussi."""
         if not self.coordinator.data:
+            self.reset_game_attributes()
             return False
         return self._attr_is_on
 
@@ -113,6 +114,7 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
     async def _force_status_off(self):
         _LOGGER.debug("Forcing Recalbox status OFF (sans attendre MQTT)")
         self._attr_is_on = False
+        self.reset_game_attributes()
         self.async_write_ha_state()
 
 
@@ -221,6 +223,16 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
             )
 
 
+    def reset_game_attributes(self):
+        self.game = "-"
+        self.console = "-"
+        self.genre = "-"
+        self.genreId = "-"
+        self.rom = "-"
+        self.imageUrl = "-"
+        _LOGGER.debug("Recalbox game attributes cleaned")
+        self.async_write_ha_state()
+
     ##########################
     #       Ecoute MQTT      #
     ##########################
@@ -242,6 +254,8 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
             if topic == "recalbox/notifications/status":
                 _LOGGER.debug(f"MQTT status message received ! Updating recalbox status to : {payload}")
                 self._attr_is_on = (payload == "ON")
+                if not self._attr_is_on:
+                    self.reset_game_attributes()
 
             # 2. Gestion des infos du Jeu (JSON)
             elif topic == "recalbox/notifications/game":

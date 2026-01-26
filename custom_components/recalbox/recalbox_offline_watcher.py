@@ -22,7 +22,7 @@ async def prepare_ping_coordinator(hass, api:RecalboxAPI) -> DataUpdateCoordinat
     # On garde un historique des 3 derniers résultats de Ping.
     # Si on a un seul ping qui échoue, ça évite de mettre la recalbox offline pour rien.
     # Avec un ping toutes les 30sec, on la passe en offline après 2 minutes comme ça.
-    history = deque([True], maxlen=maxHistoryLength)
+    history = deque([], maxlen=maxHistoryLength)
     # 1. On définit le coordinateur pour le "Ping"
     async def async_update_data():
         """Vérifie si la Recalbox répond aux ping."""
