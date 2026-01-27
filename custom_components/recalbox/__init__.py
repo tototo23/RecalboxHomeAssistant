@@ -34,10 +34,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data[DOMAIN]["instances"][entry.entry_id] = {
         "api": RecalboxAPI(
             host,
-            api_port_os=config.get("api_port_os"),
-            api_port_emulstation=config.get("api_port_emulstation"),
-            udp_recalbox=config.get("udp_recalbox"),
-            udp_emulstation=config.get("udp_emulstation")
+            api_port_os=config.get("api_port_os") or 80,
+            api_port_emulstation=config.get("api_port_emulstation") or 81,
+            udp_recalbox=config.get("udp_recalbox") or 1337,
+            udp_emulstation=config.get("udp_emulstation") or 55355
         )
     }
 
