@@ -3,6 +3,12 @@
 > By Aurélien Tomassini, 2026.
 
 
+## v1.2.5 - ...
+
+
+- ...
+
+
 ## v1.2.4 - 28/01/2026
 
 > This version allows you to defined custom host + ports for Recalbox,
