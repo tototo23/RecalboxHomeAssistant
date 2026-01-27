@@ -37,8 +37,6 @@ class RecalboxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
 
 class RecalboxOptionsFlowHandler(config_entries.OptionsFlow):
-    def __init__(self, config_entry):
-        self.config_entry = config_entry
 
     async def async_step_init(self, user_input=None):
         if user_input is not None:
@@ -50,7 +48,7 @@ class RecalboxOptionsFlowHandler(config_entries.OptionsFlow):
         return self.async_show_form(
             step_id="init",
             data_schema=vol.Schema({
-                vol.Required("host", default=current_config.get("host")): str,
+                vol.Required("host", default=current_config.get("host", "recalbox.local")): str,
                 vol.Required("api_port_os", default=current_config.get("api_port_os", 80)): int,
                 vol.Required("api_port_emulstation", default=current_config.get("api_port_emulstation", 81)): int,
                 vol.Required("udp_recalbox", default=current_config.get("udp_recalbox", 1337)): int,

@@ -26,7 +26,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Fusionner data et options pour avoir les valeurs à jour
     config = {**entry.data, **entry.options}
     host = config.get("host")
-    hass.data.setdefault(DOMAIN, {"instances": {}, "global": {}})
 
     # Ajout du service de traductions : accessible partout (genre de singleton)
     hass.data[DOMAIN]["translator"] = RecalboxTranslator(hass, DOMAIN)
@@ -55,10 +54,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     _LOGGER.debug(f"Entry {entry.entry_id} setup complete")
     return True
 
-
-async def update_listener(hass: HomeAssistant, entry: ConfigEntry):
-    """Met à jour l'entrée si les options changent."""
-    await hass.config_entries.async_reload(entry.entry_id)
 
 
 async def async_register_frontend(hass: HomeAssistant) -> None:
@@ -109,6 +104,10 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Suppression de l'intégration."""
     return await hass.config_entries.async_unload_platforms(entry, ["binary_sensor"])
 
+
+async def update_listener(hass: HomeAssistant, entry: ConfigEntry):
+    """Met à jour l'entrée si les options changent."""
+    await hass.config_entries.async_reload(entry.entry_id)
 
 
 
