@@ -69,11 +69,11 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
         return {
             "identifiers": {(DOMAIN, self._config_entry.entry_id)},
             "name": f"Recalbox ({self._ip})",
-            "manufacturer": "Aurélien Tomassini for Recalbox",
-            "model": "Recalbox OS Integration",
+            "manufacturer": "Recalbox",
+            "model": f"Recalbox OS, at {self._ip}",
             "configuration_url": f"http://{self._ip}",
             "sw_version": self._attr_extra_state_attributes.get("recalboxVersion", "-"),
-            "hw_version": self._attr_extra_state_attributes.get("hardware", "-"),
+            "hw_version": self._attr_extra_state_attributes.get("hardware", "-")
         }
 
     @property
@@ -82,6 +82,7 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
         global_data = self.hass.data.get(DOMAIN, {}).get("global", {})
         return {
             **self._attr_extra_state_attributes, # Les persistants (version, hw)
+            "ip_address": self._ip,
             "game": self.game,
             "console": self.console,
             "genre": self.genre,

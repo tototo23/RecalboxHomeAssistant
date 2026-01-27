@@ -5,7 +5,10 @@
 
 ## v1.2.4 - ...
 
-- 
+- Add IP address of the Recalbox as an attribute. 
+  So it will be available to display, or to use in scripts / automations.
+- Improve device infos box, showing IP here also
+
 
 
 ## v1.2.3 - 26/01/2026
