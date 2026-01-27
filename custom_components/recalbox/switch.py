@@ -142,8 +142,8 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
 
     async def request_screenshot(self) -> bool :
         _LOGGER.debug("Screenshot UDP, puis API si échec")
-        port_api = self._config_entry.options.get("api_port_emulstation", 81)
-        port_udp = self._config_entry.options.get("udp_emulstation", 55355)
+        port_api = self._api.api_port_emulstation
+        port_udp = self._api.udp_emulstation
         # 1. Test UDP
         success = await self._api.send_udp_command(port_udp, "SCREENSHOT")
         # 2. Fallback API
@@ -157,13 +157,13 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
 
     async def request_quit_current_game(self) -> bool :
         _LOGGER.debug("Quit current game via UDP")
-        port_udp = self._config_entry.options.get("udp_emulstation", 55355)
+        port_udp = self._api.udp_emulstation
         return await self._api.send_udp_command(port_udp, "QUIT")
 
 
     async def request_pause_game(self) -> bool :
         _LOGGER.debug("(Un)Pause current game via UDP")
-        port_udp = self._config_entry.options.get("udp_emulstation", 55355)
+        port_udp = self._api.udp_emulstation
         return await self._api.send_udp_command(port_udp, "PAUSE_TOGGLE")
 
 
@@ -171,8 +171,8 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
     async def search_and_launch_game_by_name(self, console, game_query, lang=None) -> str :
         _LOGGER.debug(f"Try to launch game {game_query} on system {console}")
         translator:RecalboxTranslator = self.hass.data[DOMAIN]["translator"]
-        port_api = self._config_entry.options.get("api_port_emulstation", 81)
-        port_udp = self._config_entry.options.get("udp_recalbox", 1337)
+        port_api = self._api.api_port_emulstation
+        port_udp = self._api.udp_recalbox
         # Récupérer la liste des roms via l'API (HTTP GET)
         try:
             roms = await self._api.get_roms(console, port_api)
