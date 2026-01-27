@@ -52,7 +52,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     install_services(hass)
 
     # Pour raffraichir les entoités si ma config change
-    entry.async_on_unload(entry.add_to_config_entry_update_listener(update_listener))
+    entry.async_on_unload(entry.add_update_listener(update_listener))
 
     _LOGGER.debug(f"Entry {entry.entry_id} setup complete")
     return True
