@@ -47,6 +47,11 @@ class RecalboxCard extends HTMLElement {
     const lang = (hass.language || 'en').split('-')[0];
     const i18n = TRANSLATIONS[lang] || TRANSLATIONS['en'];
 
+    const showTurnOffButton = this.config.showTurnOffButton ?? true;
+    const showRebootButton = this.config.showRebootButton ?? true;
+    const showScreenshotButton = this.config.showScreenshotButton ?? true;
+    const showQuitGameButton = this.config.showQuitGameButton ?? true;
+
     if (!state) {
       this.innerHTML = `<ha-card><div style="padding:16px; color:red;">Entité non trouvée : ${entityId}</div></ha-card>`;
       return;
@@ -115,7 +120,7 @@ class RecalboxCard extends HTMLElement {
       <div class="recalbox-card-content">
         <div class="info-row">
           <ha-icon icon="mdi:gamepad-variant-outline"></ha-icon>
-          <div class="info-text"><div>${recalboxName}</div><div class="info-value">${i18n.subtitle}</div></div>
+          <div class="info-text"><div>${recalboxName}</div><div class="info-value">${this.config.subtitle || i18n.subtitle}</div></div>
           <ha-icon
             icon="mdi:power"
             style="color: ${isOn ? 'var(--state-icon-color)' : 'var(--state-unavailable-color)'}; margin: 0;">
@@ -167,10 +172,10 @@ class RecalboxCard extends HTMLElement {
     if (isOn) {
       this.actions.style.display = "flex";
       this.actions.innerHTML = `
-        <div class="action-button" id="btn-power-off"><ha-icon icon="mdi:power"></ha-icon>${i18n.buttons.shutdown}</div>
-        <div class="action-button" id="btn-reboot"><ha-icon icon="mdi:restart"></ha-icon>${i18n.buttons.reboot}</div>
-        <div class="action-button" id="btn-snap" ` + (isAGameRunning ? '' : 'style="display:none"')+ `><ha-icon icon="mdi:camera"></ha-icon>${i18n.buttons.screenshot}</div>
-        <div class="action-button" id="btn-stop" ` + (isAGameRunning ? '' : 'style="display:none"')+ `><ha-icon icon="mdi:location-exit"></ha-icon>${i18n.buttons.stop}</div>
+        <div class="action-button" id="btn-power-off" ` + (showTurnOffButton ? '' : 'style="display:none"')+ `><ha-icon icon="mdi:power"></ha-icon>${i18n.buttons.shutdown}</div>
+        <div class="action-button" id="btn-reboot" ` + (showRebootButton ? '' : 'style="display:none"')+ `><ha-icon icon="mdi:restart"></ha-icon>${i18n.buttons.reboot}</div>
+        <div class="action-button" id="btn-snap" ` + ((showScreenshotButton && isAGameRunning) ? '' : 'style="display:none"')+ `><ha-icon icon="mdi:camera"></ha-icon>${i18n.buttons.screenshot}</div>
+        <div class="action-button" id="btn-stop" ` + ((showQuitGameButton && isAGameRunning) ? '' : 'style="display:none"')+ `><ha-icon icon="mdi:location-exit"></ha-icon>${i18n.buttons.stop}</div>
       `;
       this.actions.querySelector('#btn-power-off').onclick = () => hass.callService('recalbox', 'shutdown', { entity_id: entityId });
       this.actions.querySelector('#btn-reboot').onclick = () => hass.callService('recalbox', 'reboot', { entity_id: entityId });
@@ -200,8 +205,20 @@ class RecalboxCard extends HTMLElement {
 
 
   setConfig(config) {
-    if (!config.entity) throw new Error("Entité manquante");
+    if (!config.entity) throw new Error("Missing entity in card yaml !");
     this.config = config;
+  }
+
+  static getStubConfig() {
+    return {
+      entity: "",
+      title: "Recalbox",
+      subtitle: "",
+      showTurnOffButton: true,
+      showRebootButton: true,
+      showScreenshotButton: true,
+      showQuitGameButton: true,
+    };
   }
 
   getCardSize() { return 6; }

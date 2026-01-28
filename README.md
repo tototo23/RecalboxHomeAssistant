@@ -155,6 +155,8 @@ Fill the yaml :
 ```yaml
 type: custom:recalbox-card
 entity: switch.recalbox_recalbox_local
+# Optionnel : si vous voulez changer le titre de la carte
+title: Recalbox
 ```
 And you will get this (in French or English, depending on your user language)
 

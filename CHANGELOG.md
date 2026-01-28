@@ -6,7 +6,8 @@
 ## v1.2.7 - ...
 
 
-- ...
+- When adding Recalbox card to dashboard, pre-fill the yaml required structure (type, entity, title)
+- Add Recalbox Card options to display or not buttons
 
 
 ## v1.2.6 - 28/01/2026
