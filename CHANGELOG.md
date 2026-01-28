@@ -8,6 +8,7 @@
 
 - Rename `api_port_webmanager` configuration attribute
 - Use `api_port_webmanager` in the web manager link in dashboard Recalbox Card
+- Fix device `configuration_url`
 
 
 ## v1.2.4 - 28/01/2026

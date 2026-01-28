@@ -71,7 +71,7 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
             "name": f"Recalbox ({self._api.host})",
             "manufacturer": "Recalbox",
             "model": f"Recalbox OS, at {self._api.host}",
-            "configuration_url": f"http://{self._api.host}",
+            "configuration_url": f"http://{self._api.host}:{self._api.api_port_webmanager}",
             "sw_version": self._attr_extra_state_attributes.get("recalboxVersion", "-"),
             "hw_version": self._attr_extra_state_attributes.get("hardware", "-")
         }
