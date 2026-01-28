@@ -3,7 +3,7 @@
 > By Aurélien Tomassini, 2026.
 
 
-## v1.2.7 - ...
+## v1.2.8 - 28/01/2026
 
 
 - Rename `udp_emulstation` to `udp_retroarch` in sources and translations
