@@ -31,6 +31,15 @@ intents:
           - "(mets en pause | reprends) le jeu (actuel | en cours) [sur [la] recalbox]"
           - "(arrête la pause | enlève la pause) [(du | sur le) jeu] (actuel | en cours) [sur [la] recalbox]"
           - "mets le jeu en pause [sur [la] recalbox]"
+  RecalboxSaveState:
+    data:
+      - sentences:
+          - "enregistre (le | mon) jeu (actuel | en cours) [sur [la] recalbox]"
+          - "enregistre ma partie (actuelle | en cours) [sur [la] recalbox]"
+  RecalboxLoadState:
+    data:
+      - sentences:
+          - "(charge | recharge) (ma | la) [dernière] sauvegarde [du jeu] [sur [la] recalbox]"
 
 lists:
   game:
