@@ -52,7 +52,7 @@ class RecalboxCard extends HTMLElement {
     const entityId = this.config.entity;
     const state = hass.states[entityId];
 
-    const lang = (this.config.lang || hass.language || 'en').split('-')[0];
+    const lang = (this.config.lang || hass.language || 'en').split('-')[0].toLowerCase();
     const i18n = TRANSLATIONS[lang] || TRANSLATIONS['en'];
 
     const showGameGenre = this.config.showGameGenre ?? true;
