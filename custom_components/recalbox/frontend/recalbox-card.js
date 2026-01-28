@@ -186,7 +186,6 @@ class RecalboxCard extends HTMLElement {
     const recalboxVersion = state.attributes.recalboxVersion || "x.x";
     const hardware = state.attributes.hardware;
     const host = state.attributes.ip_address;
-    // const api_port_webmanager = state.attributes.api_port_webmanager;
 
     this.footer.innerHTML = `
       <div>

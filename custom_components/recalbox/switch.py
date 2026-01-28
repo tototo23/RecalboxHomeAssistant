@@ -83,7 +83,6 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
         return {
             **self._attr_extra_state_attributes, # Les persistants (version, hw)
             "ip_address": self._api.host,
-            "api_port_webmanager": self._api.api_port_webmanager,
             "game": self.game,
             "console": self.console,
             "genre": self.genre,
@@ -143,7 +142,7 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
 
     async def request_screenshot(self) -> bool :
         _LOGGER.debug("Screenshot UDP, puis API si échec")
-        port_api = self._api.api_port_webmanager
+        port_api = self._api.api_port_gamesmanager
         port_udp = self._api.udp_emulstation
         # 1. Test UDP
         success = await self._api.send_udp_command(port_udp, "SCREENSHOT")
@@ -172,7 +171,7 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
     async def search_and_launch_game_by_name(self, console, game_query, lang=None) -> str :
         _LOGGER.debug(f"Try to launch game {game_query} on system {console}")
         translator:RecalboxTranslator = self.hass.data[DOMAIN]["translator"]
-        port_api = self._api.api_port_webmanager
+        port_api = self._api.api_port_gamesmanager
         port_udp = self._api.udp_recalbox
         # Récupérer la liste des roms via l'API (HTTP GET)
         try:

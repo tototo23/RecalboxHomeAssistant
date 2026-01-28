@@ -1,0 +1,30 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configurer nouvelle Recalbox",
+        "data": {
+          "host": "Adresse IP ou nom d'hôte",
+          "api_port_os": "Port API Système (arrêt, redémarrage)",
+          "api_port_gamesmanager": "Port API Jeux (liste de roms, captures)",
+          "udp_recalbox": "Port UDP Recalbox",
+          "udp_emulstation": "Port UDP EmulationStation"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "user": {
+        "title": "Modifier les paramètres de la Recalbox",
+        "data": {
+          "host": "Adresse IP ou nom d'hôte",
+          "api_port_os": "Port API Système (arrêt, redémarrage)",
+          "api_port_gamesmanager": "Port API Jeux (liste de roms, captures)",
+          "udp_recalbox": "Port UDP Recalbox",
+          "udp_emulstation": "Port UDP EmulationStation"
+        }
+      }
+    }
+  }
+}

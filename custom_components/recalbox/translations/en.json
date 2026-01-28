@@ -1,0 +1,30 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure new Recalbox",
+        "data": {
+          "host": "IP Address or Hostname",
+          "api_port_os": "Web API Port for OS (shutdown, reboot)",
+          "api_port_gamesmanager": "Web API Port for games (list roms, screenshot)",
+          "udp_recalbox": "UDP Port for Recalbox",
+          "udp_emulstation": "UDP Port for EmulationStation"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Reconfigure Recalbox",
+        "data": {
+          "host": "IP Address or Hostname",
+          "api_port_os": "Web API Port for OS (shutdown, reboot)",
+          "api_port_gamesmanager": "Web API Port for games (list roms, screenshot)",
+          "udp_recalbox": "UDP Port for Recalbox",
+          "udp_emulstation": "UDP Port for EmulationStation"
+        }
+      }
+    }
+  }
+}

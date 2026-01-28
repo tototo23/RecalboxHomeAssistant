@@ -6,7 +6,10 @@
 ## v1.2.6 - ...
 
 
-- ...
+- Add translated labels for creation/modification of Recalbox Config
+- Move ports configuration to an advanced section
+- Rename API ports fields to be more convenient (entities impacted)
+- Clean Recalbox entity attributes
 
 
 ## v1.2.5 - 28/01/2026
