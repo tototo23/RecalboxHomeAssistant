@@ -1,3 +1,11 @@
+import "https://unpkg.com/wired-card@0.8.1/wired-card.js?module";
+import "https://unpkg.com/wired-toggle@0.8.0/wired-toggle.js?module";
+import {
+  LitElement,
+  html,
+  css,
+} from "https://unpkg.com/lit-element@2.0.1/lit-element.js?module";
+
 // Traductions
 const TRANSLATIONS = {
   "fr": {
@@ -45,6 +53,11 @@ const TRANSLATIONS = {
     }
   }
 };
+
+
+
+// ------------ VISUEL DE MA CARTE RECALBOX ------------------
+
 
 class RecalboxCard extends HTMLElement {
 
@@ -238,6 +251,10 @@ class RecalboxCard extends HTMLElement {
     if (!config.entity) throw new Error("Missing entity in card yaml !");
     this.config = config;
   }
+  
+  static getConfigElement() {
+    return document.createElement("recalbox-card-editor");
+  }
 
   static getStubConfig() {
     return {
@@ -260,6 +277,91 @@ class RecalboxCard extends HTMLElement {
   getCardSize() { return 6; }
 }
 
+
+
+
+
+
+
+
+// ------------ EDITEUR DE MA CARTE RECALBOX ------------------
+// Pour afficher un éditeur inteactif plutot que du yaml pur
+// https://developers.home-assistant.io/docs/frontend/custom-ui/custom-card/
+
+class RecalboxCardEditor extends LitElement {
+  setConfig(config) {
+    this._config = config;
+  }
+
+  configChanged(newConfig) {
+    const event = new Event("config-changed", {
+      bubbles: true,
+      composed: true,
+    });
+    event.detail = { config: newConfig };
+    this.dispatchEvent(event);
+  }
+  
+  // Le schéma définit les champs de l'interface visuelle
+  static _getSchema() {
+    return [
+      { name: "title", selector: { text: {} } },
+      { name: "entity", required: true, selector: { entity: { domain: "switch" } } },
+      { name: "subtitle", selector: { text: {} } },
+      {
+        type: "grid",
+        name: "",
+        schema: [
+          { name: "showGameGenre", selector: { boolean: {} } },
+          { name: "showRomPath", selector: { boolean: {} } },
+          { name: "showRestartRequiredSuggestion", selector: { boolean: {} } },
+        ],
+      },
+      {
+        name: "Actions",
+        type: "expandable",
+        schema: [
+            { name: "showTurnOffButton", selector: { boolean: {} } },
+            { name: "showRebootButton", selector: { boolean: {} } },
+            { name: "showScreenshotButton", selector: { boolean: {} } },
+            { name: "showPauseGameButton", selector: { boolean: {} } },
+            { name: "showLoadGameButton", selector: { boolean: {} } },
+            { name: "showSaveGameButton", selector: { boolean: {} } },
+            { name: "showQuitGameButton", selector: { boolean: {} } },
+        ]
+      }
+    ];
+  }
+  
+  
+  static getConfigForm() {
+    return {
+      schema: _getSchema(),
+      //computeLabel: (schema) => {
+      //  if (schema.name === "icon") return "Special Icon";
+      //  return undefined;
+      //},
+      //computeHelper: (schema) => {
+      //  switch (schema.name) {
+      //    case "entity":
+      //      return "This text describes the function of the entity selector";
+      //    case "unit":
+      //      return "The unit of measurement for this card";
+      //  }
+      //  return undefined;
+      //},
+      //assertConfig: (config) => {
+      //  if (config.other_option) {
+      //    throw new Error("'other_option' is unexpected.");
+      //  }
+      //},
+    };
+  }
+  
+}
+
+
+customElements.define("recalbox-card-editor", RecalboxCardEditor);
 customElements.define('recalbox-card', RecalboxCard);
 
 const isFrench = navigator.language.startsWith('fr');
