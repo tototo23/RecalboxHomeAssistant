@@ -3,6 +3,16 @@
 > By Aurélien Tomassini, 2026.
 
 
+## v1.2.8 - 28/01/2026
+
+
+- Rename `udp_emulstation` to `udp_retroarch` in sources and translations
+- Improve Recalbox card layout (especially current game buttons)
+- Add "lang" hidden fields to change the lang of the Recalbox card (useful in dev)
+- Update documents screenshots
+
+
+
 ## v1.2.7 - 28/01/2026
 
 > This version adds many options to the Recalbox dashboard card,

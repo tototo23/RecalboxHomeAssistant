@@ -40,7 +40,7 @@ intents:
   RecalboxLoadState:
     data:
       - sentences:
-          - "(charge | recharge) (ma | la) [dernière] (sauvegarde | partie) [du jeu] [sur [la] recalbox]"
+          - "(charge | recharge | restaure) (ma | la) [dernière] (sauvegarde | partie) [du jeu] [sur [la] recalbox]"
 
 lists:
   game:
