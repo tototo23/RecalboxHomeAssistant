@@ -3,6 +3,13 @@
 > By Aurélien Tomassini, 2026.
 
 
+## v1.2.7 - ...
+
+
+- ...
+
+
+
 ## v1.2.7 - 28/01/2026
 
 > This version adds many options to the Recalbox dashboard card,
