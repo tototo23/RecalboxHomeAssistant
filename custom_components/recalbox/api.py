@@ -20,7 +20,7 @@ class RecalboxAPI:
         self.udp_emulstation = udp_emulstation
 
     async def send_udp_command(self, port, message):
-        _LOGGER.debug(f"Envoi UDP {port}: {message}")
+        _LOGGER.debug(f"Envoi UDP {port}: \"{message}\"")
         loop = asyncio.get_running_loop()
         transport, protocol = await loop.create_datagram_endpoint(
             lambda: asyncio.DatagramProtocol(),

@@ -52,7 +52,7 @@ class RecalboxCard extends HTMLElement {
     const entityId = this.config.entity;
     const state = hass.states[entityId];
 
-    const lang = (hass.language || 'en').split('-')[0];
+    const lang = (this.config.lang || hass.language || 'en').split('-')[0];
     const i18n = TRANSLATIONS[lang] || TRANSLATIONS['en'];
 
     const showGameGenre = this.config.showGameGenre ?? true;
@@ -91,9 +91,10 @@ class RecalboxCard extends HTMLElement {
             .game-preview img { max-width: 90%; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
             .card-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 12px; border-top: 1px solid var(--divider-color); border-radius: 0 0 12px 12px; }
-            .action-button { display: flex; flex-direction: row; gap: 6px; border-radius: 20px; padding: 2px 12px; align-items: center; cursor: pointer; font-size: 10px; text-transform: uppercase; color: var(--primary-text-color); background-color: var(--chip-background-color); }
-            .action-button ha-icon { color: var(--_leading-icon-color); margin-bottom: 4px; --mdc-icon-size: 18px; }
-            .game-icon-button { padding: 0 2px; }
+            .action-button { display: flex; min-height: 26px; flex-direction: row; gap: 6px; border-radius: 20px; padding: 0 12px; align-items: center; cursor: pointer; font-size: 10px; text-transform: uppercase; color: var(--primary-text-color); background-color: var(--chip-background-color); }
+            .action-button ha-icon { color: var(--_leading-icon-color); --mdc-icon-size: 18px; }
+            .no-gap { gap: 0; }
+            .game-icon-button { padding: 0 4px; min-height: 26px; align-content: center; }
             .game-icon-button:hover { background-color: var(--chip-background-color); }
 
             .card-markdown-footer { padding: 24px 16px 16px; font-size: 0.8em; color: var(--secondary-text-color); line-height: 1.4; }
@@ -194,7 +195,7 @@ class RecalboxCard extends HTMLElement {
         <div class="action-button" id="btn-power-off" ` + ((showTurnOffButton) ? '' : 'style="display:none"')+ `><ha-icon icon="mdi:power"></ha-icon>${i18n.buttons.shutdown}</div>
         <div class="action-button" id="btn-reboot" ` + ((showRebootButton) ? '' : 'style="display:none"')+ `><ha-icon icon="mdi:restart"></ha-icon>${i18n.buttons.reboot}</div>
 
-        <div class="action-button" ` + (isAGameRunning ? '' : 'style="display:none"')+ `>
+        <div class="action-button no-gap" ` + (isAGameRunning ? '' : 'style="display:none"')+ `>
             ${i18n.game} &nbsp;
             <div class="game-icon-button" title="${i18n.buttons.screenshot}" id="btn-snap" ` + ((showScreenshotButton) ? '' : 'style="display:none"')+ `><ha-icon icon="mdi:camera"></ha-icon></div>
             <div class="game-icon-button" title="${i18n.buttons.pause}" id="btn-pause" ` + ((showPauseGameButton) ? '' : 'style="display:none"')+ `><ha-icon icon="mdi:play-pause"></ha-icon></div>
