@@ -30,7 +30,16 @@ intents:
           - "(pause | resume | stop the pause) [the] [(current | running)] game [on [the] recalbox]"
           - "pause [the] [(current | running)] game [on [the] recalbox]"
           - "unpause [the] [(current | running)] game [on [the] recalbox]"
-          
+  RecalboxSaveState:
+    data:
+      - sentences:
+          - "save (the | my) [(current | running)] game [(state)] [on [the] recalbox]"
+  RecalboxLoadState:
+    data:
+      - sentences:
+          - "(load | reload) (my | the) [last] game [(state | saved)] [on [the] recalbox]"
+          - "(load | reload) (my | the) [last] save [on [the] recalbox]"
+
 lists:
   game:
     wildcard: true

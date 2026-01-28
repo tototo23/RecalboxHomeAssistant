@@ -3,6 +3,24 @@
 > By Aurélien Tomassini, 2026.
 
 
+## v1.2.7 - 28/01/2026
+
+> This version adds many options to the Recalbox dashboard card,
+> and new features to load/save your current game state.
+
+**Recalbox Card settings**
+- When adding Recalbox card to dashboard, pre-fill the yaml required structure (type, entity, title)
+- Add Recalbox Card options to display or not each buttons
+- Add Recalbox Card option to display Rom path (false by default)
+- Group current game action buttons in a single box, to avoid having too many buttons
+
+**Save/load game state**
+- Add entity save/load features
+- Expose services to Home Assistant
+- Add new buttons (more condensed now) to access those features from dashboard card
+- Add new Assist intents to access save/load game state
+
+
 ## v1.2.6 - 28/01/2026
 
 

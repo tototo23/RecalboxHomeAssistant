@@ -32,6 +32,15 @@ def install_services(hass: HomeAssistant):
     async def handle_quit_game(call):
         recalbox_entity = findRecalboxEntity(hass, call.data.get("entity_id"))
         if recalbox_entity: await recalbox_entity.request_quit_current_game()
+    async def handle_pause_resume_game(call):
+        recalbox_entity = findRecalboxEntity(hass, call.data.get("entity_id"))
+        if recalbox_entity: await recalbox_entity.request_pause_game()
+    async def handle_save_state(call):
+        recalbox_entity = findRecalboxEntity(hass, call.data.get("entity_id"))
+        if recalbox_entity: await recalbox_entity.request_save_state()
+    async def handle_load_state(call):
+        recalbox_entity = findRecalboxEntity(hass, call.data.get("entity_id"))
+        if recalbox_entity: await recalbox_entity.request_load_state()
     async def handle_launch_game(call):
         recalbox_entity = findRecalboxEntity(hass, call.data.get("entity_id"))
         game = call.data.get("game")
@@ -45,6 +54,9 @@ def install_services(hass: HomeAssistant):
         "reboot": handle_reboot,
         "screenshot": handle_screenshot,
         "quit_game": handle_quit_game,
+        "pause_resume_game": handle_pause_resume_game,
+        "save_state": handle_save_state,
+        "load_state": handle_load_state,
         "launch_game": handle_launch_game,
     }
 
