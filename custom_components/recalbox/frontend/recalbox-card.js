@@ -289,7 +289,7 @@ class RecalboxCard extends HTMLElement {
     const deviceId = state.context && state.context.device_id;
     const recalboxVersion = state.attributes.recalboxVersion || "x.x";
     const hardware = state.attributes.hardware;
-    const host = state.attributes.ip_address;
+    const host = state.attributes.host;
 
     this.footer.innerHTML = `
       <div>

@@ -82,7 +82,8 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
         global_data = self.hass.data.get(DOMAIN, {}).get("global", {})
         return {
             **self._attr_extra_state_attributes, # Les persistants (version, hw)
-            "ip_address": self._api.host,
+            "host": self._api.host,
+            "ip_address": "//TODO",
             "game": self.game,
             "console": self.console,
             "genre": self.genre,
