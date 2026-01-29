@@ -85,7 +85,7 @@ case "$ACTION" in
     ;;
   wakeup|rungame)
     ;;
-  stop)
+  stop|shutdown|reboot)
     STATUS="OFF"
     clear_game
     CONSOLE_JSON="null"

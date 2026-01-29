@@ -15,6 +15,7 @@
   Integration is still compatible with older versions, it reads `imageUrl` is existing in JSON, else it composes itself the URL with `imagePath`.
 - Make Recalbox script "permanent". It is way more optimized, and waits to be connected to network
   to send MQTT messages. As the MQTT listener cannot work yet, this version waits for `/tmp/es_state.inf` file modifications
+- Add `shutdown` and `reboot` events in Recalbox script, to say to Home Assistant that the Recalbox is turning off (was only listing `stop` until that)
 
 
 ## v1.3.0 - 29/01/2026 - Recalbox card visual editor 

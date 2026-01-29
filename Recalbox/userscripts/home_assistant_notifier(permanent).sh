@@ -160,7 +160,7 @@ while true; do
       clear_game
       SYSTEM_NAME="Kodi"; GAME_NAME="Lecteur multimédia"
       ;;
-    stop)
+    stop|shutdown|reboot)
       STATUS="OFF"; clear_game; SYSTEM_NAME="null"
       ;;
     wakeup|rungame)
