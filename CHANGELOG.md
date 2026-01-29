@@ -3,10 +3,14 @@
 > By Aurélien Tomassini, 2026.
 
 
-## v1.2.9 - ...
+## v1.3.0 - 29/01/2026
 
 
-- ...
+- Implements a visual editor for Recalbox Card on dashboard.  
+  Instead of having a yaml file to fill, the default card editor has now a UI to
+  edit the options you want, with live preview.
+- Translations of visual editor in English and French
+  ![](docs/RecalboxCardVisualEditor.png)
 
 
 ## v1.2.8 - 28/01/2026

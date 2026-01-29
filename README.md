@@ -159,17 +159,13 @@ It uses the same services just listed.
 You can add a Recalbox card to your Home Assistant dashboard, in order to display the Recalbox status, game info, picture, etc.  
 It will be refreshed in real time.
 
-Go to your dashboard in edit mode, "+ add card", scroll down to Custom Cards : "Recalbox Card".
-Fill the yaml :
-```yaml
-type: custom:recalbox-card
-entity: switch.recalbox_recalbox_local
-# Optional : if you want to change card title, and Recalbox subtitle
-title: Recalbox
-subtitle: ""
-# Other display options fill be automatically shown in your yaml
-```
-And you will get this (in English or French, depending on your user language)
+Go to your dashboard in edit mode, "+ add card", scroll down to Custom Cards : "Recalbox Card".  
+Since v1.3.0, a UI have been implemented for visual edition of the card options, with live preview :
+![](docs/RecalboxCardVisualEditor.png)
+
+Both visual editor, and the card view, are translated in English and French, depending on your user language.  
+Once configured, you'll get your card with the options you selected.  
+Example : all buttons shown, update alert shown, genre shown, but Rom path hidden :
 
 ![](docs/example.png)
 
