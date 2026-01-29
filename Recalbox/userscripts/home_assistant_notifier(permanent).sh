@@ -81,7 +81,9 @@ send_mqtt() {
 
 
 #----- Script permanent -----
-
+# Voir si le script tourne :      ps auxw | grep "assistant"
+# Lancer le script à la main :    bash -x "/recalbox/share/userscripts/home_assistant_notifier(permanent).sh"
+# générer un événement fake:      mosquitto_pub -h 127.0.0.1 -t "/Recalbox/EmulationStation/Event" -m "start"
 
 echo "Démarrage du démon de notification Home Assistant par MQTT..." >&2
 
