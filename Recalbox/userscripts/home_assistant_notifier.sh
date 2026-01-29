@@ -7,8 +7,8 @@
 # Configuration
 HOME_ASSISTANT_DOMAIN="homeassistant.local"
 
-# Récupérer l'IP via mDNS
-HA_IP=$(avahi-resolve -n $HOME_ASSISTANT_DOMAIN -4 | cut -f2)
+#Adresse IP de Recalbox. Sera récupérée plus bas pour optimiser
+HA_IP=""
 MQTT_USER="recalbox"
 MQTT_PASS="recalpass"
 TOPIC="recalbox/notifications"
@@ -99,8 +99,9 @@ esac
 
 
 
+# Récupérer l'IP via mDNS
+HA_IP=$(avahi-resolve -n $HOME_ASSISTANT_DOMAIN -4 | cut -f2)
 
-  
 # Extraction de la version et du hardware
 RECALBOX_VERSION=$(cat /recalbox/recalbox.version 2>/dev/null || echo "Inconnue")
 HARDWARE_MODEL=$(tr -d '\0' < /proc/device-tree/model 2>/dev/null || echo "Hardware inconnu")
