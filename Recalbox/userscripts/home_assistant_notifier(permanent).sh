@@ -126,7 +126,7 @@ while true; do
   EVENT=$(mosquitto_sub -h "$MQTT_LOCAL_HOST" -p $MQTT_LOCAL_PORT -q 0 -t "$TOPIC_LOCAL" -C 1)
 
   case "$EVENT" in
-    $ALLOWED_KEYS)
+    $ALLOWED_EVENTS)
       echo "Evénement reçu : $EVENT" >&2
       ;;
     *)
