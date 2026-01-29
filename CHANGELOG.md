@@ -9,6 +9,7 @@
 - On first install or updates, if custom sentences have been updated,
   tries to reload Home Assistant Assist sentences without asking for a new restart.  
   Only if fails to reload, it will ask the user to restart.
+- Reorder settings buttons, because save/load were not in the same order that in the card
 
 
 ## v1.3.0 - 29/01/2026

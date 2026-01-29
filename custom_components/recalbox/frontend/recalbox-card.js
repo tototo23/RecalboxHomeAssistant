@@ -11,7 +11,7 @@ const TRANSLATIONS = {
       "shutdown": "Éteindre",
       "reboot": "Redémarrer",
       "screenshot": "Capture",
-      "pause": "Pause",
+      "pause": "Pause/Reprendre",
       "save": "Enregistrer",
       "load": "Restaurer",
       "stop": "Quitter le jeu"
@@ -35,7 +35,7 @@ const TRANSLATIONS = {
         "showTurnOffButton": "Éteindre",
         "showRebootButton": "Redémarrer",
         "showScreenshotButton": "Capture",
-        "showPauseGameButton": "Pause",
+        "showPauseGameButton": "Pause/Reprendre",
         "showLoadGameButton": "Restaurer",
         "showSaveGameButton": "Enregistrer",
         "showQuitGameButton": "Quitter le jeu",
@@ -66,7 +66,7 @@ const TRANSLATIONS = {
       "reboot": "Reboot",
       "screenshot": "Screenshot",
       "stop": "Quit game",
-      "pause": "Pause",
+      "pause": "Pause/Resume",
       "save": "Save State",
       "load": "Load State",
     },
@@ -89,7 +89,7 @@ const TRANSLATIONS = {
         "showTurnOffButton": "Power off",
         "showRebootButton": "Reboot",
         "showScreenshotButton": "Screenshot",
-        "showPauseGameButton": "Pause",
+        "showPauseGameButton": "Pause/Resume",
         "showLoadGameButton": "Load State",
         "showSaveGameButton": "Save State",
         "showQuitGameButton": "Quit game"
@@ -440,8 +440,8 @@ class RecalboxCardEditor extends HTMLElement {
         schema: [
             { name: "showScreenshotButton", selector: { boolean: {} } },
             { name: "showPauseGameButton", selector: { boolean: {} } },
-            { name: "showLoadGameButton", selector: { boolean: {} } },
             { name: "showSaveGameButton", selector: { boolean: {} } },
+            { name: "showLoadGameButton", selector: { boolean: {} } },
             { name: "showQuitGameButton", selector: { boolean: {} } },
         ]
       }
