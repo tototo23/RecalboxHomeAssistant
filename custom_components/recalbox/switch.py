@@ -143,7 +143,7 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
     async def request_screenshot(self) -> bool :
         _LOGGER.debug("Screenshot UDP, puis API si échec")
         port_api = self._api.api_port_gamesmanager
-        port_udp = self._api.udp_emulstation
+        port_udp = self._api.udp_retroarch
         # 1. Test UDP
         success = await self._api.send_udp_command(port_udp, "SCREENSHOT")
         # 2. Fallback API
@@ -157,25 +157,25 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
 
     async def request_quit_current_game(self) -> bool :
         _LOGGER.debug("Quit current game via UDP")
-        port_udp = self._api.udp_emulstation
+        port_udp = self._api.udp_retroarch
         return await self._api.send_udp_command(port_udp, "QUIT")
 
 
     async def request_pause_game(self) -> bool :
         _LOGGER.debug("(Un)Pause current game via UDP")
-        port_udp = self._api.udp_emulstation
+        port_udp = self._api.udp_retroarch
         return await self._api.send_udp_command(port_udp, "PAUSE_TOGGLE")
 
 
     async def request_save_state(self) -> bool :
         _LOGGER.debug("Saving state game via UDP")
-        port_udp = self._api.udp_emulstation
+        port_udp = self._api.udp_retroarch
         return await self._api.send_udp_command(port_udp, "SAVE_STATE")
 
 
     async def request_load_state(self) -> bool :
         _LOGGER.debug("Loading state game via UDP")
-        port_udp = self._api.udp_emulstation
+        port_udp = self._api.udp_retroarch
         return await self._api.send_udp_command(port_udp, "LOAD_STATE")
 
 

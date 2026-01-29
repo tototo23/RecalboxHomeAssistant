@@ -37,7 +37,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             api_port_os=config.get("api_port_os") or 80,
             api_port_gamesmanager=config.get("api_port_gamesmanager") or 81,
             udp_recalbox=config.get("udp_recalbox") or 1337,
-            udp_emulstation=config.get("udp_emulstation") or 55355
+            udp_retroarch=config.get("udp_retroarch") or 55355
         )
     }
 

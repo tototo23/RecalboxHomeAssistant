@@ -8,9 +8,12 @@ This repository allows you to integrate Recalbox in your Home Assistant :
 - In your dashboard :
   - Get status
   - Display current game
+  - Stop current game
+  - Take a screenshot
+  - Pause/resume game
+  - Save/Load game state
   - Turn off
   - Reboot
-  - Take screenshots
   - etc
 - Trigger any automation you want.  
   For example, change light color according to the game launched, send notifications, etc.
@@ -19,6 +22,8 @@ This repository allows you to integrate Recalbox in your Home Assistant :
   - Ask what is the current game
   - Stop current game
   - Take a screenshot
+  - Pause/resume game
+  - Save/Load game state
   - Turn off Recalbox
   - etc
 
@@ -74,12 +79,12 @@ The scripts reads the needed data for game information, and sends a MQTT message
 Home Assistant can then update its "Recalbox" entity with the current game.
 
 > The attributes read by Home Assistant are, through this JSON :
-> - `game `: name of the running game, user friendly. null if no game launched.
-> - `console `: name of the console, user friendly. null if no game launched, or "Kodi"
-> - `rom `: path to the current rom. null if no game launched.
-> - `genre `: genre of the running game, user friendly. null if no game launched.
-> - `genreId `: genreId of the running game. null if no game launched. Can be useful for automation where you want to set lights colors depending on type of game for example.
-> - `imageUrl `: URL to the image of the current game. null if no game running. The picture exists only if the game has been scrapped.
+> - `game`
+> - `console`
+> - `rom`
+> - `genre`
+> - `genreId`
+> - `imageUrl`
 > - `recalboxVersion` : Version of the Recalbox OS
 > - `hardware` : Device running the Recalbox
 
@@ -133,6 +138,8 @@ It uses the same services just listed.
        You will be asked for Host/IP of your Recalbox (you should let the default "recalbox.local"), and ports can be changed if needed.
        If you can, have your Recalbox ON, and then let the "Test connection" checkbox checked to test host and ports.
        
+       ![](docs/RecalboxSettings.png)
+       
        > A second reboot could be necessary, depending on what's shown on dashboard custom card,
        > to apply the newly installed custom_sentences for Assist.
 
@@ -162,7 +169,7 @@ title: Recalbox
 subtitle: ""
 # Other display options fill be automatically shown in your yaml
 ```
-And you will get this (in French or English, depending on your user language)
+And you will get this (in English or French, depending on your user language)
 
 ![](docs/example.png)
 

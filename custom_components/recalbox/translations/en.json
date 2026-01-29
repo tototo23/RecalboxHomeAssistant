@@ -8,7 +8,7 @@
           "api_port_os": "Web API Port for OS (shutdown, reboot)",
           "api_port_gamesmanager": "Web API Port for games (list roms, screenshot)",
           "udp_recalbox": "UDP Port for Recalbox",
-          "udp_emulstation": "UDP Port for EmulationStation",
+          "udp_retroarch": "UDP Port for RetroArch",
           "test_connection": "Test connection"
         }
       }
@@ -26,7 +26,7 @@
           "api_port_os": "Web API Port for OS (shutdown, reboot)",
           "api_port_gamesmanager": "Web API Port for games (list roms, screenshot)",
           "udp_recalbox": "UDP Port for Recalbox",
-          "udp_emulstation": "UDP Port for EmulationStation"
+          "udp_retroarch": "UDP Port for RetroArch"
         }
       }
     }

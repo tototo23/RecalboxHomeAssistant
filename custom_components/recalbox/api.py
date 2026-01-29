@@ -11,13 +11,13 @@ class RecalboxAPI:
                  api_port_os: int = 80,
                  api_port_gamesmanager: int = 81,
                  udp_recalbox: int = 1337,
-                 udp_emulstation: int = 55355
+                 udp_retroarch: int = 55355
                  ):
         self.host = host
         self.api_port_os = api_port_os # Arrêter, Reboot de Recalbox...
         self.api_port_gamesmanager = api_port_gamesmanager # Lister les roms, demander un screenshot...
         self.udp_recalbox = udp_recalbox # Lancer une ROM
-        self.udp_emulstation = udp_emulstation
+        self.udp_retroarch = udp_retroarch
 
     async def send_udp_command(self, port, message):
         _LOGGER.debug(f"Envoi UDP {port}: \"{message}\"")
@@ -83,7 +83,7 @@ class RecalboxAPI:
         try:
             _LOGGER.info(f"Testing TCP+UDP ports on {self.host}...")
             TCP_PORTS = [self.api_port_os, self.api_port_gamesmanager]
-            UDP_PORTS = [self.udp_recalbox, self.udp_emulstation]
+            UDP_PORTS = [self.udp_recalbox, self.udp_retroarch]
             for port in TCP_PORTS:
                 try:
                     _LOGGER.debug(f"Testing TCP port {port} on {self.host}")

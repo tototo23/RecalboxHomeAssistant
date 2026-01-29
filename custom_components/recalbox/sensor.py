@@ -12,7 +12,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         RecalboxDiagnosticSensor(config_entry, "api_port_os", "Port API OS", "mdi:api", 80),
         RecalboxDiagnosticSensor(config_entry, "api_port_gamesmanager", "Port API Games", "mdi:api", 81),
         RecalboxDiagnosticSensor(config_entry, "udp_recalbox", "Port UDP Recalbox", "mdi:remote", 1337),
-        RecalboxDiagnosticSensor(config_entry, "udp_emulstation", "Port UDP EmulationStation", "mdi:remote", 55355),
+        RecalboxDiagnosticSensor(config_entry, "udp_retroarch", "Port UDP RetroArch", "mdi:remote", 55355),
     ]
     async_add_entities(entities)
 
