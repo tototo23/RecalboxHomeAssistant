@@ -12,6 +12,11 @@ TOPIC="recalbox/notifications"
 # Chemin du fichier d'état Recalbox
 STATE_FILE="/tmp/es_state.inf"
 
+# logs
+LOG_FILE="/recalbox/share/saves/home_assistant_notifier.log"
+exec 2>> "$LOG_FILE" # Redirige les erreurs (stderr) vers le fichier
+exec 1>> "$LOG_FILE" # Optionnel : redirige aussi la sortie standard (stdout)
+
 # MQTT localpour écouter les événements Recalbox
 MQTT_LOCAL_HOST="127.0.0.1"
 TOPIC_LOCAL="/Recalbox/EmulationStation/Event"
@@ -84,6 +89,7 @@ send_mqtt() {
 # Voir si le script tourne :      ps auxw | grep "assistant"
 # Lancer le script à la main :    bash -x "/recalbox/share/userscripts/home_assistant_notifier(permanent).sh"
 # générer un événement fake:      mosquitto_pub -h 127.0.0.1 -t "/Recalbox/EmulationStation/Event" -m "start"
+# voir les logs de cet outil:     tail -f "/recalbox/share/saves/home_assistant_notifier.log"
 
 echo "Démarrage du démon de notification Home Assistant par MQTT..." >&2
 
@@ -92,6 +98,7 @@ while true; do
   # Débloquer avec
   # mosquitto_pub -h 127.0.0.1 -t "/Recalbox/EmulationStation/Event" -m "start"
   # pour déclencher un événement MQTT
+  echo "En attente d'un nouvel événement..." >&2
   EVENT=$(mosquitto_sub -h "$MQTT_LOCAL_HOST" -p 1883 -q 0 -t "$TOPIC_LOCAL" -C 1)
   echo "Evénement reçu : $EVENT" >&2
 
