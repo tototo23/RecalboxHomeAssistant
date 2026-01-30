@@ -52,6 +52,7 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
         self.genre = "-"
         self.genreId = "-"
         self.imageUrl = "-"
+        self.scriptVersion = "-"
 
     #@property
     #def icon(self):
@@ -297,10 +298,12 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
                     # 1. Mise à jour des attributs internes
                     v_sw = data.get("recalboxVersion")
                     v_hw = data.get("hardware")
+                    scriptVersion = data.get("scriptVersion")
 
                     self._attr_extra_state_attributes.update({
                         "hardware": v_hw,
-                        "recalboxVersion": v_sw
+                        "recalboxVersion": v_sw,
+                        "scriptVersion": scriptVersion,
                     })
 
                     _LOGGER.debug('Updating game attributes...')
