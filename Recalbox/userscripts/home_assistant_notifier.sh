@@ -73,7 +73,7 @@ send_mqtt() {
   
   if [ "$3" == "true" ]; then
     mosquitto_pub -h "$HA_IP" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$TOPIC/$sub_topic" -m "$message" -r
-    log "Message MQTT(r) envoyé à $HA_IP, sur $TOPIC/$sub_topic : $message"
+    log "Message MQTT (retain) envoyé à $HA_IP, sur $TOPIC/$sub_topic : $message"
   else
     mosquitto_pub -h "$HA_IP" -u "$MQTT_USER" -P "$MQTT_PASS" -t "$TOPIC/$sub_topic" -m "$message"
     log "Message MQTT envoyé à $HA_IP, sur $TOPIC/$sub_topic : $message"
