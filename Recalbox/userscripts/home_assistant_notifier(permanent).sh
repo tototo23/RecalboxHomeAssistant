@@ -13,10 +13,25 @@ MQTT_PASS="recalpass"
 TOPIC="recalbox/notifications"
 # Chemin du fichier d'état Recalbox
 STATE_FILE="/tmp/es_state.inf"
+LOGS_FOLDER="/recalbox/share/system/logs/home_assistant_integration"
 
 # logs
 LOG_DIR="/recalbox/share/system/logs/home_assistant_integration/$(date '+%Y-%m-%d')"
 mkdir -p "$LOG_DIR"
+LOG_FILE="$LOG_DIR/home_assistant_notifier_permanent_$(date '+%Y-%m-%d_%H%M%S')_$ACTION.log"
+exec > "$LOG_FILE" 2>&1 # Redirige les sorties vers le fichier
+
+
+# logs : 1 dossier par jour
+LOG_DIR="$LOGS_FOLDER/$(date '+%Y-%m-%d')"
+# On crée le dossier de logs du jour, s'il n'existe pas encore
+mkdir -p "$LOG_DIR"
+# On supprime les dossiers de logs des autres jours, pour pas tout garder pour rien :
+# on cherche les dossiers (-type d) dans le répertoire parent,
+# on exclut le dossier parent lui-même (!) et celui du jour (! -path),
+# puis on supprime.
+find "$LOGS_FOLDER/" -mindepth 1 -maxdepth 1 -type d ! -path "$LOG_DIR" -exec rm -rf {} +
+# Et enfin on crée le fichier le logs de cette instance du script
 LOG_FILE="$LOG_DIR/home_assistant_notifier_permanent_$(date '+%Y-%m-%d_%H%M%S')_$ACTION.log"
 exec > "$LOG_FILE" 2>&1 # Redirige les sorties vers le fichier
 

@@ -9,6 +9,7 @@ SCRIPT_VERSION="home_assistant_notifier.sh:v1.3.1"
 # Configuration
 HOME_ASSISTANT_DOMAIN="homeassistant.local"
 HOME_ASSISTANT_IP_CACHE_FILE="/tmp/ha_ip_address.txt"
+LOGS_FOLDER="/recalbox/share/system/logs/home_assistant_integration"
 #Adresse IP de Recalbox. Sera récupérée plus bas pour optimiser
 HA_IP=""
 MQTT_USER="recalbox"
@@ -44,9 +45,16 @@ GAME_GENRE_ID=$(get_val "GenreId")
 GAME_NAME="${GAME_NAME/#[0-9][0-9][0-9] /}"
 
 
-# logs
-LOG_DIR="/recalbox/share/system/logs/home_assistant_integration/$(date '+%Y-%m-%d')"
+# logs : 1 dossier par jour
+LOG_DIR="$LOGS_FOLDER/$(date '+%Y-%m-%d')"
+# On crée le dossier de logs du jour, s'il n'existe pas encore
 mkdir -p "$LOG_DIR"
+# On supprime les dossiers de logs des autres jours, pour pas tout garder pour rien :
+# on cherche les dossiers (-type d) dans le répertoire parent,
+# on exclut le dossier parent lui-même (!) et celui du jour (! -path),
+# puis on supprime.
+find "$LOGS_FOLDER/" -mindepth 1 -maxdepth 1 -type d ! -path "$LOG_DIR" -exec rm -rf {} +
+# Et enfin on crée le fichier le logs de cette instance du script
 LOG_FILE="$LOG_DIR/home_assistant_notifier_$(date '+%Y-%m-%d_%H%M%S')_$ACTION.log"
 exec > "$LOG_FILE" 2>&1 # Redirige les sorties vers le fichier
 

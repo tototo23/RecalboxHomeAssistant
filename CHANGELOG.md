@@ -24,6 +24,7 @@
     - Create a timestamped logs file : `/recalbox/share/system/logs/home_assistant_integration/*`
 - Both scripts now send their version to Home Assistant, in the JSON message, 
   `"scriptVersion": "home_assistant_notifier.sh:v1.3.1"` or `"scriptVersion": "home_assistant_notifier(permanent).sh:v1.3.1"`
+- Auto clean scripts logs
 - Persist `scriptVersion` as Recalbox extra state attribute
 - Added `host` attribute, so the REcalbox card uses the configured host to access webmanager, instead of `ip_adress` that doesn't exist yet
 - Make `ip_adress` attribut as "//TODO", instead of setting as the host
