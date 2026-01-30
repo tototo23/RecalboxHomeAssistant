@@ -16,13 +16,14 @@
 - Split Recalbox script in two versions (only one required) :
   - `Recalbox/userscripts/home_assistant_notifier.sh`:
     - Improve to get Home Assistant IP adress only if the event is useful
+    - Optimization : as soon as the Home Assistant IP is solved, it is saved in cache to make next executions quicker
     - Add `shutdown` and `reboot` events in Recalbox script, to say to Home Assistant that the Recalbox is turning off (was only listing `stop` until that)
   - `Recalbox/userscripts/home_assistant_notifier(permanent).sh` :
     - New version, that is permanent : the script is launched only once, and loops on events.
     - It should be way more optimized, and waits to be connected to network to send MQTT messages.
-    - Create a timestamped logs file : `/recalbox/share/saves/home_assistant_notifier.log`
-- Both scripts now send to Home Assistant, in the JSON message, 
-  `"script": "home_assistant_notifier.sh:v1.3.1"` or `"script": "home_assistant_notifier(permanent).sh:v1.3.1"`
+    - Create a timestamped logs file : `/recalbox/share/system/logs/home_assistant_integration/*`
+- Both scripts now send their version to Home Assistant, in the JSON message, 
+  `"scriptVersion": "home_assistant_notifier.sh:v1.3.1"` or `"scriptVersion": "home_assistant_notifier(permanent).sh:v1.3.1"`
 - Added `host` attribute, so the REcalbox card uses the configured host to access webmanager, instead of `ip_adress` that doesn't exist yet
 - Make `ip_adress` attribut as "//TODO", instead of setting as the host
 

@@ -45,7 +45,9 @@ GAME_NAME="${GAME_NAME/#[0-9][0-9][0-9] /}"
 
 
 # logs
-LOG_FILE="/recalbox/share/saves/home_assistant_notifier_$(date '+%Y-%m-%d_%H%M%S')_$ACTION.log"
+LOG_DIR="/recalbox/share/system/logs/home_assistant_integration/$(date '+%Y-%m-%d')"
+mkdir -p "$LOG_DIR"
+LOG_FILE="$LOG_DIR/home_assistant_notifier_$(date '+%Y-%m-%d_%H%M%S')_$ACTION.log"
 exec > "$LOG_FILE" 2>&1 # Redirige les sorties vers le fichier
 
 # Ecriture dans les logs
@@ -104,7 +106,7 @@ case "$ACTION" in
     CONSOLE_JSON="null"
     ;;
   *)
-    echo "Ignoring command \"$ACTION\" !"
+    # echo "Ignoring command \"$ACTION\" !"
     exit 1
     ;;
 esac

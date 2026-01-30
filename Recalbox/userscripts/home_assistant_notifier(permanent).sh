@@ -15,7 +15,9 @@ TOPIC="recalbox/notifications"
 STATE_FILE="/tmp/es_state.inf"
 
 # logs
-LOG_FILE="/recalbox/share/saves/home_assistant_notifier_$(date '+%Y-%m-%d %H:%M:%S').log"
+LOG_DIR="/recalbox/share/system/logs/home_assistant_integration/$(date '+%Y-%m-%d')"
+mkdir -p "$LOG_DIR"
+LOG_FILE="$LOG_DIR/home_assistant_notifier_permanent_$(date '+%Y-%m-%d_%H%M%S')_$ACTION.log"
 exec > "$LOG_FILE" 2>&1 # Redirige les sorties vers le fichier
 
 # MQTT localpour écouter les événements Recalbox
