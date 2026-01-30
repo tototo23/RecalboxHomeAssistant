@@ -165,7 +165,8 @@ while true; do
   "genreId": $(clean_json_val "$GAME_GENRE_ID"),
   "imagePath": $IMAGE_PATH,
   "recalboxVersion": $(clean_json_val "$RECALBOX_VERSION"),
-  "hardware": $(clean_json_val "$HARDWARE_MODEL")
+  "hardware": $(clean_json_val "$HARDWARE_MODEL"),
+  "scriptVersion": "home_assistant_notifier(permanent).sh:v1.3.1"
 }
 EOF
 )

@@ -125,7 +125,8 @@ gen_game_json() {
   "genreId": $(clean_json_val "$GAME_GENRE_ID"),
   "imagePath": $imagePath,
   "recalboxVersion": $(clean_json_val "$RECALBOX_VERSION"),
-  "hardware": $(clean_json_val "$HARDWARE_MODEL")
+  "hardware": $(clean_json_val "$HARDWARE_MODEL"),
+  "scriptVersion": "home_assistant_notifier.sh:v1.3.1"
 }
 EOF
 }
