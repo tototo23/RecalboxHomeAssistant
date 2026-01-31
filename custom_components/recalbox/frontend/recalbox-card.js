@@ -161,6 +161,7 @@ class RecalboxCard extends HTMLElement {
 
             .card-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 12px; border-top: 1px solid var(--divider-color); border-radius: 0 0 12px 12px; }
             .action-button { display: flex; min-height: 26px; flex-direction: row; gap: 6px; border-radius: 20px; padding: 0 12px; align-items: center; cursor: pointer; font-size: 10px; text-transform: uppercase; color: var(--primary-text-color); background-color: var(--chip-background-color); }
+            /* Couleur spécifique pour le Thème Clair (Light) */ @media (prefers-color-scheme: light) { .action-button { background-color: var(--ha-assist-chip-active-container-color); }}
             .action-button ha-icon { color: var(--_leading-icon-color); --mdc-icon-size: 18px; }
             .no-gap { gap: 0; }
             .game-icon-button { padding: 0 4px; min-height: 26px; align-content: center; }

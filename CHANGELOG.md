@@ -29,6 +29,7 @@
 - Added `host` attribute, so the REcalbox card uses the configured host to access webmanager, instead of `ip_adress` that doesn't exist yet
 - Make `ip_adress` attribut as "//TODO", instead of setting as the host
 - When Home Assistant (re)starts, pings the Recalbox to directly set as ON (without game info) or OFF, instead of waiting for the first ON MQQT message
+- Change Recalbox Card chip color in light theme.
 
 
 ## v1.3.0 - 29/01/2026 - Recalbox card visual editor 
