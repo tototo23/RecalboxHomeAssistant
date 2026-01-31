@@ -82,6 +82,9 @@ clean_json_val() {
 
 # Tentative de récupération de l'IP Home Assistant (seulement si pas encore connue)
 update_ha_ip() {
+  # On récupère l'IP (la première trouvée)
+  IP_LOCALE=$(hostname -I | awk '{print $1}')
+
   if [ -z "$HA_IP" ]; then
     # On vérifie si le réseau est là en tentant une résolution
     HA_IP=$(avahi-resolve -n "$HOME_ASSISTANT_DOMAIN" -4 | cut -f2)
@@ -198,6 +201,7 @@ while true; do
   "genre": $(clean_json_val "$GAME_GENRE"),
   "genreId": $(clean_json_val "$GAME_GENRE_ID"),
   "imagePath": $IMAGE_PATH,
+  "recalboxIpAddress": $(clean_json_val "$IP_LOCALE"),
   "recalboxVersion": $(clean_json_val "$RECALBOX_VERSION"),
   "hardware": $(clean_json_val "$HARDWARE_MODEL"),
   "scriptVersion": "$SCRIPT_VERSION"

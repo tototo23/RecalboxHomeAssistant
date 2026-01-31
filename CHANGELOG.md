@@ -3,8 +3,10 @@
 > By Aurélien Tomassini, 2026.
 
 
-## v1.3.1 - ...
+## v1.3.1 - 01/02/2026
 
+> This version adds Assist auto reload on updated Assist sentences.
+> 
 
 - On first install or updates, if custom sentences have been updated,
   tries to reload Home Assistant Assist sentences without asking for a new restart.  
@@ -13,12 +15,12 @@
 - Change JSON sent from Recalbox to Home Assistant, from `imageUrl` to `imagePath`.
   Home Assistant will recompose the full URL on his own, because he knowns the host+port of this Recalbox.
   Integration is still compatible with older versions, it reads `imageUrl` is existing in JSON, else it composes itself the URL with `imagePath`.
-- Split Recalbox script in two versions (only one required) :
+- Duplicate Recalbox script in two versions (only one required) :
   - `Recalbox/userscripts/home_assistant_notifier.sh`:
     - Improve to get Home Assistant IP adress only if the event is useful
     - Optimization : as soon as the Home Assistant IP is solved, it is saved in cache to make next executions quicker
     - Add `shutdown` and `reboot` events in Recalbox script, to say to Home Assistant that the Recalbox is turning off (was only listing `stop` until that)
-  - `Recalbox/userscripts/home_assistant_notifier(permanent).sh` :
+  - `Recalbox/userscripts/home_assistant_notifier(permanent).sh` **EXPERIMENTAL** :
     - New version, that is permanent : the script is launched only once, and loops on events.
     - It should be way more optimized, and waits to be connected to network to send MQTT messages.
     - Create a timestamped logs file : `/recalbox/share/system/logs/home_assistant_integration/*`
@@ -27,7 +29,7 @@
 - Auto clean scripts logs
 - Persist `scriptVersion` as Recalbox extra state attribute
 - Added `host` attribute, so the REcalbox card uses the configured host to access webmanager, instead of `ip_adress` that doesn't exist yet
-- Make `ip_adress` attribut as "//TODO", instead of setting as the host
+- Added `recalboxIpAddress` attribute, instead of setting as the host
 - When Home Assistant (re)starts, pings the Recalbox to directly set as ON (without game info) or OFF, instead of waiting for the first ON MQQT message
 - Change Recalbox Card chip color in light theme.
 

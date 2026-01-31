@@ -135,6 +135,14 @@ esac
 log "Generating data for received command $ACTION"
 
 
+# On récupère l'IP (la première trouvée)
+IP_LOCALE=$(hostname -I | awk '{print $1}')
+# On vérifie si la variable est vide
+if [ -z "$IP_LOCALE" ]; then
+    echo "Erreur : Non connecté au réseau."
+    exit 1
+fi
+
 # Chemin du cache pour l'IP
 if [ -f "$HOME_ASSISTANT_IP_CACHE_FILE" ]; then
     # Récupérer l'IP via le cache
@@ -144,8 +152,8 @@ else
     # Récupérer l'IP via mDNS
     HA_IP=$(avahi-resolve -n $HOME_ASSISTANT_DOMAIN -4 | cut -f2)
     if [ -n "$HA_IP" ]; then
-        echo "$HA_IP" > "$HOME_ASSISTANT_IP_CACHE_FILE"
-        log "IP résolue via mDNS et mise en cache : $HA_IP"
+      echo "$HA_IP" > "$HOME_ASSISTANT_IP_CACHE_FILE"
+      log "IP résolue via mDNS et mise en cache : $HA_IP"
     fi
 fi
 
@@ -171,6 +179,7 @@ gen_game_json() {
   "genre": $(clean_json_val "$GAME_GENRE"),
   "genreId": $(clean_json_val "$GAME_GENRE_ID"),
   "imagePath": $imagePath,
+  "recalboxIpAddress": $(clean_json_val "$IP_LOCALE"),
   "recalboxVersion": $(clean_json_val "$RECALBOX_VERSION"),
   "hardware": $(clean_json_val "$HARDWARE_MODEL"),
   "scriptVersion": "$SCRIPT_VERSION"

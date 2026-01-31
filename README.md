@@ -85,6 +85,7 @@ Home Assistant can then update its "Recalbox" entity with the current game.
 > - `genre`
 > - `genreId`
 > - `imageUrl`
+> - `recalboxIpAddress`
 > - `recalboxVersion` : Version of the Recalbox OS
 > - `hardware` : Device running the Recalbox
 > - `scriptVersion` : Version of the integration script in the Recalbox
@@ -106,10 +107,11 @@ It uses the same services just listed.
 
 1. **Recalbox**
    
-   - Copy the script of your choice in the `userscripts` Recalbox folder. **Only one is required** !
-     - `Recalbox/userscripts/home_assistant_notifier.sh` : sript called at every event
-     - `Recalbox/userscripts/home_assistant_notifier(permanent).sh` : script called only once, and waiting for events itself
+   - Copy the script in the `userscripts` Recalbox folder. **Only one is required** !
+     - `Recalbox/userscripts/home_assistant_notifier.sh` : script called at every event. Optimized since v1.3.1
+     - **(EXPERIMENTAL)** `Recalbox/userscripts/home_assistant_notifier(permanent).sh` : script called only once, and waiting for events itself
      Both script will react to Recalbox events.
+     Still experimental in v1.3.1, use at your own risk.
 
 
 2. **Home Assistant**

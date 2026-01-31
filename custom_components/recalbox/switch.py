@@ -84,7 +84,7 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
         return {
             **self._attr_extra_state_attributes, # Les persistants (version, hw)
             "host": self._api.host,
-            "ip_address": "//TODO",
+            "recalboxIpAddress": self.recalboxIpAddress,
             "game": self.game,
             "console": self.console,
             "genre": self.genre,
@@ -316,6 +316,7 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
                         "recalboxVersion": v_sw,
                         "scriptVersion": scriptVersion,
                     })
+                    self.recalboxIpAddress = data.get("recalboxIpAddress", "-")
 
                     _LOGGER.debug('Updating game attributes...')
 
