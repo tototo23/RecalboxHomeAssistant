@@ -83,7 +83,7 @@ clean_json_val() {
 # Tentative de récupération de l'IP Home Assistant (seulement si pas encore connue)
 update_ha_ip() {
   # On récupère l'IP (la première trouvée)
-  IP_LOCALE=$(hostname -I | awk '{print $1}')
+  IP_LOCALE=$(ip -4 addr show scope global | awk '/inet / {print $2}' | cut -d/ -f1 | head -n 1)
 
   if [ -z "$HA_IP" ]; then
     # On vérifie si le réseau est là en tentant une résolution

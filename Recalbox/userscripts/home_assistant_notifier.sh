@@ -136,7 +136,7 @@ log "Generating data for received command $ACTION"
 
 
 # On récupère l'IP (la première trouvée)
-IP_LOCALE=$(hostname -I | awk '{print $1}')
+IP_LOCALE=$(ip -4 addr show scope global | awk '/inet / {print $2}' | cut -d/ -f1 | head -n 1)
 # On vérifie si la variable est vide
 if [ -z "$IP_LOCALE" ]; then
     echo "Erreur : Non connecté au réseau."
