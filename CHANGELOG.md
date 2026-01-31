@@ -3,10 +3,14 @@
 > By Aurélien Tomassini, 2026.
 
 
+## v1.3.2 - ...
+
+- ...
+
+
 ## v1.3.1 - 01/02/2026
 
 > This version adds Assist auto reload on updated Assist sentences.
-> 
 
 - On first install or updates, if custom sentences have been updated,
   tries to reload Home Assistant Assist sentences without asking for a new restart.  
