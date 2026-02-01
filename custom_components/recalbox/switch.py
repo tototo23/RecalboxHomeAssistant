@@ -269,7 +269,7 @@ class RecalboxEntityMQTT(CoordinatorEntity, SwitchEntity):
             # Ce n'est pas une IP (probablement un nom d'hôte)
             # Si on ne connait pas encore l'IP, on essaye de la récupérer
             if not self.coordinator.data.get("mdns_ip_address"):
-                await self.coordinator.async_config_entry_first_refresh()
+                await self.coordinator.async_refresh()
             # on renvoie l'adresse IP si on la connait
             return self.coordinator.data.get("mdns_ip_address")
 
