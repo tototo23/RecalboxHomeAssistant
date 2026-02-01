@@ -8,6 +8,7 @@ const TRANSLATIONS = {
     "genre": "Genre",
     "romPath": "Rom",
     "rebootRequired": "De nouvelles phrases Assist ont été détectées et installées. Redémarrez Home Assistant une nouvelle fois pour les activer et avoir accès aux nouvelles commandes vocales/textuelles.",
+    "recalboxScriptUpgradeRequired": "Vous devez installer la dernière version du script sur votre Recalbox. La version actuelle est trop ancienne.",
     "buttons": {
       "shutdown": "Éteindre",
       "reboot": "Redémarrer",
@@ -62,6 +63,7 @@ const TRANSLATIONS = {
     "genre": "Genre",
     "romPath": "Rom",
     "rebootRequired": "New Assist sentences have been installed. You will have to restart Home Assistant again to have access to the new intents on text/voice commands.",
+    "recalboxScriptUpgradeRequired": "Please update the script in your Recalbox. The version installed is too old.",
     "buttons": {
       "shutdown": "Power off",
       "reboot": "Reboot",
@@ -132,7 +134,12 @@ class RecalboxCard extends HTMLElement {
     const state = hass.states[entityId];
 
     if (!state) {
-      this.innerHTML = `<ha-card><div style="padding:16px; color:red;">Entité non trouvée, ou état non accessible : ${entityId}</div></ha-card>`;
+      this.innerHTML = `<ha-card><div style="padding:16px; color:red;">Entité non trouvée : ${entityId}</div></ha-card>`;
+      return;
+    }
+
+    if (!state.attributes) {
+      this.innerHTML = `<ha-card><div style="padding:16px; color:red;">Attributs non accessibles : ${entityId}</div></ha-card>`;
       return;
     }
 
@@ -149,6 +156,18 @@ class RecalboxCard extends HTMLElement {
     const showLoadGameButton = this.config.showLoadGameButton ?? true;
     const showSaveGameButton = this.config.showSaveGameButton ?? true;
     const showQuitGameButton = this.config.showQuitGameButton ?? true;
+
+    let needsRecalboxScriptUpgrade = false;
+    const currentScriptVersion = state.attributes.scriptVersion;
+    if (state && state.attributes.recalboxVersion) {
+        if (!currentScriptVersion) {
+            // we already had a recalbox version but not the script version
+            needsRecalboxScriptUpgrade = true;
+        } else if (currentScriptVersion.localeCompare(RECALBOX_SCRIPT_MIN_VERSION, undefined, { numeric: true, sensitivity: 'base' }) < 0) {
+            // the script version is < RECALBOX_SCRIPT_MIN_VERSION
+            needsRecalboxScriptUpgrade = true;
+        }
+    }
 
 
     if (!this.content) {
@@ -243,6 +262,18 @@ class RecalboxCard extends HTMLElement {
         <div style="background-color: var(--secondary-background-color); color: white; padding: 12px; border-radius: 6px; border: solid 1px grey; margin: 10px; font-size: 0.8em; display: flex; align-items: center;">
           <ha-icon icon="mdi:alert" style="margin-right: 16px;"></ha-icon>
           ${i18n.rebootRequired}
+        </div>
+      `;
+      this.content.innerHTML += alertHtml;
+    }
+
+    if (needsRecalboxScriptUpgrade) {
+      const alertHtml = `
+        <div style="background-color: var(--secondary-background-color); color: white; padding: 12px; border-radius: 6px; border: solid 1px grey; margin: 10px; font-size: 0.8em; display: flex; align-items: center;">
+          <ha-icon icon="mdi:alert" style="margin-right: 16px;"></ha-icon>
+          ${i18n.recalboxScriptUpgradeRequired}
+          <br/>Min : ${RECALBOX_SCRIPT_MIN_VERSION}
+          <br/>Script : ${RECALBOX_SCRIPT_MIN_VERSION}
         </div>
       `;
       this.content.innerHTML += alertHtml;
