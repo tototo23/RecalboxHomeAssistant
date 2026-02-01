@@ -11,7 +11,8 @@
 > it was sent to.
 > 
 > The Recalbox script has changes and needs to be updated.  
-> If the script version in < 1.4.0, a message is displayed in the Recalbox card.
+> If the script version in < 1.4.0, please upgrade !
+> (a message will be displayed in the Recalbox card asap).
 
 - Clean `recalboxIpAddress` and `scriptVersion` switch attributes
 - In the HA model, return to 'None' fields values, instead of "-" that was not consistent
