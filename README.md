@@ -3,7 +3,7 @@
 <small>By Aurélien Tomassini, 2026</small>
 
 🇺🇸 English version  
-[🇫🇷 Lire le README en Français](README_fr.md)
+[🇫🇷 Ouvrir la version Française](README_fr.md)
 
 <img src="logo.png" height="196px">
 

@@ -3,7 +3,7 @@
 <small>Par Aurélien Tomassini, 2026</small>
 
 🇫🇷 Version Française  
-[🇺🇸 Read README in English](README.md)
+[🇺🇸 Go to English version](README.md)
 
 <img src="logo.png" height="196px">
 
@@ -37,26 +37,26 @@ Ce dépôt vous permet d'intégrer Recalbox dans votre Home Assistant :
 
 <!-- toc -->
 
-- [Requirements](#requirements)
+- [Pré-requis](#pre-requis)
 - [Architecture](#architecture)
-  * [Recalbox to Home Assistant](#recalbox-to-home-assistant)
-  * [Home Assistant to Recalbox](#home-assistant-to-recalbox)
+  * [Recalbox vers Home Assistant](#recalbox-vers-home-assistant)
+  * [Home Assistant vers Recalbox](#home-assistant-vers-recalbox)
 - [Installation](#installation)
-- [Usage](#usage)
-  * [Dashboard card](#dashboard-card)
-  * [Automations](#automations)
-  * [Assist (text/voice)](#assist-textvoice)
+- [Utilisation](#utilisation)
+  * [Carte du Dashboard](#carte-du-dashboard)
+  * [Automatisations](#automatisations)
+  * [Assist (texte/voix)](#assist-textevoix)
     + [Get current game](#get-current-game)
-    + [Launch a game](#launch-a-game)
-    + [Stop the current game](#stop-the-current-game)
-    + [Pause/Resume the current game](#pauseresume-the-current-game)
-    + [Take a screenshot](#take-a-screenshot)
-    + [Save current game state](#save-current-game-state)
-    + [Load last game state](#load-last-game-state)
+    + [Lancer un jeu](#lancer-un-jeu)
+    + [Arrêter le jeu en cours](#arreter-le-jeu-en-cours)
+    + [Pause/Reprendre le jeu](#pausereprendre-le-jeu)
+    + [Faire une capture d'écran](#faire-une-capture-decran)
+    + [Enregistrer la partie](#enregistrer-la-partie)
+    + [Charger la partie](#charger-la-partie)
     + [Turn OFF recalbox](#turn-off-recalbox)
-- [Releases notes](#releases-notes)
-- [Troubleshot](#troubleshot)
-  * [`CRLF` / `LF` run script issue](#crlf--lf-run-script-issue)
+- [Notes de versions](#notes-de-versions)
+- [Aides](#aides)
+  * [Problème de lancement du script Recalbox, à cause du `CRLF` / `LF`](#probleme-de-lancement-du-script-recalbox-a-cause-du-crlf--lf)
 
 <!-- tocstop -->
 
@@ -133,9 +133,9 @@ lancées par Assist utilisent les mêmes commandes que listées ci-dessus.
        [![Open your Home Assistant instance and open install MQTT.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start?domain=mqtt)  
        Autoriser le lancement au démarrage, et activez le watchdog.
    
-     - In services integration, add MQTT service which should be now available.
-       Click on reconfigure, and use the credentials defined for authentication.
-       Double check they are the same defined in `home_assistant_notifier.sh` lines 13+14.
+     - Dans les services, ajouter une intégration MQTT qui devrait maintenant être disponible.
+       Cliquez sur reconfigurer, et utiliser les login/mot de passe définis au dessus.
+       Assurez-vous qu'il correspondent bien à ceux dans `home_assistant_notifier.sh` lignes 13+14.
      
    - Installer Recalbox Integration
    
@@ -164,23 +164,23 @@ lancées par Assist utilisent les mêmes commandes que listées ci-dessus.
 ## Utilisation 
 
 
-> Most of in-game button/voice actions use UDP commands.  
-> If not working, ensure that your Recalbox has `network_cmd_enable = true` in `retroarch.cfg`, as [documented in the Recalbox Wiki / GPIO](https://wiki.recalbox.com/en/tutorials/network/send-commands-to-emulators-with-gpio).  
-> This versions uses port 55355 for retroarch UDP commands by default.
+> La plupart des actions sur les jeux utilisent des commandes UDP.  
+> Si ça ne fonctionne pas, assurez-vous que les paramètres de Recalbox ont `network_cmd_enable = true` dans `retroarch.cfg`, comme [documenté dans le Wiki Recalbox / GPIO](https://wiki.recalbox.com/en/tutorials/network/send-commands-to-emulators-with-gpio).  
+> Cette version utilise le port 55355 pour les commandes UDP retroarch par defaut.
 
 
-### Carte du Dashboard
+### Carte du tableau de bord
 
-You can add a Recalbox card to your Home Assistant dashboard, in order to display the Recalbox status, game info, picture, etc.  
-It will be refreshed in real time.
+Vous pouvez ajouter une carte Recalbox à votre tableau de bord Home Assistant, pour afficher le status de la Recalbox, des jeux, l'image du jeu, etc.  
+L'affichage s'actualise en temps réel.
 
-Go to your dashboard in edit mode, "+ add card", scroll down to Custom Cards : "Recalbox Card".  
-Since v1.3.0, a UI have been implemented for visual edition of the card options, with live preview :
+Allez dans votre tableau de bord, en mode édition, et cliquez sur "+ ajouter carte" ; scrollez tout en bas dans les Custom Cards : "Recalbox Card".  
+Depuis la version v1.3.0, une interface avec un formulaire vous aide à paramétrer la carte à vos gouts :
 ![](docs/RecalboxCardVisualEditor.png)
 
-Both visual editor, and the card view, are translated in English and French, depending on your user language.  
-Once configured, you'll get your card with the options you selected.  
-Example : all buttons shown, update alert shown, genre shown, but Rom path hidden :
+L'éditeur et la carte sont traduites en Anglais et en Français, selon la langue de votre profile Home Assistant.  
+Une fois configuré, vous verrez votre carte Recalbox telle que configurée.  
+Exemple : tous les boutons visibles, alerte de mises à jour activées, afficher le genre du jeu, mais cacher le chemin de la rom :
 
 ![](docs/example.png)
 
