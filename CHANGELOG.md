@@ -3,7 +3,7 @@
 > By Aurélien Tomassini, 2026.
 
 
-## v1.4.1 - ...
+## v1.4.1 - 03/02/2026
 
 
 - Ensure git pulls the sources with `LF` instead of `CRLF` on windows (+ add troubleshot section in readme)
