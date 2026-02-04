@@ -57,6 +57,7 @@ Ce dépôt vous permet d'intégrer Recalbox dans votre Home Assistant :
 - [Notes de versions](#notes-de-versions)
 - [Aides](#aides)
   * [Problème de lancement du script Recalbox, à cause du `CRLF` / `LF`](#probleme-de-lancement-du-script-recalbox-a-cause-du-crlf--lf)
+  * [IP v6](#ip-v6)
 
 <!-- tocstop -->
 
@@ -80,7 +81,7 @@ Ce dépôt vous permet d'intégrer Recalbox dans votre Home Assistant :
 ### Recalbox vers Home Assistant
 
 Sur la Recalbox, un script écoute les événements locaux, selon la documentation [Scripts sur événements d'EmulationStation | Recalbox Wiki](https://wiki.recalbox.com/fr/advanced-usage/scripts-on-emulationstation-events) .
-Le script lit les informations nécessaires sur le jeu et la Recalbox, et envoie un message MQTT à Home Assistant au format JSON.
+Le script lit les informations nécessaires sur le jeu et la Recalbox, et envoie un message à Home Assistant au format JSON.
 Home Assistant va alors mettre à jour son entité "Recalbox" avec les informations reçues.
 
 > Les attributs reçus par Home Assistant (dans le JSON) sont :
@@ -94,11 +95,6 @@ Home Assistant va alors mettre à jour son entité "Recalbox" avec les informati
 > - `recalboxVersion` : Version de l'OS Recalbox
 > - `hardware` : Appareil sur lequel tourne Recalbox
 > - `scriptVersion` : Version du script d'intégration sh qui tourne sur la Recalbox
-
-Depuis la version v1.4.0 de l'intégration, on peut avoir plusieurs Recalbox sur le même réseau :
-- (v1.4.1 ou suivantes) Si on a une seule Recalbox déclarée dans Home Assistant, alors on considèrera que tous les messages MQTT sont pour elle
-- Sinon, on regarde alors si l'IP du message correspond à l'IP reçue du coordinateur par mDNS (cela peut donc prendre 30sec après le démarrage de la Recalbox, pour avoir son IP et pouvoir lire ses messages...)
-- Sinon, on estime que le message est pour une autre Recalbox
 
 
 ### Home Assistant vers Recalbox
@@ -129,40 +125,27 @@ lancées par Assist utilisent les mêmes commandes que listées ci-dessus.
 
 
 2. **Home Assistant**
- 
-   - Installer le broker MQTT  
-     
-     - Créez un utilisateur Home Assistant, appelé "recalbox" (ou autre), autorisé à se connecter seulement sur le réseau local.
-       Cet utilisateur sera utilisé pour l'authentification MQTT. Remplacez le login/password dans `home_assistant_notifier.sh`, lignes 13 et 14 (`MQTT_USER` & `MQTT_PASS`)
    
-     - Installez le broker MQTT Mosquitto dans Home assistant (via Addons).  
-       [![Open your Home Assistant instance and open install MQTT.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start?domain=mqtt)  
-       Autoriser le lancement au démarrage, et activez le watchdog.
+   - Si vous ne l'avez pas encore, [installez HACS](https://www.hacs.xyz/docs/use/download/download/)
    
-     - Dans les services, ajouter une intégration MQTT qui devrait maintenant être disponible.
-       Cliquez sur reconfigurer, et utiliser les login/mot de passe définis au dessus.
-       Assurez-vous qu'il correspondent bien à ceux dans `home_assistant_notifier.sh` lignes 13+14.
-     
-   - Installer Recalbox Integration
-   
-     - Si vous ne l'avez pas encore, installez HACS
-     
-     - Installez cette intégration Recalbox via ce bouton :  
-       [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ooree23&repository=RecalboxHomeAssistant&category=integration)  
-       Ou manuellement, ajoutez `https://github.com/ooree23/RecalboxHomeAssistant` comme dépôt, de type Integration.
+   - Installez cette **intégration Recalbox** via ce bouton :  
+     [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ooree23&repository=RecalboxHomeAssistant&category=integration)  
+     > Ou manuellement, ajoutez `https://github.com/ooree23/RecalboxHomeAssistant` comme dépôt, de type Integration.
        Cliquez sur télécharger, et acceptez de redémarrer.
-       Cela ajoutera l'intégration Recalbox dans votre Home Assistant
-       (la nouvelle intégration "Recalbox" sera visible seulement après le redémarrage, dans le menu Appareils & Service).
-      
-     - Ajouter une nouvelle Recalbox avec ce simple bouton :  
-       [![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=recalbox)  
-       Ou, manuellement, allez dans le menu Appareils & Services, "+ add integration", et recherchez "Recalbox".
-       Un formulaire vous demandera l'Hôst/IP de votre Recalbox (par défaut "recalbox.local"), et les ports par défaut peuvent être changés si besoin.
-       Si votre Recalbox est allumée, activez "Test connection" pour valider vos paramètres.  
-       
-       > Vous pouvez avoir plusieurs Recalbox sur votre réseau, et dans cette intégration Home Assistant.  
-       > Selon votre infrastructure, vous aurez probablement des adresses IP dynamiques : veuillez donc utiliser les noms d'hôtes,
-       > différents, au lieu des adresses IP, puisque celles-ci peuvent changer dans le temps.
+     
+     Cela ajoutera l'intégration Recalbox dans votre Home Assistant
+     (la nouvelle intégration "Recalbox" sera visible seulement après le redémarrage, dans le menu Appareils & Service).
+    
+   - Ajouter une **nouvelle Recalbox** avec ce simple bouton :  
+     [![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=recalbox)  
+     > Ou, manuellement, allez dans le menu Appareils & Services, "+ add integration", et recherchez "Recalbox".
+     
+     Un formulaire vous demandera l'Hôst/IP de votre Recalbox (par défaut "recalbox.local"), et les ports par défaut peuvent être changés si besoin.
+     Si votre Recalbox est allumée, activez "Test connection" pour valider vos paramètres.  
+     
+     > Vous pouvez avoir plusieurs Recalbox sur votre réseau, et dans cette intégration Home Assistant.  
+       Selon votre infrastructure, vous aurez probablement des adresses IP dynamiques : veuillez donc utiliser les noms d'hôtes,
+       différents, au lieu des adresses IP, puisque celles-ci peuvent changer dans le temps.
 
 
 
@@ -316,7 +299,8 @@ Consultez [le fichier des notes de versions](CHANGELOG.md)
 
 ## Aides
 
-### Problème de lancement du script Recalbox, à cause du `CRLF` / `LF` 
+### Problème de lancement du script Recalbox, à cause du `CRLF` / `LF`
+
 Si votre Recalbox ne semble pas communiquer avec Home Assistant alors que
 votre script est bien présent dans userscripts, veuillez vous assurer que le fichier `.sh`
 utilise le séparateur de ligne "LF" :
@@ -336,3 +320,16 @@ pour vous assurer que Git conserve le format "LF" d'origine sans le modifier.
 
 Enfin, assurez-vous d'utiliser la dernière version du script.
 Si votre version est trop ancienne, un message s'affichera sur votre carte Recalbox dans Home Assistant.
+
+
+
+### IP v6
+
+Quand Home Assistants résout le hostname de votre Recalbox, il peut obtenir une IPv6.
+Il semble y avoir des problème avec les IPv6 (au moins sur RPi3), et la Recalbox ne reçoit donc pas les requêtes de Home Assistant.
+Un message apparait en bas de l'écran de Home Assistant, montrant une adresse IPv6.
+
+Si cela se produit et vous bloque, allez dans les paramètres de l'intégration, et modifier votre hostname vers une adresse IP v4.
+Ca va corriger le problème, maissi votre routeur attribue une nouvelle IP à votre Recalbox, il faudra retourner changer l'IP dans Home Assistant...
+
+La version v1.5.0 force dorénavant l'utilisation des IPv4.

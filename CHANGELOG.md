@@ -3,10 +3,16 @@
 > By Aurélien Tomassini, 2026.
 
 
-## v1.4.2 - 
+## v1.5.0 - 04/02/2026 - Remove MQTT usage
 
+> Major changes, please upload the new Recalbox script to Recalbox `userscripts` folder.
 
-- ...
+- Remove MQTT dependency, for a lighter architecture : Recalbox now sends its data to an API instead of MQTT.
+  The installation is now way easier for customers : no MQTT broker to install, no user, nothing.
+- On receiving data, while last Ping was failed, forces an instant Ping to switch the Recalbox entity status ON
+- Between Home Assitant restarts, restore the previous Recalbox important informations (hardware, recalboxVersion, scriptVersion)
+- On Home Assistant (re)start, request via API the Recalbox Status to get the current game
+- Force using IPv4 in Recalbox hostname resolution to make communication more stable
 
 
 ## v1.4.1 - 03/02/2026

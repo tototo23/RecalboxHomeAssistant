@@ -12,6 +12,7 @@ from .frontend import JSModuleRegistration
 from .translations_service import RecalboxTranslator
 from .custom_sentences_installer import install_sentences
 from .services_installer import install_services
+from.rest_controller import RecalboxRestController
 import os
 import shutil
 import logging
@@ -46,9 +47,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # On ajoute le switch à la liste des plateformes
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
-    # rengistrement des services Recalbox, utilisés par la partie JS notamment
+    # engistrement des services Recalbox, utilisés par la partie JS notamment
     # mais dispo aussi dans HA au global
     install_services(hass)
+
+    # déclare un endpoint pour Recalbox
+    hass.http.register_view(RecalboxRestController(hass))
 
     # Pour raffraichir les entoités si ma config change
     entry.async_on_unload(entry.add_update_listener(update_listener))
