@@ -1,4 +1,5 @@
 from homeassistant.components.switch import SwitchEntity
+from homeassistant.helpers.restore_state import RestoreEntity
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed, CoordinatorEntity
 from homeassistant.helpers import device_registry as dr
 from homeassistant.exceptions import HomeAssistantError
@@ -34,7 +35,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
 
 
-class RecalboxEntity(CoordinatorEntity, SwitchEntity):
+class RecalboxEntity(CoordinatorEntity, SwitchEntity, RestoreEntity):
     def __init__(self, hass, config_entry, api:RecalboxAPI, coordinator):
         super().__init__(coordinator)
         self.hass = hass # On récupère l'IP stockée dans la config
@@ -336,6 +337,18 @@ class RecalboxEntity(CoordinatorEntity, SwitchEntity):
     async def async_added_to_hass(self):
         """Appelé quand l'entité est ajoutée à HA."""
         await super().async_added_to_hass()
+
+
+        # Récupération des dernières infos connues
+        old_state = await self.async_get_last_state()
+        if old_state:
+            self._attr_extra_state_attributes.update({
+                "hardware": old_state.attributes.get("hardware"),
+                "recalboxVersion": old_state.attributes.get("recalboxVersion"),
+                "scriptVersion": old_state.attributes.get("scriptVersion"),
+            })
+
+
 
         # Initialisation du 1er status pour savoir si on est ON ou OFF
         await self.coordinator.async_config_entry_first_refresh()

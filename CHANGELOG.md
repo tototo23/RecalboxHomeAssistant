@@ -10,6 +10,7 @@
 - Remove MQTT dependency, for a lighter architecture : Recalbox now sends its data to an API instead of MQTT.
   The installation is now way easier for customers : no MQTT broker to install, no user, nothing.
 - On receiving data, while last Ping was failed, forces an instant Ping to switch the Recalbox entity status ON
+- Between Home Assitant restarts, restore the previous Recalbox important informations (hardware, recalboxVersion, scriptVersion)
 
 
 ## v1.4.1 - 03/02/2026
