@@ -57,6 +57,7 @@ Ce dépôt vous permet d'intégrer Recalbox dans votre Home Assistant :
 - [Notes de versions](#notes-de-versions)
 - [Aides](#aides)
   * [Problème de lancement du script Recalbox, à cause du `CRLF` / `LF`](#probleme-de-lancement-du-script-recalbox-a-cause-du-crlf--lf)
+  * [IP v6](#ip-v6)
 
 <!-- tocstop -->
 
@@ -298,7 +299,8 @@ Consultez [le fichier des notes de versions](CHANGELOG.md)
 
 ## Aides
 
-### Problème de lancement du script Recalbox, à cause du `CRLF` / `LF` 
+### Problème de lancement du script Recalbox, à cause du `CRLF` / `LF`
+
 Si votre Recalbox ne semble pas communiquer avec Home Assistant alors que
 votre script est bien présent dans userscripts, veuillez vous assurer que le fichier `.sh`
 utilise le séparateur de ligne "LF" :

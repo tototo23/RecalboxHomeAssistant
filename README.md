@@ -57,6 +57,7 @@ This repository allows you to integrate Recalbox in your Home Assistant :
 - [Releases notes](#releases-notes)
 - [Troubleshot](#troubleshot)
   * [`CRLF` / `LF` run script issue](#crlf--lf-run-script-issue)
+  * [IP v6](#ip-v6)
 
 <!-- tocstop -->
 
