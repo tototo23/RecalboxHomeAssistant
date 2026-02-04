@@ -12,6 +12,7 @@
 - On receiving data, while last Ping was failed, forces an instant Ping to switch the Recalbox entity status ON
 - Between Home Assitant restarts, restore the previous Recalbox important informations (hardware, recalboxVersion, scriptVersion)
 - On Home Assistant (re)start, request via API the Recalbox Status to get the current game
+- Force using IPv4 in Recalbox hostname resolution to make communication more stable
 
 
 ## v1.4.1 - 03/02/2026

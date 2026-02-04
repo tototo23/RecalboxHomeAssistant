@@ -2,6 +2,7 @@
 import aiohttp
 import asyncio
 import logging
+import socket
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -24,7 +25,8 @@ class RecalboxAPI:
         loop = asyncio.get_running_loop()
         transport, protocol = await loop.create_datagram_endpoint(
             lambda: asyncio.DatagramProtocol(),
-            remote_addr=(self.host, port)
+            remote_addr=(self.host, port),
+            family=socket.AF_INET  # Force la résolution en IPv4
         )
         try:
             transport.sendto(message.encode())
@@ -39,7 +41,8 @@ class RecalboxAPI:
     async def post_api(self, path, port=80):
         url = f"http://{self.host}:{port}{path}"
         _LOGGER.debug(f"API POST {url}")
-        async with aiohttp.ClientSession() as session:
+        connector = aiohttp.TCPConnector(family=socket.AF_INET) # Force la résolution en IPv4
+        async with aiohttp.ClientSession(connector=connector) as session:
             try:
                 async with session.post(url) as response:
                     return response.status == 200
@@ -51,7 +54,8 @@ class RecalboxAPI:
     async def get_roms(self, console):
         url = f"http://{self.host}:{self.api_port_gamesmanager}/api/systems/{console}/roms"
         _LOGGER.debug(f"API GET roms from {url}")
-        async with aiohttp.ClientSession() as session:
+        connector = aiohttp.TCPConnector(family=socket.AF_INET) # Force la résolution en IPv4
+        async with aiohttp.ClientSession(connector=connector) as session:
             try:
                 async with session.get(url, timeout=10) as response:
                     if response.status == 200:
@@ -65,6 +69,7 @@ class RecalboxAPI:
     async def get_current_status(self):
         url = f"http://{self.host}:{self.api_port_gamesmanager}/api/status"
         _LOGGER.debug(f"API GET current Recalbox status {url}")
+        connector = aiohttp.TCPConnector(family=socket.AF_INET) # Force la résolution en IPv4
         # {
         #   "Action": "rungame",
         #   "Parameter": "/recalbox/share/roms/megadrive/001 Sonic 1.bin",
@@ -99,7 +104,7 @@ class RecalboxAPI:
         #     }
         #   }
         # }
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession(connector=connector) as session:
             try:
                 async with session.get(url, timeout=10) as response:
                     if response.status == 200:
@@ -124,7 +129,7 @@ class RecalboxAPI:
     async def ping(self) -> bool:
         """Exécute un ping système vers l'hôte."""
         _LOGGER.debug(f"PING recalbox on {self.host}")
-        command = f"ping -c 1 -W 1 {self.host} > /dev/null 2>&1"
+        command = f"ping -4 -c 1 -W 1 {self.host} > /dev/null 2>&1"
         try:
             # On exécute la commande système de façon asynchrone
             process = await asyncio.create_subprocess_shell(command)
@@ -146,7 +151,7 @@ class RecalboxAPI:
             for port in TCP_PORTS:
                 try:
                     _LOGGER.debug(f"Testing TCP port {port} on {self.host}")
-                    conn = asyncio.open_connection(self.host, port)
+                    conn = asyncio.open_connection(self.host, port, family=socket.AF_INET)
                     _reader, writer = await asyncio.wait_for(conn, timeout=1.0)
                     writer.close()
                     await writer.wait_closed()

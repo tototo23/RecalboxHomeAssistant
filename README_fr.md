@@ -331,3 +331,5 @@ Un message apparait en bas de l'écran de Home Assistant, montrant une adresse I
 
 Si cela se produit et vous bloque, allez dans les paramètres de l'intégration, et modifier votre hostname vers une adresse IP v4.
 Ca va corriger le problème, maissi votre routeur attribue une nouvelle IP à votre Recalbox, il faudra retourner changer l'IP dans Home Assistant...
+
+La version v1.5.0 force dorénavant l'utilisation des IPv4.
