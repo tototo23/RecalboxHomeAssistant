@@ -4,7 +4,7 @@ import unicodedata
 import re
 from .const import DOMAIN
 from .translations_service import RecalboxTranslator
-from .switch import RecalboxEntityMQTT
+from .switch import RecalboxEntity
 import logging
 
 _LOGGER = logging.getLogger(__name__)
@@ -42,16 +42,16 @@ async def async_setup_intents(hass):
 # - soit l'instance est spécifiée dans l'intent
 # - soit non, et on prend la première qu'on trouve allumée
 # - soit on prend la première qu'on trouve si toutes sont éteintes
-def find_recalbox_entity(hass: HomeAssistant, intent_obj:intent.Intent) -> RecalboxEntityMQTT:
+def find_recalbox_entity(hass: HomeAssistant, intent_obj:intent.Intent) -> RecalboxEntity:
     instances = hass.data[DOMAIN].get("instances", {})
     if not instances:
         return None
 
-    # Extraction des entités réelles (RecalboxEntityMQTT)
+    # Extraction des entités réelles (RecalboxEntity)
     all_entities = [instance.get("sensor_entity") for instance in instances.values() if instance.get("sensor_entity")]
 
     if not all_entities:
-        _LOGGER.warning("No RecalboxEntityMQTT found")
+        _LOGGER.warning("No RecalboxEntity found")
         return None
 
     # Prio 1 :
@@ -68,7 +68,7 @@ def find_recalbox_entity(hass: HomeAssistant, intent_obj:intent.Intent) -> Recal
                 return entity
 
     # Prio 2 :
-    # Si on n'a pas trouvé un RecalboxEntityMQTT par nom,
+    # Si on n'a pas trouvé un RecalboxEntity par nom,
     # on cherche la première qui est "ON"
     for entity in all_entities:
         state = hass.states.get(entity.entity_id)
@@ -81,7 +81,7 @@ def find_recalbox_entity(hass: HomeAssistant, intent_obj:intent.Intent) -> Recal
     return all_entities[0]
 
 def find_recalbox_states(hass: HomeAssistant, intent_obj:intent.Intent) -> State:
-    recalboxEntity:RecalboxEntityMQTT = find_recalbox_entity(hass, intent_obj)
+    recalboxEntity:RecalboxEntity = find_recalbox_entity(hass, intent_obj)
     return hass.states.get(recalboxEntity.entity_id)
 
 def get_translator(hass: HomeAssistant) -> RecalboxTranslator:
@@ -120,7 +120,7 @@ class RecalboxScreenshotHandler(intent.IntentHandler):
 
     async def async_handle(self, intent_obj):
         hass = intent_obj.hass
-        recalbox:RecalboxEntityMQTT = find_recalbox_entity(hass, intent_obj)
+        recalbox:RecalboxEntity = find_recalbox_entity(hass, intent_obj)
         translator:RecalboxTranslator = get_translator(hass)
 
         if await recalbox.request_screenshot():
@@ -139,7 +139,7 @@ class RecalboxQuitGameHandler(intent.IntentHandler):
 
     async def async_handle(self, intent_obj):
         hass = intent_obj.hass
-        recalbox:RecalboxEntityMQTT = find_recalbox_entity(hass, intent_obj)
+        recalbox:RecalboxEntity = find_recalbox_entity(hass, intent_obj)
         translator:RecalboxTranslator = get_translator(hass)
 
         if await recalbox.request_quit_current_game():
@@ -158,7 +158,7 @@ class RecalboxPauseGameHandler(intent.IntentHandler):
 
     async def async_handle(self, intent_obj):
         hass = intent_obj.hass
-        recalbox:RecalboxEntityMQTT = find_recalbox_entity(hass, intent_obj)
+        recalbox:RecalboxEntity = find_recalbox_entity(hass, intent_obj)
         translator:RecalboxTranslator = get_translator(hass)
 
         if await recalbox.request_pause_game():
@@ -176,7 +176,7 @@ class RecalboxSaveStateHandler(intent.IntentHandler):
 
     async def async_handle(self, intent_obj):
         hass = intent_obj.hass
-        recalbox:RecalboxEntityMQTT = find_recalbox_entity(hass, intent_obj)
+        recalbox:RecalboxEntity = find_recalbox_entity(hass, intent_obj)
         translator:RecalboxTranslator = get_translator(hass)
 
         if await recalbox.request_save_state():
@@ -194,7 +194,7 @@ class RecalboxLoadStateHandler(intent.IntentHandler):
 
     async def async_handle(self, intent_obj):
         hass = intent_obj.hass
-        recalbox:RecalboxEntityMQTT = find_recalbox_entity(hass, intent_obj)
+        recalbox:RecalboxEntity = find_recalbox_entity(hass, intent_obj)
         translator:RecalboxTranslator = get_translator(hass)
 
         if await recalbox.request_load_state():

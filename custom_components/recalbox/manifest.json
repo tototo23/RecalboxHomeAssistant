@@ -3,8 +3,8 @@
   "name": "Recalbox",
   "config_flow": true,
   "codeowners": ["Aurelien Tomassini", "@ooree23"],
-  "dependencies": ["mqtt", "frontend", "http"],
+  "dependencies": ["frontend", "http", "api"],
   "iot_class": "local_push",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "documentation": "https://github.com/ooree23/RecalboxHomeAssistant"
 }
