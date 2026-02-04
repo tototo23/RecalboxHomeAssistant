@@ -6,7 +6,8 @@
 ## v1.5.1 - 
 
 
-- ...
+- If multiple Recalbox entities are matching to the same Recabox (example, one is "recalbox.local" and one is "192.168.1.X", both for the same device)
+  we now update each matching instances, instead of only the first one.
 
 
 ## v1.5.0 - 04/02/2026 - (Breaking changes) Remove MQTT usage
