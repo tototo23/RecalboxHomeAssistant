@@ -53,7 +53,8 @@ Ce dépôt vous permet d'intégrer Recalbox dans votre Home Assistant :
     + [Faire une capture d'écran](#faire-une-capture-decran)
     + [Enregistrer la partie](#enregistrer-la-partie)
     + [Charger la partie](#charger-la-partie)
-    + [Turn OFF recalbox](#turn-off-recalbox)
+    + [Eteindre la recalbox](#eteindre-la-recalbox)
+    + [Quitter Kodi](#quitter-kodi)
 - [Notes de versions](#notes-de-versions)
 - [Aides](#aides)
   * [Problème de lancement du script Recalbox, à cause du `CRLF` / `LF`](#probleme-de-lancement-du-script-recalbox-a-cause-du-crlf--lf)
@@ -276,7 +277,7 @@ Exemples :
 - "Recharge la dernière partie"
 
 
-#### Turn OFF recalbox
+#### Eteindre la recalbox
 
 > Cet ordre utilise les intentions natives de Home Assistant, pour éteindre la Recalbox, reconnue comme un interrupteur.
 > Assurez-vous donc d'avoir donné un nom prononçable à votre entité Recalbox, pour faciliter la compréhension par
@@ -285,6 +286,15 @@ Exemples :
 Exemples :
 - "Turn off Recalbox"
 - "Eteins Recalbox"
+
+
+#### Quitter Kodi
+
+> Utilise le port 8081 par defaut. Fonctionne uniquement si Kodi est lancé.
+
+Exemples :
+- "Quitte Kodi"
+- "Ferme Kodi"
 
 
 

@@ -23,7 +23,7 @@ class RecalboxRestController(HomeAssistantView):
         """Reçoit le JSON et l'aiguille vers la bonne instance."""
         try:
             data = await request.json()
-            _LOGGER.debug(f"Notification reçue pour le host {hostname}: {data}")
+            _LOGGER.debug(f"Notification reçue pour le host {hostname} (IP {data.get("recalboxIpAddress")}): {data}")
 
             # On cherche l'instance correspondante
             instances = self.hass.data.get(DOMAIN, {}).get("instances", {})
@@ -36,7 +36,7 @@ class RecalboxRestController(HomeAssistantView):
                     target_entity = instance.get("sensor_entity")
                     # On met à jour l'entité directement
                     await target_entity.update_from_recalbox_json_message(data)
-                    break
+                    #break
 
             if target_entity:
                 return web.Response(status=200, text="OK")

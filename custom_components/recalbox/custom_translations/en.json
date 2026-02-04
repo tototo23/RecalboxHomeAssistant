@@ -58,6 +58,13 @@
     ],
     "save_state_failed": [
       "Saving the current state failed"
+    ],
+    "quit_kodi_success": [
+      "Quiting Kodi !"
+    ],
+    "quit_kodi_failed": [
+      "Cannot exit Kodi ! It is maybe not running...",
+      "Kodi doesn't seem to be running..."
     ]
   },
   "errors": {

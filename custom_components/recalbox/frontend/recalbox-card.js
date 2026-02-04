@@ -16,7 +16,8 @@ const TRANSLATIONS = {
       "pause": "Pause/Reprendre",
       "save": "Enregistrer",
       "load": "Restaurer",
-      "stop": "Quitter le jeu"
+      "stop": "Quitter le jeu",
+      "quit_kodi": "Quitter Kodi",
     },
     "footer": {
         "onHardware": "sur",
@@ -42,6 +43,7 @@ const TRANSLATIONS = {
         "showLoadGameButton": "Restaurer",
         "showSaveGameButton": "Enregistrer",
         "showQuitGameButton": "Quitter le jeu",
+        "showQuitKodiButton": "Quitter kodi",
     },
     "form_description": {
         "entity": "Doit être une entité créée à partir de l'intégration Recalbox",
@@ -55,6 +57,7 @@ const TRANSLATIONS = {
         "showLoadGameButton": "Restaurer le dernier point de sauvegarde par UDP (équivalent à HK + X)",
         "showSaveGameButton": "Créer un point de sauvegarde par UDP (équivalent à HK + Y)",
         "showQuitGameButton": "Quitter le jeu en cours par UDP (retour au menu)",
+        "showQuitKodiButton": "Permet de quitter Kodi si celui-ci est lancé, par exemple au démarrage de la Recalbox."
     },
   },
   "en": {
@@ -73,6 +76,7 @@ const TRANSLATIONS = {
       "pause": "Pause/Resume",
       "save": "Save State",
       "load": "Load State",
+      "quit_kodi": "Quit Kodi",
     },
     "footer": {
         "onHardware": "on",
@@ -97,7 +101,8 @@ const TRANSLATIONS = {
         "showPauseGameButton": "Pause/Resume",
         "showLoadGameButton": "Load State",
         "showSaveGameButton": "Save State",
-        "showQuitGameButton": "Quit game"
+        "showQuitGameButton": "Quit game",
+        "showQuitKodiButton": "Quit kodi"
     },
     "form_description": {
         "entity": "Must be an entity created by the Recalbox integration",
@@ -110,7 +115,8 @@ const TRANSLATIONS = {
         "showPauseGameButton": "Pause/resume the current emulator (via UDP)",
         "showLoadGameButton": "Restore the last save point via UDP (equivalent to HK + X)",
         "showSaveGameButton": "Create a save point via UDP (equivalent to HK + Y)",
-        "showQuitGameButton": "Quit the current game via UDP (return to menu)"
+        "showQuitGameButton": "Quit the current game via UDP (return to menu)",
+        "showQuitKodiButton": "Show quit Kodi button, when running, for example on your Recalbox startup."
     },
   }
 };
@@ -158,6 +164,7 @@ class RecalboxCard extends HTMLElement {
     const showLoadGameButton = this.config.showLoadGameButton ?? true;
     const showSaveGameButton = this.config.showSaveGameButton ?? true;
     const showQuitGameButton = this.config.showQuitGameButton ?? true;
+    const showQuitKodiButton = this.config.showQuitKodiButton ?? true;
 
     let needsRecalboxScriptUpgrade = false;
     const currentScriptVersion = state.attributes.scriptVersion;
@@ -322,6 +329,7 @@ class RecalboxCard extends HTMLElement {
       this.actions.innerHTML = `
         <div class="action-button" id="btn-power-off" ` + ((showTurnOffButton) ? '' : 'style="display:none"')+ `><ha-icon icon="mdi:power"></ha-icon>${i18n.buttons.shutdown}</div>
         <div class="action-button" id="btn-reboot" ` + ((showRebootButton) ? '' : 'style="display:none"')+ `><ha-icon icon="mdi:restart"></ha-icon>${i18n.buttons.reboot}</div>
+        <div class="action-button" id="btn-quit-kodi" ` + ((showQuitKodiButton && consoleName=='Kodi') ? '' : 'style="display:none"')+ `><ha-icon icon="mdi:kodi"></ha-icon>${i18n.buttons.quit_kodi}</div>
 
         <div class="action-button no-gap" ` + (isAGameRunning ? '' : 'style="display:none"')+ `>
             ${i18n.game} &nbsp;
@@ -339,6 +347,7 @@ class RecalboxCard extends HTMLElement {
       this.actions.querySelector('#btn-save').onclick = () => hass.callService('recalbox', 'save_state', { entity_id: entityId });
       this.actions.querySelector('#btn-load').onclick = () => hass.callService('recalbox', 'load_state', { entity_id: entityId });
       this.actions.querySelector('#btn-stop').onclick = () => hass.callService('recalbox', 'quit_game', { entity_id: entityId });
+      this.actions.querySelector('#btn-quit-kodi').onclick = () => hass.callService('recalbox', 'quit_kodi', { entity_id: entityId });
     } else {
       this.actions.style.display = "none";
     }
@@ -387,6 +396,7 @@ class RecalboxCard extends HTMLElement {
       showLoadGameButton: true,
       showSaveGameButton: true,
       showQuitGameButton: true,
+      showQuitKodiButton: true,
     };
   }
 
@@ -490,6 +500,7 @@ class RecalboxCardEditor extends HTMLElement {
         schema: [
             { name: "showTurnOffButton", selector: { boolean: {} } },
             { name: "showRebootButton", selector: { boolean: {} } },
+            { name: "showQuitKodiButton", selector: { boolean: {} } },
         ]
       },
       {

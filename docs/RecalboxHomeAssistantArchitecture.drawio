@@ -1,92 +1,124 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="29.3.3">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="29.3.7">
   <diagram name="Page-1" id="k_nSxGcE_CIYXGTXqeBE">
-    <mxGraphModel dx="2066" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="583" math="0" shadow="0">
+    <mxGraphModel dx="2066" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="800" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="ec2RJxvYGELbJNF-a-S--4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="" vertex="1">
-          <mxGeometry height="130" width="260" x="514" y="132" as="geometry" />
+          <mxGeometry height="130" width="260" x="500" y="162" as="geometry" />
         </mxCell>
         <mxCell id="ec2RJxvYGELbJNF-a-S--1" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Recalbox&lt;/h1&gt;&lt;div&gt;recalbox.local&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="180" x="543" y="162" as="geometry" />
+          <mxGeometry height="80" width="180" x="529" y="187" as="geometry" />
         </mxCell>
         <mxCell id="ec2RJxvYGELbJNF-a-S--27" edge="1" parent="1" source="ec2RJxvYGELbJNF-a-S--3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" target="ec2RJxvYGELbJNF-a-S--4">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="249" y="312" />
-              <mxPoint x="579" y="312" />
+              <mxPoint x="235" y="410" />
+              <mxPoint x="565" y="410" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="ec2RJxvYGELbJNF-a-S--29" connectable="0" parent="ec2RJxvYGELbJNF-a-S--27" style="edgeLabel;html=1;align=left;verticalAlign=middle;resizable=0;points=[];spacingTop=0;spacingLeft=0;spacingBottom=0;spacingRight=0;textShadow=0;labelBorderColor=none;spacing=0;labelBackgroundColor=none;" value="API calls :&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Get status&lt;/div&gt;&lt;div&gt;Turn OFF Recalbox&lt;/div&gt;&lt;div&gt;- Reboot Recalbox&lt;/div&gt;&lt;div&gt;- List roms of a system&lt;/div&gt;&lt;div&gt;- Take a screenshot&lt;/div&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="ec2RJxvYGELbJNF-a-S--29" connectable="0" parent="ec2RJxvYGELbJNF-a-S--27" style="edgeLabel;html=1;align=left;verticalAlign=middle;resizable=0;points=[];spacingTop=0;spacingLeft=0;spacingBottom=0;spacingRight=0;textShadow=0;labelBorderColor=none;spacing=0;labelBackgroundColor=none;" value="API 81 : EmulationStation&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Get status&lt;/div&gt;&lt;div&gt;-&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;List roms of a system&lt;/span&gt;&lt;/div&gt;&lt;div&gt;- Take a screenshot&lt;/div&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry relative="1" x="-0.0501" y="-4" as="geometry">
-            <mxPoint x="-50" y="24" as="offset" />
+            <mxPoint x="-50" y="9" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="ec2RJxvYGELbJNF-a-S--28" edge="1" parent="1" source="ec2RJxvYGELbJNF-a-S--3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" target="ec2RJxvYGELbJNF-a-S--4">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="119" y="520" />
-              <mxPoint x="709" y="520" />
+              <mxPoint x="105" y="610" />
+              <mxPoint x="695" y="610" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="ec2RJxvYGELbJNF-a-S--30" connectable="0" parent="ec2RJxvYGELbJNF-a-S--28" style="edgeLabel;html=1;align=left;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=none;" value="UDP 1337 commands :&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- Launch a specific rom&lt;/div&gt;" vertex="1">
           <mxGeometry relative="1" x="0.0071" y="4" as="geometry">
-            <mxPoint x="-68" y="-86" as="offset" />
+            <mxPoint x="-68" y="-88" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="ApIP_Xdv9q3WK2fL85me-2" edge="1" parent="1" source="ec2RJxvYGELbJNF-a-S--3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="ec2RJxvYGELbJNF-a-S--4">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="184" y="430" />
-              <mxPoint x="644" y="430" />
+              <mxPoint x="170" y="520" />
+              <mxPoint x="630" y="520" />
             </Array>
           </mxGeometry>
         </mxCell>
+        <mxCell id="fEWEZeXLtIbiUHNP-2Xh-1" edge="1" parent="1" source="ec2RJxvYGELbJNF-a-S--3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" target="ec2RJxvYGELbJNF-a-S--4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="40" y="730" />
+              <mxPoint x="760" y="730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fEWEZeXLtIbiUHNP-2Xh-2" connectable="0" parent="fEWEZeXLtIbiUHNP-2Xh-1" style="edgeLabel;html=1;align=left;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=none;" value="API JSON RPC : 8081&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- Quit Kodi (only if running)&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.0198" y="2" as="geometry">
+            <mxPoint x="-81" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mCkXnQJRTY17aj6y0XdX-1" edge="1" parent="1" source="ec2RJxvYGELbJNF-a-S--3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" target="ec2RJxvYGELbJNF-a-S--4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="330" />
+              <mxPoint x="500" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mCkXnQJRTY17aj6y0XdX-4" connectable="0" parent="mCkXnQJRTY17aj6y0XdX-1" style="edgeLabel;html=1;align=left;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=none;" value="API 80 : OS&lt;br&gt;&lt;br&gt;- Turn OFF Recalbox&lt;br&gt;- Reboot Recalbox" vertex="1">
+          <mxGeometry relative="1" x="-0.029" y="3" as="geometry">
+            <mxPoint x="-62" y="9" as="offset" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="ec2RJxvYGELbJNF-a-S--3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="" vertex="1">
-          <mxGeometry height="130" width="260" x="54" y="132" as="geometry" />
+          <mxGeometry height="130" width="260" x="40" y="162" as="geometry" />
         </mxCell>
         <mxCell id="ec2RJxvYGELbJNF-a-S--2" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Home Assistant&lt;/h1&gt;&lt;div&gt;homeassistant.local&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="220" x="73" y="162" as="geometry" />
+          <mxGeometry height="80" width="220" x="59" y="192" as="geometry" />
         </mxCell>
         <mxCell id="ec2RJxvYGELbJNF-a-S--8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
-          <mxGeometry height="30" width="196" x="80" y="112" as="geometry" />
+          <mxGeometry height="30" width="196" x="66" y="142" as="geometry" />
         </mxCell>
         <mxCell id="ec2RJxvYGELbJNF-a-S--7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="API 8123 : Recalbox Integration" vertex="1">
-          <mxGeometry height="30" width="190" x="80" y="112" as="geometry" />
+          <mxGeometry height="30" width="190" x="66" y="142" as="geometry" />
         </mxCell>
         <mxCell id="cxFimN4w7W0WBXtZPJgl-1" edge="1" parent="1" source="ec2RJxvYGELbJNF-a-S--10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="ec2RJxvYGELbJNF-a-S--8">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="591" y="40" />
-              <mxPoint x="227" y="40" />
+              <mxPoint x="577" y="70" />
+              <mxPoint x="213" y="70" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="ec2RJxvYGELbJNF-a-S--10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
-          <mxGeometry height="30" width="191" x="543" y="112" as="geometry" />
+          <mxGeometry height="30" width="191" x="529" y="142" as="geometry" />
         </mxCell>
         <mxCell id="ec2RJxvYGELbJNF-a-S--11" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="home_assistant_notifier.sh" vertex="1">
-          <mxGeometry height="30" width="60" x="603" y="112" as="geometry" />
+          <mxGeometry height="30" width="60" x="589" y="142" as="geometry" />
         </mxCell>
         <mxCell id="ec2RJxvYGELbJNF-a-S--13" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="POST JSON :&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;ON/OFF, Game, console, picture, genre, ...&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="90" width="120" x="348" y="10" as="geometry" />
+          <mxGeometry height="90" width="120" x="334" y="40" as="geometry" />
         </mxCell>
         <mxCell id="ec2RJxvYGELbJNF-a-S--25" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=6.418604651162838;" value="" vertex="1">
-          <mxGeometry height="30" width="20" x="264" y="122" as="geometry" />
+          <mxGeometry height="30" width="20" x="250" y="152" as="geometry" />
         </mxCell>
-        <mxCell id="ec2RJxvYGELbJNF-a-S--31" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="API 80, 81" vertex="1">
-          <mxGeometry height="30" width="60" x="549" y="238" as="geometry" />
+        <mxCell id="ec2RJxvYGELbJNF-a-S--31" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="API&lt;br&gt;80" vertex="1">
+          <mxGeometry height="30" width="60" x="490" y="262" as="geometry" />
         </mxCell>
-        <mxCell id="ec2RJxvYGELbJNF-a-S--32" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="UDP 55355" vertex="1">
-          <mxGeometry height="30" width="71" x="690" y="238" as="geometry" />
+        <mxCell id="ec2RJxvYGELbJNF-a-S--32" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="UDP&lt;div&gt;55355&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="71" x="660" y="262" as="geometry" />
         </mxCell>
         <mxCell id="ApIP_Xdv9q3WK2fL85me-1" connectable="0" parent="1" style="edgeLabel;html=1;align=left;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=none;" value="UDP 55355 retroarch commands :&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- Stop the current game&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- Take a screenshot&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- Play/Pause game&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- ...&lt;/div&gt;" vertex="1">
-          <mxGeometry x="350" y="540" as="geometry" />
+          <mxGeometry x="334" y="630" as="geometry" />
         </mxCell>
-        <mxCell id="ApIP_Xdv9q3WK2fL85me-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="UDP 1337" vertex="1">
-          <mxGeometry height="30" width="60" x="614" y="238" as="geometry" />
+        <mxCell id="ApIP_Xdv9q3WK2fL85me-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="UDP&lt;br&gt;1337" vertex="1">
+          <mxGeometry height="30" width="60" x="600" y="262" as="geometry" />
+        </mxCell>
+        <mxCell id="fEWEZeXLtIbiUHNP-2Xh-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="API&lt;br&gt;8081" vertex="1">
+          <mxGeometry height="30" width="71" x="709" y="262" as="geometry" />
+        </mxCell>
+        <mxCell id="mCkXnQJRTY17aj6y0XdX-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="API&lt;br&gt;81" vertex="1">
+          <mxGeometry height="30" width="60" x="540" y="260" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

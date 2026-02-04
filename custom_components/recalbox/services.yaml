@@ -43,6 +43,17 @@ quit_game:
       selector:
         text:
 
+quit_kodi:
+  name: "Quitter Kodi"
+  description: "Ferme Kodi, pour arriver à l'interface EmulationStation."
+  fields:
+    entity_id:
+      name: "ID de l'entité"
+      description: "L'identifiant de l'entité Recalbox (Config Entry ID)."
+      required: true
+      selector:
+        text:
+
 launch_game:
   name: "Lancer un jeu"
   description: "Recherche et lance un jeu sur la Recalbox par son nom et sa console, puis le lance."

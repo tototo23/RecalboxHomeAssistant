@@ -54,6 +54,7 @@ This repository allows you to integrate Recalbox in your Home Assistant :
     + [Save current game state](#save-current-game-state)
     + [Load last game state](#load-last-game-state)
     + [Turn OFF recalbox](#turn-off-recalbox)
+    + [Quit Kodi](#quit-kodi)
 - [Releases notes](#releases-notes)
 - [Troubleshot](#troubleshot)
   * [`CRLF` / `LF` run script issue](#crlf--lf-run-script-issue)
@@ -285,6 +286,15 @@ Examples :
 Examples :
 - "Turn off Recalbox"
 - "Eteins Recalbox"
+
+
+#### Quit Kodi
+
+> This uses port 8081 by default. It only works if Kodi is currently running.
+
+Examples :
+- "Quit Kodi"
+- "Exit Kodi"
 
 
 

@@ -182,6 +182,11 @@ class RecalboxEntity(CoordinatorEntity, SwitchEntity, RestoreEntity):
         return await self._api.send_udp_command(port_udp, "LOAD_STATE")
 
 
+    async def quit_kodi(self) -> bool :
+        _LOGGER.debug("Quit Kodi via JSON RPC")
+        return await self._api.quit_kodi()
+
+
     # Renvoie le texte pour Assist
     async def search_and_launch_game_by_name(self, console, game_query, lang=None) -> str :
         _LOGGER.debug(f"Try to launch game {game_query} on system {console}")

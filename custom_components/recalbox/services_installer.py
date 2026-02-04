@@ -47,6 +47,9 @@ def install_services(hass: HomeAssistant):
         console = call.data.get("console")
         if recalbox_entity:
             await recalbox_entity.search_and_launch_game_by_name(console, game)
+    async def handle_quit_kodi(call):
+        recalbox_entity = findRecalboxEntity(hass, call.data.get("entity_id"))
+        if recalbox_entity: await recalbox_entity.quit_kodi()
 
     # Mapping des noms de services vers leurs fonctions de rappel
     RECALBOX_SERVICES = {
@@ -58,6 +61,7 @@ def install_services(hass: HomeAssistant):
         "save_state": handle_save_state,
         "load_state": handle_load_state,
         "launch_game": handle_launch_game,
+        "quit_kodi": handle_quit_kodi,
     }
 
     for service_name, handler in RECALBOX_SERVICES.items():

@@ -67,6 +67,14 @@
     ],
     "save_state_failed": [
       "Echec de la demande de sauvegarde"
+    ],
+    "quit_kodi_success": [
+      "Je quitte Kodi !",
+      "Ciao Kodi !"
+    ],
+    "quit_kodi_failed": [
+      "Erreur, impossible de quitter Kodi. Kodi n'est peut-être pas lancé, ou n'écoute sur le port 8081.",
+      "Kodi n'a pas l'air d'être lancé, ou ne peut pas être quitté."
     ]
   },
   "errors": {
