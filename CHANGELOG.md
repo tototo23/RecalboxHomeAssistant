@@ -3,9 +3,16 @@
 > By Aurélien Tomassini, 2026.
 
 
-## v1.5.0 - 04/02/2026 - Remove MQTT usage
+## v1.5.0 - 04/02/2026 - (Breaking changes) Remove MQTT usage
 
-> Major changes, please upload the new Recalbox script to Recalbox `userscripts` folder.
+> Major changes : to make installation way more easy, I left MQTT broker dependency !  
+> Now the integration exposes an API, and the Recalbox sends its data to Home Assistant via this API.  
+> The installation is only 2 steps now :
+> - copy the script on Recalbox
+> - install the HACS github project
+> - nothing else
+> 
+> Please upload the new Recalbox script to Recalbox `userscripts` folder.
 
 - Remove MQTT dependency, for a lighter architecture : Recalbox now sends its data to an API instead of MQTT.
   The installation is now way easier for customers : no MQTT broker to install, no user, nothing.
