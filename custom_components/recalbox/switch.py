@@ -263,17 +263,17 @@ class RecalboxEntity(CoordinatorEntity, SwitchEntity, RestoreEntity):
         self._attr_is_on = (data.get("status") == "ON")
 
         # 1. Mise à jour des attributs internes
-        v_sw = data.get("recalboxVersion", self._attr_extra_state_attributes.get("recalboxVersion"))
-        v_hw = data.get("hardware", self._attr_extra_state_attributes.get("hardware"))
-        scriptVersion = data.get("scriptVersion", self._attr_extra_state_attributes.get("scriptVersion"))
+        v_sw = data.get("recalboxVersion") or self._attr_extra_state_attributes.get("recalboxVersion")
+        v_hw = data.get("hardware") or self._attr_extra_state_attributes.get("hardware")
+        script_version = data.get("scriptVersion") or self._attr_extra_state_attributes.get("scriptVersion")
 
         self._attr_extra_state_attributes.update({
             "hardware": v_hw,
             "recalboxVersion": v_sw,
-            "scriptVersion": scriptVersion,
+            "scriptVersion": script_version,
         })
 
-        self.recalboxIpAddress = data.get("recalboxIpAddress", self.recalboxIpAddress)
+        self.recalboxIpAddress = data.get("recalboxIpAddress") or self.recalboxIpAddress
 
         _LOGGER.debug('Updating game attributes...')
 
@@ -347,7 +347,7 @@ class RecalboxEntity(CoordinatorEntity, SwitchEntity, RestoreEntity):
                 "recalboxVersion": old_state.attributes.get("recalboxVersion"),
                 "scriptVersion": old_state.attributes.get("scriptVersion"),
             })
-            _LOGGER.debug("Last main information from Recalbox has been restored")
+            _LOGGER.debug(f"Last main information from Recalbox has been restored to {self._attr_extra_state_attributes}")
 
 
 

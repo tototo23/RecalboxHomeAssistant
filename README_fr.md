@@ -318,3 +318,14 @@ pour vous assurer que Git conserve le format "LF" d'origine sans le modifier.
 
 Enfin, assurez-vous d'utiliser la dernière version du script.
 Si votre version est trop ancienne, un message s'affichera sur votre carte Recalbox dans Home Assistant.
+
+
+
+### IP v6
+
+Quand Home Assistants résout le hostname de votre Recalbox, il peut obtenir une IPv6.
+Il semble y avoir des problème avec les IPv6 (au moins sur RPi3), et la Recalbox ne reçoit donc pas les requêtes de Home Assistant.
+Un message apparait en bas de l'écran de Home Assistant, montrant une adresse IPv6.
+
+Si cela se produit et vous bloque, allez dans les paramètres de l'intégration, et modifier votre hostname vers une adresse IP v4.
+Ca va corriger le problème, maissi votre routeur attribue une nouvelle IP à votre Recalbox, il faudra retourner changer l'IP dans Home Assistant...

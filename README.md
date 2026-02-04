@@ -299,6 +299,7 @@ See [change logs file](CHANGELOG.md)
 ## Troubleshot
 
 ### `CRLF` / `LF` run script issue 
+
 If your Recalbox doesn't seem to reach Home Assistant, while you have your script in `userscripts`,
 please make sure the `.sh` file is using "LF" line separator :
 - You can run via SSH `sh <path-to-the-script>` :  
@@ -314,3 +315,13 @@ git keeps the "LF" as it was in the file, without changing it.
 
 Also, make sure that you are using the latest script version.
 If your script version is too old, a message will be shown in your Recalbox Card.
+
+
+### IP v6
+
+When your Home Assistants resolves the hostname of your Recalbox, it can use IPv6.
+It seems to have some troubles (at least on RPi3), so Recalbox doesn't receive the requests from Home Assistant.
+A toast is shown in Home Assistant showing an IPv6 address.
+
+If it occures too often, go to your integration settings, and change your hostname to the IP address v4.
+It will fix this issue, but if your router changes your IP address, you will have to change it again.
