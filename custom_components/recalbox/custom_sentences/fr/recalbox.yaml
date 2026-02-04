@@ -41,6 +41,10 @@ intents:
     data:
       - sentences:
           - "(charge | recharge | restaure) (ma | la) [dernière] (sauvegarde | partie) [du jeu] [sur [la] recalbox]"
+  RecalboxQuitKodi:
+    data:
+      - sentences:
+          - "(quitte | ferme | tue) Kodi [sur [la] recalbox]"
 
 lists:
   game:

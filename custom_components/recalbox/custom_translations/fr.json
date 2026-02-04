@@ -67,6 +67,12 @@
     ],
     "save_state_failed": [
       "Echec de la demande de sauvegarde"
+    ],
+    "quit_kodi_success": [
+      "Je quitte Kodi !"
+    ],
+    "quit_kodi_failed": [
+      "Erreur, impossible de quitter Kodi"
     ]
   },
   "errors": {

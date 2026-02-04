@@ -39,6 +39,10 @@ intents:
       - sentences:
           - "(load | reload) (my | the) [last] game [(state | saved)] [on [the] recalbox]"
           - "(load | reload) (my | the) [last] save [on [the] recalbox]"
+  RecalboxQuitKodi:
+    data:
+      - sentences:
+          - "(quit | exit | kill) Kodi [on [the] recalbox]"
 
 lists:
   game:

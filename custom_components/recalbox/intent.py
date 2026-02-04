@@ -153,6 +153,25 @@ class RecalboxQuitGameHandler(intent.IntentHandler):
 
 
 
+class RecalboxQuitGameHandler(intent.IntentHandler):
+    intent_type = "RecalboxQuitKodi"
+
+    async def async_handle(self, intent_obj):
+        hass = intent_obj.hass
+        recalbox:RecalboxEntity = find_recalbox_entity(hass, intent_obj)
+        translator:RecalboxTranslator = get_translator(hass)
+
+        if await recalbox.quit_kodi():
+            text = translator.translate("intent_response.quit_kodi_success", lang=intent_obj.language)
+        else:
+            text = translator.translate("intent_response.quit_kodi_failed", lang=intent_obj.language)
+
+        response = intent_obj.create_response()
+        response.async_set_speech(text)
+        return response
+
+
+
 class RecalboxPauseGameHandler(intent.IntentHandler):
     intent_type = "RecalboxPauseGame"
 
