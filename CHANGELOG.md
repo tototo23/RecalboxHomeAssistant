@@ -3,7 +3,7 @@
 > By Aurélien Tomassini, 2026.
 
 
-## v1.5.2 - ...
+## v1.5.2 - 05/02/2026
 
 
 - Enable (re)configuration of the Kodi port (8081 by default)
