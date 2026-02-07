@@ -7,6 +7,7 @@
 
 
 - Add option to force IP v4 on mDNS or not
+- Add other variants on Quit Kodi sentences
 
 
 ## v1.5.3 - 05/02/2026
