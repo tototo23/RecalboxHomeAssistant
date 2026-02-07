@@ -4,6 +4,24 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="xuUsNKQw6926h0aMBOMb-57" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.patternFillRect;fillStyle=diagRev;step=5;fillStrokeWidth=0.2;fillStrokeColor=#dddddd;fillColor=#6d8764;fontColor=#ffffff;strokeColor=#3A5431;" value="" vertex="1">
+          <mxGeometry height="340" width="10" x="1600" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="xuUsNKQw6926h0aMBOMb-54" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.patternFillRect;fillStyle=diagRev;step=5;fillStrokeWidth=0.2;fillStrokeColor=#dddddd;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" value="" vertex="1">
+          <mxGeometry height="250" width="10" x="1270" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="xuUsNKQw6926h0aMBOMb-53" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.patternFillRect;fillStyle=diagRev;step=5;fillStrokeWidth=0.2;fillStrokeColor=#dddddd;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" value="" vertex="1">
+          <mxGeometry height="240" width="10" x="710" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="xuUsNKQw6926h0aMBOMb-56" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.patternFillRect;fillStyle=diagRev;step=5;fillStrokeWidth=0.2;fillStrokeColor=#dddddd;fillColor=#6d8764;fontColor=#ffffff;strokeColor=#3A5431;" value="" vertex="1">
+          <mxGeometry height="340" width="10" x="1040" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="xuUsNKQw6926h0aMBOMb-52" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.patternFillRect;fillStyle=diagRev;step=5;fillStrokeWidth=0.2;fillStrokeColor=#dddddd;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" value="" vertex="1">
+          <mxGeometry height="200" width="10" x="110" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="xuUsNKQw6926h0aMBOMb-55" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.patternFillRect;fillStyle=diagRev;step=5;fillStrokeWidth=0.2;fillStrokeColor=#dddddd;fillColor=#6d8764;fontColor=#ffffff;strokeColor=#3A5431;" value="" vertex="1">
+          <mxGeometry height="200" width="10" x="440" y="360" as="geometry" />
+        </mxCell>
         <mxCell id="xuUsNKQw6926h0aMBOMb-1" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Démarrage de Recalbox après HA (A)&lt;/h1&gt;&lt;p&gt;Home Assistant est censé tourner en continu, alors que Recalbox est allumée normalement de façon beaucoup plus occasionnelle. C&#39;est donc le cas nominal qui va être décrit dans les sous-cas ci-dessous :&lt;br&gt;&lt;/p&gt;" vertex="1">
           <mxGeometry height="120" width="450" x="40" y="30" as="geometry" />
         </mxCell>
@@ -87,15 +105,15 @@
         </mxCell>
         <mxCell id="xuUsNKQw6926h0aMBOMb-22" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;edgeStyle=orthogonalEdgeStyle;align=left;verticalAlign=top;rounded=0;" value="Failed = off">
           <mxGeometry relative="1" x="-1" as="geometry">
-            <mxPoint x="120" y="280" as="sourcePoint" />
-            <mxPoint x="220" y="280" as="targetPoint" />
+            <mxPoint x="120" y="286" as="sourcePoint" />
+            <mxPoint x="220" y="286" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="xuUsNKQw6926h0aMBOMb-23" connectable="0" parent="xuUsNKQw6926h0aMBOMb-22" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;" value="Ping" vertex="1">
           <mxGeometry relative="1" x="-1" as="geometry" />
         </mxCell>
         <mxCell id="xuUsNKQw6926h0aMBOMb-24" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="x" vertex="1">
-          <mxGeometry height="30" width="30" x="220" y="265" as="geometry" />
+          <mxGeometry height="30" width="30" x="220" y="271" as="geometry" />
         </mxCell>
         <mxCell id="xuUsNKQw6926h0aMBOMb-25" edge="1" parent="1" style="endArrow=block;endFill=1;html=1;edgeStyle=orthogonalEdgeStyle;align=left;verticalAlign=top;rounded=0;" value="Success = ON, go to ask on API for status !">
           <mxGeometry relative="1" x="-1" as="geometry">
