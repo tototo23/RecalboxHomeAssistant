@@ -5,6 +5,6 @@ JSMODULES = [
     {
         "name": "Recalbox Card",
         "filename": "recalbox-card.js",
-        "version": "1.5.4",
+        "version": "1.5.5",
     },
 ]

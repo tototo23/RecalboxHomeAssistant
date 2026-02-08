@@ -3,6 +3,12 @@
 > By Aurélien Tomassini, 2026.
 
 
+## v1.5.5 - 08/02/2025
+
+- Force not using DNS cache on `aiohttp`, because its mDNS resolution is not stable with
+  `.local`-suffixed host.
+
+
 ## v1.5.4 - 07/02/2025
 
 
