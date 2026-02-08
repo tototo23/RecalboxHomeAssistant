@@ -19,7 +19,7 @@ class RecalboxAPI:
                  udp_recalbox: int = 1337, # https://github.com/recalbox/recalbox-api
                  udp_retroarch: int = 55355, # https://docs.libretro.com/development/retroarch/network-control-interface/
                  api_port_kodi: int = 8081, # https://kodi.wiki/view/JSON-RPC_API
-                 only_ip_v4: bool = False,
+                 only_ip_v4: bool = True,
                  ):
         self.host = host
         self.api_port_os = api_port_os # Arrêter, Reboot de Recalbox...
