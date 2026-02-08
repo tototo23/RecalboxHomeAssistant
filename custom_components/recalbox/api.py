@@ -55,9 +55,10 @@ class RecalboxAPI:
         )
         try:
             transport.sendto(message.encode())
+            _LOGGER.debug(f"UDP message sent !")
             return True
         except Exception as e:
-            _LOGGER.error(f"Fail to send UDP message to {self.host} on port {port}")
+            _LOGGER.error(f"Fail to send UDP message to {self.host} on port {port} : {e}")
             return False
         finally:
             transport.close()
