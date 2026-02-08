@@ -46,12 +46,13 @@ class RecalboxAPI:
 
 
     async def send_udp_command(self, port, message):
-        _LOGGER.debug(f"Envoi UDP {port}: \"{message}\"")
+        socket_type = self._getSocketType()
+        _LOGGER.debug(f"Envoi UDP {port} ({socket_type}): \"{message}\"")
         loop = asyncio.get_running_loop()
         transport, protocol = await loop.create_datagram_endpoint(
             lambda: asyncio.DatagramProtocol(),
             remote_addr=(self.host, port),
-            family=self._getSocketType()
+            family=socket_type
         )
         try:
             transport.sendto(message.encode())
