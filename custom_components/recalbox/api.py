@@ -38,11 +38,11 @@ class RecalboxAPI:
         else :
             return socket.AF_UNSPEC  # Peut avoir du IPv6 ou IPv4
 
-    def _createTCPConnector(self) -> aiohttp.TCPConnector:
-        return aiohttp.TCPConnector(
-            family=self._getSocketType(),
-            use_dns_cache=False # aide aiohttp qui a du mal avec le .local
-        )
+    #def _createTCPConnector(self) -> aiohttp.TCPConnector:
+    #    return aiohttp.TCPConnector(
+    #        family=self._getSocketType(),
+    #        use_dns_cache=False # aide aiohttp qui a du mal avec le .local
+    #    )
 
 
     async def send_udp_command(self, port, message):

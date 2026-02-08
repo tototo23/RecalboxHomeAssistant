@@ -13,7 +13,7 @@ DATA_SCHEMA_CREATION = vol.Schema({
     vol.Required("udp_recalbox", default=1337): int,
     vol.Required("udp_retroarch", default=55355): int,
     vol.Required("api_port_kodi", default=8081): int,
-    vol.Required("only_ip_v4", default=False): bool,
+    #IPV4 vol.Required("only_ip_v4", default=False): bool,
     vol.Required("test_connection", default=True): bool,
 })
 
@@ -35,7 +35,7 @@ class RecalboxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     udp_recalbox=user_input["udp_recalbox"] or 1337,
                     udp_retroarch=user_input["udp_retroarch"] or 55355,
                     api_port_kodi=user_input["api_port_kodi"] or 8081,
-                    only_ip_v4=user_input["only_ip_v4"] or False,
+                    #IPV4 only_ip_v4=user_input["only_ip_v4"] or False,
                 )
                 is_valid = await api_temp.ping() and await api_temp.testPorts()
             else:
@@ -82,6 +82,6 @@ class RecalboxOptionsFlowHandler(config_entries.OptionsFlow):
                 vol.Required("udp_recalbox", default=current_config.get("udp_recalbox", 1337)): int,
                 vol.Required("udp_retroarch", default=current_config.get("udp_retroarch", 55355)): int,
                 vol.Required("api_port_kodi", default=current_config.get("api_port_kodi", 8081)): int,
-                vol.Required("only_ip_v4", default=current_config.get("only_ip_v4", False)): bool,
+                #IPV4 vol.Required("only_ip_v4", default=current_config.get("only_ip_v4", False)): bool,
             }),
         )

@@ -203,12 +203,12 @@ class RecalboxCard extends HTMLElement {
             .recalbox-card-content { padding: var(--ha-space-4); }
             .recalbox-card-content hr { margin: 12px 0; border: 0; border-top: 1px solid var(--divider-color); margin: 8px 0; }
             .info-row { display: flex; align-items: center; padding: 4px 0; min-height: 40px; }
-            .info-row div:last-child { text-align: right; }
             .info-row ha-icon { color: var(--state-icon-color); margin-right: 24px; margin-left: 4px; }
             .info-text { flex-grow: 1; }
             .info-value { color: var(--secondary-text-color); font-size: 0.9em; }
             .one-line { display: flex; flex-direction: row-reverse; gap: 20px; justify-content: space-between; vertical-align: middle; margin: 6px 0; }
             .one-line .info-value { color: var(--primary-text-color); font-size: inherit; }
+            .one-line div:first-child { text-align: right; }
 
             .game-preview { text-align: center; padding: 10px 0; margin: 10px -16px; }
             .game-preview img { max-width: 90%; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
