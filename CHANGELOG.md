@@ -10,7 +10,8 @@
 - Remove custom `aiohttp` sessions, now uses the `async_get_clientsession`
   from Home Assistant
 - On Recalbox card, align the game title, and other information to the right side
-
+- When launching a game by its name, if it starts with 3 digits and a space, then
+  say only the text after this prefix.
 
 
 ## v1.5.5 - 08/02/2025

@@ -34,7 +34,6 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
 
 
-
 class RecalboxEntity(CoordinatorEntity, SwitchEntity, RestoreEntity):
     def __init__(self, hass, config_entry, api:RecalboxAPI, coordinator):
         super().__init__(coordinator)
@@ -198,6 +197,13 @@ class RecalboxEntity(CoordinatorEntity, SwitchEntity, RestoreEntity):
         return await self._api.quit_kodi()
 
 
+
+    def _clean_game_name(self, raw_game_name):
+        if len(raw_game_name) > 4 and raw_game_name[:3].isdigit() and raw_game_name[3] == " ":
+            return raw_game_name[4:]
+        else:
+            return raw_game_name
+
     # Renvoie le texte pour Assist
     async def search_and_launch_game_by_name(self, console, game_query, lang=None) -> str :
         _LOGGER.debug(f"Try to launch game {game_query} on system {console}")
@@ -236,20 +242,21 @@ class RecalboxEntity(CoordinatorEntity, SwitchEntity, RestoreEntity):
                 break
 
         if target:
+            game_cleaned_name = self._clean_game_name(target['name'])
             _LOGGER.debug(f"Game found, with name {target['name']}, on system {console}. Try to launch via UDP command...")
             try:
                 await self._api.send_udp_command(port_udp, f"START|{console}|{target['path']}")
                 _LOGGER.debug(f"Game launched !")
                 return translator.translate(
                     "intent_response.game_launched_success",
-                    {"console": console, "game": target['name']},
+                    {"console": console, "game": game_cleaned_name},
                     lang=lang
                 )
             except Exception as err:
                 _LOGGER.error(f"Failed to launch game {target['name']} on {console} : {err}")
                 return translator.translate(
                     "intent_response.game_launched_error",
-                    {"console": console, "game": target['name']},
+                    {"console": console, "game": game_cleaned_name},
                     lang=lang
                 )
         else:
