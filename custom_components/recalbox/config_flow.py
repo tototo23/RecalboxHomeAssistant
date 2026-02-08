@@ -28,6 +28,7 @@ class RecalboxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             if (user_input["test_connection"]):
                 # tester un ping sur cette IP/host??
                 api_temp = RecalboxAPI(
+                    hass=self.hass,
                     host=user_input["host"],
                     api_port_os=user_input["api_port_os"] or 80,
                     api_port_gamesmanager=user_input["api_port_gamesmanager"] or 81,

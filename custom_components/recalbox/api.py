@@ -3,11 +3,16 @@ import aiohttp
 import asyncio
 import logging
 import socket
+from homeassistant.core import (
+    HomeAssistant
+)
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 _LOGGER = logging.getLogger(__name__)
 
 class RecalboxAPI:
     def __init__(self,
+                 hass: HomeAssistant,
                  host: str = "recalbox.local",
                  api_port_os: int = 80,
                  api_port_gamesmanager: int = 81,
@@ -23,6 +28,8 @@ class RecalboxAPI:
         self.udp_retroarch = udp_retroarch
         self.api_port_kodi = api_port_kodi # Pour quitter Kodi
         self.only_ip_v4 = only_ip_v4
+        # On récupère la session globale de HA
+        self._session = async_get_clientsession(hass)
 
 
     def _getSocketType(self):
@@ -59,29 +66,25 @@ class RecalboxAPI:
     async def post_api(self, path, port=80):
         url = f"http://{self.host}:{port}{path}"
         _LOGGER.debug(f"API POST {url}")
-        connector = self._createTCPConnector()
-        async with aiohttp.ClientSession(connector=connector) as session:
-            try:
-                async with session.post(url) as response:
-                    return response.status == 200
-            except Exception as e:
-                _LOGGER.error(f"Failed to call {url}")
-                raise
+        try:
+            async with self._session.post(url) as response:
+                return response.status == 200
+        except Exception as e:
+            _LOGGER.error(f"Failed to call {url}")
+            raise
 
 
     async def get_roms(self, console):
         url = f"http://{self.host}:{self.api_port_gamesmanager}/api/systems/{console}/roms"
         _LOGGER.debug(f"API GET roms from {url}")
-        connector = self._createTCPConnector()
-        async with aiohttp.ClientSession(connector=connector) as session:
-            try:
-                async with session.get(url, timeout=10) as response:
-                    if response.status == 200:
-                        data = await response.json()
-                        return data.get("roms", [])
-            except Exception as e:
-                _LOGGER.error(f"Failed to get roms list on {url} : {e}")
-                raise
+        try:
+            async with self._session.get(url, timeout=10) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    return data.get("roms", [])
+        except Exception as e:
+            _LOGGER.error(f"Failed to get roms list on {url} : {e}")
+            raise
 
 
     async def quit_kodi(self) -> bool:
@@ -92,16 +95,14 @@ class RecalboxAPI:
             "id": 1
         }
         _LOGGER.debug(f"API to quit Kodi : {kodi_url}")
-        connector = self._createTCPConnector()
-        async with aiohttp.ClientSession(connector=connector) as session:
-            try:
-                async with session.post(kodi_url, json=payload, timeout=5) as response:
-                    if response.status == 200:
-                        await asyncio.sleep(5)
-                        return True
-            except Exception as e:
-                _LOGGER.error(f"Failed to quit Kodi via JSON RPC on {kodi_url} : {e}")
-                return False
+        try:
+            async with self._session.post(kodi_url, json=payload, timeout=5) as response:
+                if response.status == 200:
+                    await asyncio.sleep(5)
+                    return True
+        except Exception as e:
+            _LOGGER.error(f"Failed to quit Kodi via JSON RPC on {kodi_url} : {e}")
+            return False
 
 
     async def is_kodi_running(self) -> bool:
@@ -112,15 +113,13 @@ class RecalboxAPI:
             "id": 1
         }
         _LOGGER.debug(f"Ping Kodi : {kodi_url}")
-        connector = self._createTCPConnector()
-        async with aiohttp.ClientSession(connector=connector) as session:
-            try:
-                async with session.post(kodi_url, json=payload, timeout=5) as response:
-                    if response.status == 200:
-                        return True
-            except Exception as e:
-                _LOGGER.info(f"Failed to ping Kodi via JSON RPC on {kodi_url} : {e}")
-                return False
+        try:
+            async with self._session.post(kodi_url, json=payload, timeout=5) as response:
+                if response.status == 200:
+                    return True
+        except Exception as e:
+            _LOGGER.info(f"Failed to ping Kodi via JSON RPC on {kodi_url} : {e}")
+            return False
 
 
     # On va interroger Recalbox pour connaitre le status.
@@ -128,7 +127,6 @@ class RecalboxAPI:
     async def get_current_status(self):
         url = f"http://{self.host}:{self.api_port_gamesmanager}/api/status"
         _LOGGER.debug(f"API GET current Recalbox status {url}")
-        connector = self._createTCPConnector()
         # {
         #   "Action": "rungame",
         #   "Parameter": "/recalbox/share/roms/megadrive/001 Sonic 1.bin",
@@ -163,34 +161,17 @@ class RecalboxAPI:
         #     }
         #   }
         # }
-        async with aiohttp.ClientSession(connector=connector) as session:
-            try:
-                async with session.get(url, timeout=10) as response:
-                    if response.status == 200:
-                        data = await response.json()
-                        return {
-                            "game": data.get("Game", {}).get("Game"),
-                            "console": data.get("System", {}).get("System"),
-                            "rom": data.get("Game", {}).get("GamePath"),
-                            "genre": data.get("Game", {}).get("Genre"),
-                            "genreId": data.get("Game", {}).get("GenreId"),
-                            "imagePath": None,
-                            "recalboxIpAddress": None,
-                            "recalboxVersion": None,
-                            "hardware": None,
-                            "scriptVersion": None,
-                            "status": "ON"
-                        }
-            except Exception as e:
-                _LOGGER.error(f"Failed to get recalbox status on API {url} ({e})")
-                if (await self.is_kodi_running()) :
-                    _LOGGER.debug(f"Kodi seems to be running ! Simulating JSON data for Recalbox HA status")
+        try:
+            async with self._session.get(url, timeout=10) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    is_game_running = (data.get("Action")=="rungame");
                     return {
-                        "game": None,
-                        "console": "Kodi",
-                        "rom": None,
-                        "genre": None,
-                        "genreId": None,
+                        "game": data.get("Game", {}).get("Game") if is_game_running else None,
+                        "console": data.get("System", {}).get("System"),
+                        "rom": data.get("Game", {}).get("GamePath") if is_game_running else None,
+                        "genre": data.get("Game", {}).get("Genre") if is_game_running else None,
+                        "genreId": data.get("Game", {}).get("GenreId") if is_game_running else None,
                         "imagePath": None,
                         "recalboxIpAddress": None,
                         "recalboxVersion": None,
@@ -198,9 +179,26 @@ class RecalboxAPI:
                         "scriptVersion": None,
                         "status": "ON"
                     }
-                else:
-                    _LOGGER.error(f"Kodi is not reachable neither")
-                    raise
+        except Exception as e:
+            _LOGGER.error(f"Failed to get recalbox status on API {url} ({e})")
+            if (await self.is_kodi_running()) :
+                _LOGGER.debug(f"Kodi seems to be running ! Simulating JSON data for Recalbox HA status")
+                return {
+                    "game": None,
+                    "console": "Kodi",
+                    "rom": None,
+                    "genre": None,
+                    "genreId": None,
+                    "imagePath": None,
+                    "recalboxIpAddress": None,
+                    "recalboxVersion": None,
+                    "hardware": None,
+                    "scriptVersion": None,
+                    "status": "ON"
+                }
+            else:
+                _LOGGER.error(f"Kodi is not reachable neither")
+                raise
 
     async def ping(self) -> bool:
         """Exécute un ping système vers l'hôte."""
@@ -211,7 +209,7 @@ class RecalboxAPI:
             process = await asyncio.create_subprocess_shell(command)
             await process.wait()
 
-            _LOGGER.debug(f"PING {self.host} returned {process.returncode}")
+            _LOGGER.debug(f"Command \"{command}\" returned {process.returncode}")
             # Si le code de retour est 0, l'hôte a répondu
             return process.returncode == 0
         except:

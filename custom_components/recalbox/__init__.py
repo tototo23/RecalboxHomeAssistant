@@ -34,6 +34,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # On stocke l'API pour que button.py puisse la récupérer
     hass.data[DOMAIN]["instances"][entry.entry_id] = {
         "api": RecalboxAPI(
+            hass,
             host,
             api_port_os=config.get("api_port_os") or 80,
             api_port_gamesmanager=config.get("api_port_gamesmanager") or 81,
