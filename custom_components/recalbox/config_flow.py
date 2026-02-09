@@ -13,7 +13,7 @@ DATA_SCHEMA_CREATION = vol.Schema({
     vol.Required("udp_recalbox", default=1337): int,
     vol.Required("udp_retroarch", default=55355): int,
     vol.Required("api_port_kodi", default=8081): int,
-    vol.Required("only_ip_v4", default=False): bool,
+    vol.Required("only_ip_v4", default=True): bool,
     vol.Required("test_connection", default=True): bool,
 })
 
@@ -27,16 +27,19 @@ class RecalboxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             if (user_input["test_connection"]):
                 # tester un ping sur cette IP/host??
+                only_ip_v4_val = user_input["only_ip_v4"]
                 api_temp = RecalboxAPI(
+                    hass=self.hass,
                     host=user_input["host"],
                     api_port_os=user_input["api_port_os"] or 80,
                     api_port_gamesmanager=user_input["api_port_gamesmanager"] or 81,
                     udp_recalbox=user_input["udp_recalbox"] or 1337,
                     udp_retroarch=user_input["udp_retroarch"] or 55355,
                     api_port_kodi=user_input["api_port_kodi"] or 8081,
-                    only_ip_v4=user_input["only_ip_v4"] or False,
+                    only_ip_v4 = only_ip_v4_val if only_ip_v4_val is not None else True,
                 )
-                is_valid = await api_temp.ping() and await api_temp.testPorts()
+                is_valid = (await api_temp.ping()
+                            and await api_temp.testPorts())
             else:
                 is_valid = True
 
@@ -81,6 +84,6 @@ class RecalboxOptionsFlowHandler(config_entries.OptionsFlow):
                 vol.Required("udp_recalbox", default=current_config.get("udp_recalbox", 1337)): int,
                 vol.Required("udp_retroarch", default=current_config.get("udp_retroarch", 55355)): int,
                 vol.Required("api_port_kodi", default=current_config.get("api_port_kodi", 8081)): int,
-                vol.Required("only_ip_v4", default=current_config.get("only_ip_v4", False)): bool,
+                vol.Required("only_ip_v4", default=current_config.get("only_ip_v4", True)): bool,
             }),
         )

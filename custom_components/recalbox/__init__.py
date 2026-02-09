@@ -32,15 +32,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data[DOMAIN]["translator"] = RecalboxTranslator(hass, DOMAIN)
 
     # On stocke l'API pour que button.py puisse la récupérer
+    only_ip_v4_val = config.get("only_ip_v4")
     hass.data[DOMAIN]["instances"][entry.entry_id] = {
         "api": RecalboxAPI(
+            hass,
             host,
             api_port_os=config.get("api_port_os") or 80,
             api_port_gamesmanager=config.get("api_port_gamesmanager") or 81,
             udp_recalbox=config.get("udp_recalbox") or 1337,
             udp_retroarch=config.get("udp_retroarch") or 55355,
             api_port_kodi=config.get("api_port_kodi") or 8081,
-            only_ip_v4=config.get("only_ip_v4") or False,
+            only_ip_v4=only_ip_v4_val if only_ip_v4_val is not None else True,
         )
     }
 
@@ -110,6 +112,11 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Suppression de l'intégration."""
+
+    # Fermer les connexions avant de décharger tout :
+    api = hass.data[DOMAIN]["instances"][entry.entry_id]["api"]
+    await api.close()
+
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         hass.data[DOMAIN]["instances"].pop(entry.entry_id)

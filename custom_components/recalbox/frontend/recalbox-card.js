@@ -208,6 +208,7 @@ class RecalboxCard extends HTMLElement {
             .info-value { color: var(--secondary-text-color); font-size: 0.9em; }
             .one-line { display: flex; flex-direction: row-reverse; gap: 20px; justify-content: space-between; vertical-align: middle; margin: 6px 0; }
             .one-line .info-value { color: var(--primary-text-color); font-size: inherit; }
+            .one-line div:first-child { text-align: right; }
 
             .game-preview { text-align: center; padding: 10px 0; margin: 10px -16px; }
             .game-preview img { max-width: 90%; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
