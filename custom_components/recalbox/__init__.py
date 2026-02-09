@@ -32,6 +32,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data[DOMAIN]["translator"] = RecalboxTranslator(hass, DOMAIN)
 
     # On stocke l'API pour que button.py puisse la récupérer
+    only_ip_v4_val = config.get("only_ip_v4")
     hass.data[DOMAIN]["instances"][entry.entry_id] = {
         "api": RecalboxAPI(
             hass,
@@ -41,7 +42,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             udp_recalbox=config.get("udp_recalbox") or 1337,
             udp_retroarch=config.get("udp_retroarch") or 55355,
             api_port_kodi=config.get("api_port_kodi") or 8081,
-            only_ip_v4=config.get("only_ip_v4") or True,
+            only_ip_v4=only_ip_v4_val if only_ip_v4_val is not None else True,
         )
     }
 

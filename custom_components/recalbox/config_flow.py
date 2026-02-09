@@ -27,6 +27,7 @@ class RecalboxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             if (user_input["test_connection"]):
                 # tester un ping sur cette IP/host??
+                only_ip_v4_val = user_input["only_ip_v4"]
                 api_temp = RecalboxAPI(
                     hass=self.hass,
                     host=user_input["host"],
@@ -35,7 +36,7 @@ class RecalboxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     udp_recalbox=user_input["udp_recalbox"] or 1337,
                     udp_retroarch=user_input["udp_retroarch"] or 55355,
                     api_port_kodi=user_input["api_port_kodi"] or 8081,
-                    only_ip_v4=user_input["only_ip_v4"] or True,
+                    only_ip_v4 = only_ip_v4_val if only_ip_v4_val is not None else True,
                 )
                 is_valid = (await api_temp.ping()
                             and await api_temp.testPorts())
