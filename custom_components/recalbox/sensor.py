@@ -21,7 +21,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
 class RecalboxDiagnosticSensor(SensorEntity):
     """Classe générique pour les diagnostics de la Recalbox."""
-    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    _attr_entity_category = EntityCategory.CONFIG
     _attr_has_entity_name = True
 
     def __init__(self, config_entry, key, name, icon, default=None):
@@ -31,7 +31,7 @@ class RecalboxDiagnosticSensor(SensorEntity):
         self._attr_icon = icon
         self._default = default
         # L'ID unique doit être différent pour chaque port
-        self._attr_unique_id = f"{config_entry.entry_id}_{key}"
+        self._attr_unique_id = f"{config_entry.entry_id}_config_{key}"
 
     @property
     def native_value(self):

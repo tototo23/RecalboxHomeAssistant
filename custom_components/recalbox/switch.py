@@ -28,9 +28,9 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     api = hass.data[DOMAIN]["instances"][config_entry.entry_id]["api"]
     coordinator = await prepare_ping_coordinator(hass, api)
     # On crée l'entité en lui passant l'objet config_entry (qui contient l'IP)
-    new_entity = RecalboxEntity(hass, config_entry, api, coordinator)
-    hass.data[DOMAIN]["instances"][config_entry.entry_id]["sensor_entity"] = new_entity # pour la retrouver ailleurs plus facilement
-    async_add_entities([new_entity])
+    new_recalbox_entity = RecalboxEntity(hass, config_entry, api, coordinator)
+    hass.data[DOMAIN]["instances"][config_entry.entry_id]["sensor_entity"] = new_recalbox_entity # pour la retrouver ailleurs plus facilement
+    async_add_entities([new_recalbox_entity])
 
 
 

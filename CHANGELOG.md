@@ -6,7 +6,7 @@
 ## v1.5.7 - 
 
 
-- ...
+- Move Recalbox parameter entities to `Configuration` instead of `Diagnostic` section
 
 
 ## v1.5.6 - 09/02/2026 - Network stability + UX improvement + Support HA 2026.2
