@@ -189,7 +189,8 @@ in `configuration.yaml`, to allow Home Assistant to read yaml files in `automati
 
 ### Assist (text/voice)
 
-> Demonstration (fr) : https://youtube.com/shorts/TIOIKZNCbBE?si=my2BR19OPJmfDUWc
+> Demonstration (fr) : https://youtube.com/shorts/TIOIKZNCbBE?si=my2BR19OPJmfDUWc  
+> In this demo, I'm using an ESP32 S3 Audio Board from Waveshare, with ESP-Home yaml from https://github.com/sw3Dan/waveshare-s2-audio_esphome_voice/ by sw3Dan who made an amazing job
 
 > Since v0.2.0, a script auto installs the sentences and sentences updates.
 > Check the dashboard custom card to see if the HA needs a restarts to update the sentences.

@@ -189,7 +189,8 @@ dans `configuration.yaml`, pour permettre à Home Assistant de lire les fichiers
 
 ### Assist (texte/voix)
 
-> Démonstration : https://youtube.com/shorts/TIOIKZNCbBE?si=my2BR19OPJmfDUWc
+> Démonstration : https://youtube.com/shorts/TIOIKZNCbBE?si=my2BR19OPJmfDUWc  
+> Dans cette démo, j'utilise un ESP32 S3 Audio Board de Waveshare, avec ESP-Home et le yaml fourni sur https://github.com/sw3Dan/waveshare-s2-audio_esphome_voice/ par sw3Dan, qui a fait un super travail
 
 > Depuis la version v0.2.0, un script va automatiquement installer les phrases Assist au bon endroit, et ses mises à jour.
 > Vérifiez la carte du tableau de bord si un redémarrage manuel est nécessaire.
