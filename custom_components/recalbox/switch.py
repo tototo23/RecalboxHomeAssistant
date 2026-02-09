@@ -31,7 +31,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     # On crée l'entité en lui passant l'objet config_entry (qui contient l'IP)
     new_recalbox_entity = RecalboxEntity(hass, config_entry, api, coordinator)
     hass.data[DOMAIN]["instances"][config_entry.entry_id]["sensor_entity"] = new_recalbox_entity # pour la retrouver ailleurs plus facilement
-    async_add_entities([new_recalbox_entity])
+    async_add_entities([new_recalbox_entity, RecalboxForceV4Switch(hass, config_entry)])
 
 
 
@@ -408,7 +408,8 @@ class RecalboxForceV4Switch(SwitchEntity):
     _attr_name = "Force mDNS IP v4 only"
     _attr_icon = "mdi:dns"
 
-    def __init__(self, config_entry):
+    def __init__(self, hass, config_entry):
+        self.hass = hass
         self._config_entry = config_entry
         self._attr_unique_id = f"{config_entry.entry_id}_only_ip_v4"
 
