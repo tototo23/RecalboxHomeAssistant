@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="65bc8bc0-baff-4a1a-9129-9e293e34450f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/RecalboxHomeAssistant.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Update_README_s_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Home Assistant/automations/recalbox_automations.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README_fr.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Recalbox/userscripts/home_assistant_notifier.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/api.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/config_flow.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/const.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/custom_sentences/en/recalbox.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/custom_sentences/fr/recalbox.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/custom_sentences_installer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/custom_translations/en.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/custom_translations/fr.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/frontend/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/frontend/recalbox-card.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/intent.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/recalbox_offline_watcher.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/rest_controller.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/sensor.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/services.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/services_installer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/switch.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/translations/en.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/translations/fr.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/recalbox/translations_service.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/(DRAFT) home_assistant_notifier(permanent).sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/DeviceIntegrationSelectAndConfig.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/RecalboxCardVisualEditor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/RecalboxHomeAssistantArchitecture.drawio" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/RecalboxHomeAssistantArchitecture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/RecalboxSequenceDiagrams.drawio" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/RecalboxSettings.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/currentGameAssist.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/example.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/force_ipv4_resolution.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/launchGame.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/turnOffRecalbox.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hacs.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/preview.png" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "00000000"
+}]]></component>
+  <component name="ProjectId" id="39RDUWqQcBk3iwjzSV9piiUscvi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/dev/projects/RecalboxHomeAssistantOld"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="65bc8bc0-baff-4a1a-9129-9e293e34450f" name="Changes" comment="" />
+      <created>1770650006043</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1770650006043</updated>
+    </task>
+    <servers />
+  </component>
+</project>

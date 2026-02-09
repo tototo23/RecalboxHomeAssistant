@@ -14,6 +14,14 @@
             margin: 0;
             background-color: #f6f8fa;
         }
+        .migrate {
+            background-color: #ff000022;
+            padding: 10px 24px;
+            border-radius: 8px;
+            max-width: 340px;
+            clip-path: border-box;
+            font-size: smaller;
+        }
         .container {
             margin: 2rem auto;
             padding: 2rem;
@@ -77,10 +85,11 @@
 <body>
 
     <div class="container">
-        <a href="https://github.com/ooree23/RecalboxHomeAssistant">
+        <a href="https://github.com/recalbox/RecalboxHomeAssistant">
             <h1 data-i18n="title">Recalbox Home Assistant</h1>
-            <p class="small-text" data-i18n="author">by Aurélien Tomassini, 2026</p>
+            <p class="small-text" data-i18n="author">by Aurélien Tomassini, 2026<br/></p>
             <img class="logo" src="logo.png" height="96px">
+            <p class="migrate" data-i18n="migrateToRecalbox">Now officially a Recalbox project !<br/>Moved to Recalbox Github page</p>
         </a>
         <p class="description" data-i18n="description">This repository allows you to integrate Recalbox in your Home Assistant</p>
         <ul>
@@ -91,10 +100,10 @@
         <a class="preview" href="docs/RecalboxHomeAssistantIntegration.png">
             <img src="docs/RecalboxHomeAssistantIntegration.png" alt="Preview"/>
         </a>
-        <a class="hacs-button" href="https://my.home-assistant.io/redirect/hacs_repository/?owner=ooree23&amp;repository=RecalboxHomeAssistant&amp;category=integration" rel="nofollow">
+        <a class="hacs-button" href="https://my.home-assistant.io/redirect/hacs_repository/?owner=recalbox&amp;repository=RecalboxHomeAssistant&amp;category=integration" rel="nofollow">
             <img src="https://my.home-assistant.io/badges/hacs_repository.svg" alt="Open your Home Assistant instance and open a repository inside the Home Assistant Community Store." style="max-width: 100%;">
         </a>
-        <a class="github-button" href="https://github.com/ooree23/RecalboxHomeAssistant" data-i18n="github_btn">
+        <a class="github-button" href="https://github.com/recalbox/RecalboxHomeAssistant" data-i18n="github_btn">
             View documentation and sources on GitHub
         </a>
     </div>
@@ -103,7 +112,8 @@
         const translations = {
             'fr': {
                 'title': 'Recalbox Home Assistant',
-                'author': 'par Aurélien Tomassini, 2026',
+                'author': 'par Aurélien Tomassini, pour Recalbox, 2026',
+                'migrateToRecalbox': 'Dorénavant un projet Recalbox officiel !\nhttps://github.com/recalbox/RecalboxHomeAssistant',
                 'description': 'Ce dépôt vous permet d\'intégrer Recalbox dans votre Home Assistant :',
                 'feat_dashboard': 'Dans votre tableau de bord : Obtenir le statut, afficher le jeu actuel, éteindre, redémarrer, prendre des captures d\'écran, sauvegarder/charger une partie, etc.',
                 'feat_automation': 'Déclencher vos automatisations : Par exemple, changer la couleur des lumières selon le jeu lancé, envoyer des notifications, etc.',
@@ -112,7 +122,8 @@
             },
             'en': {
                 'title': 'Recalbox Home Assistant',
-                'author': 'Recalbox Home Assistant',
+                'author': 'by Aurélien Tomassini,for Recalbox, 2026',
+                'migrateToRecalbox': 'Now an official Recalbox project !\nhttps://github.com/recalbox/RecalboxHomeAssistant',
                 'description': 'This repository allows you to integrate Recalbox in your Home Assistant :',
                 'feat_dashboard': 'In your dashboard : Get status, Display current game, Turn off, Reboot, Take screenshots, Stop current game, Save/Load game state, ...',
                 'feat_automation': 'Trigger any automation you want. For example : change light color according to the game launched, send notifications, etc.',
