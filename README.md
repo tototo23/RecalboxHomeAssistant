@@ -333,7 +333,7 @@ If your script version is too old, a message will be shown in your Recalbox Card
 ### IP v6
 
 When your Home Assistants resolves the hostname of your Recalbox, it can use IPv6.
-It seems to have some troubles with IP v6 (at least on RPi3), so Recalbox doesn't receive the requests from Home Assistant.
+It may have some troubles with IP v6, so Recalbox doesn't receive the requests from Home Assistant.
 A toast is shown in Home Assistant showing an IPv6 address.
 
 If it happens to you :
