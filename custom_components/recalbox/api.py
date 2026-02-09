@@ -52,6 +52,7 @@ class RecalboxAPI:
 
     async def close(self):
         """Ferme la session proprement."""
+        _LOGGER.debug(f"Closing API httpx client connexions")
         await self._http_client.aclose()
 
 
