@@ -11,8 +11,9 @@
 - When launching a game by its name, if it starts with 3 digits and a space, then we remove it in order to
   say only the useful text after this prefix.
 - Remove custom `aiohttp` sessions from API
-- Switch from `aiohttp` to `httpx` implementation, with auto retry and backoff when DNS fails
+- [#11](https://github.com/ooree23/RecalboxHomeAssistant/issues/11) Switch from `aiohttp` to `httpx` implementation, with auto retry and backoff when DNS fails
 - Migrate front_end to be fully compatible with Home Assistant 2026.2 (fixing error `AttributeError: 'LovelaceData' object has no attribute 'mode'` in HA 2026.2)
+- Re-enable option to force or not IPv4
 
 
 ## v1.5.5 - 08/02/2025
